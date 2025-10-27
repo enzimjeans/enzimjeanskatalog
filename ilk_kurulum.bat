@@ -80,20 +80,23 @@ if %PYTHON_NEEDED%==1 (
 
 echo.
 echo ========================================
-echo   GitHub Ayarlari
+echo   GitHub Ayarlari (Otomatik)
 echo ========================================
 echo.
-echo GitHub'a yukleme yapabilmek icin
-echo kullanici bilgilerinizi girin:
+
+REM MAYA Katalog - Sabit GitHub bilgileri
+set GIT_USERNAME=mayakozmetikbijuteri
+set GIT_EMAIL=mayakozmetikbijuteri@users.noreply.github.com
+set REPO_URL=https://github.com/mayakozmetikbijuteri-prog/mayakozmetikbijuteri-prog.git
+
+echo GitHub kullanicisi: %GIT_USERNAME%
+echo Repository: mayakozmetikbijuteri-prog
 echo.
-set /p GIT_USERNAME="GitHub kullanici adi: "
-set /p GIT_EMAIL="GitHub e-mail: "
 
 git config user.name "%GIT_USERNAME%"
 git config user.email "%GIT_EMAIL%"
 
-echo.
-echo [OK] Kullanici bilgileri kaydedildi
+echo [OK] Kullanici bilgileri kaydedildi (Otomatik)
 echo.
 
 echo ========================================
@@ -111,17 +114,13 @@ if not exist ".git" (
 REM Remote kontrol et
 git remote get-url origin >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [!] GitHub remote baglantisi yok
-    echo.
-    echo GitHub repository URL'nizi girin:
-    echo Ornek: https://github.com/kullaniciadi/repo-adi.git
-    echo.
-    set /p REPO_URL="Repository URL: "
-
-    git remote add origin !REPO_URL!
-    echo [OK] Remote baglanti eklendi
+    echo [!] GitHub remote baglantisi kuruluyor...
+    git remote add origin %REPO_URL%
+    echo [OK] Remote baglanti eklendi: mayakozmetikbijuteri-prog
 ) else (
-    for /f "tokens=*" %%i in ('git remote get-url origin') do echo [OK] Remote: %%i
+    echo [!] Mevcut remote baglanti guncelleniyor...
+    git remote set-url origin %REPO_URL%
+    echo [OK] Remote: mayakozmetikbijuteri-prog
 )
 
 echo.

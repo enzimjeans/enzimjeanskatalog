@@ -53,8 +53,8 @@ DOKUMANTASYON:
 2. "ilk_kurulum.bat" dosyasina cift tiklayin
    - Git kurulumu kontrol edilir
    - Excel2JSON.exe kontrol edilir (Python gerekmez!)
-   - GitHub kullanici bilgileri istenir
-   - GitHub repository URL'si istenir
+   - GitHub baglantisi OTOMATIK kurulur!
+   - mayakozmetikbijuteri-prog repository'e baglanir
    - 5-10 dakika surer
 
    ONEMLI: GitHub Token gereklidir!
@@ -62,6 +62,9 @@ DOKUMANTASYON:
    - Generate new token (classic)
    - "repo" yetkisi secin
    - Token'i kopyalayin ve kaydedin
+
+   NOT: GitHub bilgileri otomatik ayarlanir,
+        hicbir sey girmenize gerek yok!
 
 3. "config.js" dosyasini duzenleyin:
    - Not defteri ile acin
