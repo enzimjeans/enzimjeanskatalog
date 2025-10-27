@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+
+# Excel geçici dosyaları
+~$*.xlsx
+~$*.xls
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Geçici dosyalar
+*.tmp
+*.bak
+
+# PyInstaller
+build/
+dist/
+*.spec
+Excel2JSON.exe

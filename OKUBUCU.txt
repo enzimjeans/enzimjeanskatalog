@@ -1,0 +1,179 @@
+═══════════════════════════════════════════════════════
+  MAYA KATALOG - TASINABILIR SISTEM
+  *** ILK ONCE BUNU OKUYUN ***
+═══════════════════════════════════════════════════════
+
+🎉 HOSGELDINIZ!
+
+Bu sistem tamamen TASINABILIR! USB bellek veya herhangi bir
+klasor ile baska bilgisayarlara kopyalayabilirsiniz.
+
+✨ AVANTAJLAR:
+- Python GEREKTIRMEZ! (Excel2JSON.exe kullanir)
+- Tek tikla GitHub guncelleme
+- USB ile her PC'de calisir
+- Basit ve kullanici dostu
+
+═══════════════════════════════════════════════════════
+📋 KLASOR ICERIGI
+═══════════════════════════════════════════════════════
+
+ONEMLI DOSYALAR:
+  ✓ urunler.xlsx         → Urunlerinizi buraya ekleyin
+  ✓ Excel2JSON.exe       → Excel'i otomatik JSON'a cevirir
+  ✓ guncelle.bat         → Tek tikla GitHub'a yukle
+  ✓ ilk_kurulum.bat      → Yeni PC'de ilk kez calistirin
+
+WEB DOSYALARI:
+  ✓ index.html           → Ana sayfa
+  ✓ style.css            → Tasarim
+  ✓ script.js            → Islevler
+  ✓ config.js            → WhatsApp ayarlari
+  ✓ logo.png             → MAYA logosu
+
+VERI DOSYALARI:
+  ✓ urunler.json         → Otomatik olusturulur
+  ✓ gorseller/           → Urun resimleri buraya
+
+DOKUMANTASYON:
+  ✓ OKUBUCU.txt          → Bu dosya (ilk okunan)
+  ✓ HIZLI_BASLANGIC.txt  → Adim adim kullanim
+  ✓ README.md            → Detayli dokumantasyon
+
+═══════════════════════════════════════════════════════
+🚀 ILKEZ KULLANIM (Yeni Bilgisayarda)
+═══════════════════════════════════════════════════════
+
+1. Bu klasoru istediginiz yere kopyalayin:
+   - Masaustu
+   - Belgeler
+   - USB bellek
+   - Herhangi bir yer!
+
+2. "ilk_kurulum.bat" dosyasina cift tiklayin
+   - Git kurulumu kontrol edilir
+   - Excel2JSON.exe kontrol edilir (Python gerekmez!)
+   - GitHub kullanici bilgileri istenir
+   - GitHub repository URL'si istenir
+   - 5-10 dakika surer
+
+   ONEMLI: GitHub Token gereklidir!
+   - GitHub Settings -> Tokens
+   - Generate new token (classic)
+   - "repo" yetkisi secin
+   - Token'i kopyalayin ve kaydedin
+
+3. "config.js" dosyasini duzenleyin:
+   - Not defteri ile acin
+   - WhatsApp numaranizi girin: +905XXXXXXXXX
+   - Kaydedin
+
+4. Ilk push yaparken:
+   - guncelle.bat'a basin
+   - Sifre istediginde TOKEN'i girin (sifre degil!)
+
+5. TAMAM! Artik kullanabilirsiniz!
+
+═══════════════════════════════════════════════════════
+💼 GUNLUK KULLANIM
+═══════════════════════════════════════════════════════
+
+HER GUN YAPACAKLARINIZ:
+
+[1] URUNLERI DUZENLEYIN
+    → urunler.xlsx dosyasini acin
+    → Urun ekleyin / duzenleyin / silin
+    → Stok durumlarini guncelleyin (Var/Yok)
+    → EXCEL'I KAPATIN! (Onemli!)
+
+[2] GORSELLERI EKLEYIN
+    → Urun resimlerini "gorseller" klasorune kopyalayin
+    → Dosya adlari Excel'deki isimlerle ayni olmali
+
+[3] GITHUB'A YUKLEYIN
+    → "guncelle.bat" dosyasina cift tiklayin
+    → 2-3 dakika bekleyin
+    → Site otomatik guncellenir!
+
+═══════════════════════════════════════════════════════
+🎯 NEDEN BU KADAR KOLAY?
+═══════════════════════════════════════════════════════
+
+✓ Python GEREKTIRMEZ
+  → Excel2JSON.exe her seyi yapar
+
+✓ Tek Tik
+  → guncelle.bat her seyi otomatik yapar
+
+✓ Tasit ve Kullan
+  → USB ile istediginiz PC'ye kopyalayin
+
+✓ Hic Kod Gerekmez
+  → Sadece Excel bilmeniz yeter!
+
+═══════════════════════════════════════════════════════
+❓ SIK SORULAN SORULAR
+═══════════════════════════════════════════════════════
+
+S: Python yok hatasi aliyorum?
+C: Excel2JSON.exe dosyasi varsa sorun yok. Emin olmak icin
+   klasorde "Excel2JSON.exe" dosyasini arayın.
+
+S: Baska bilgisayarda nasil kullanırım?
+C: Tum klasoru USB ile kopyalayin, "ilk_kurulum.bat" calistirin.
+
+S: Excel acik hatasi aliyorum?
+C: Excel'i mutlaka kapatin, sonra guncelle.bat'a basin.
+
+S: Site guncellenmiyor?
+C: 2-3 dakika bekleyin, tarayiciyi Ctrl+F5 ile yenileyin.
+
+S: Gorseller gozukmuyor?
+C: - Dosya adlarini kontrol edin
+   - Buyuk/kucuk harf onemli
+   - Gorseller "gorseller/" klasorunde olmali
+
+S: Sepet sistemi nasil calisıyor?
+C: Musteri urun secer, sepete ekler, WhatsApp'tan gonderir.
+
+S: WebP gorsel yukleyebilir miyim?
+C: Evet! jpg, png, webp, gif, svg hepsi desteklenir.
+
+═══════════════════════════════════════════════════════
+⚠️ ONEMLI UYARILAR
+═══════════════════════════════════════════════════════
+
+1. Excel'i her zaman kapatin! (En onemli kural)
+2. Gorsel isimleri basit tutun (turkce karakter yok)
+3. WhatsApp numaranizi +90 ile baslatin
+4. Internet baglantinizi kontrol edin
+5. GitHub'a giris yaptiginizdan emin olun
+
+═══════════════════════════════════════════════════════
+🛠️ SORUN YASIYORSANIZ
+═══════════════════════════════════════════════════════
+
+1. HIZLI_BASLANGIC.txt dosyasini okuyun
+2. README.md dosyasini kontrol edin
+3. Batch dosyalari acik mesaj verir, okuyun
+4. Excel'in kapali oldugundan emin olun
+5. Internet baglantinizi kontrol edin
+
+═══════════════════════════════════════════════════════
+📞 DESTEK
+═══════════════════════════════════════════════════════
+
+Site: https://mayakozmetikbijuteri-prog.github.io
+GitHub: https://github.com/mayakozmetikbijuteri-prog
+
+═══════════════════════════════════════════════════════
+
+🎉 BASARILAR! 🎉
+
+Artık profesyonel bir online katalog sisteminiz var!
+USB ile tasiyabilir, her PC'de kullanabilirsiniz!
+
+═══════════════════════════════════════════════════════
+
+Son Guncelleme: 27 Ekim 2025
+Versiyon: 2.0 (Portable - Python Gerektirmez)

@@ -1,0 +1,43 @@
+═══════════════════════════════════════
+    GÖRSELLERİ KAYDETME TALİMATI
+═══════════════════════════════════════
+
+5 ürün görseli bu klasöre kaydedilmeli:
+
+1. Image #1 → elma.jpg
+2. Image #2 → armut.jpg
+3. Image #3 → muz.jpg
+4. Image #4 → incir.jpg
+5. Image #5 → kivi.jpg
+
+ADIMLAR:
+─────────
+1. Yukarıdaki görselleri indir/kaydet
+2. Dosya adlarını tam olarak yukarıdaki gibi yap
+3. Bu klasöre (gorseller/) kaydet:
+   C:\Users\PC\Desktop\katalog\gorseller\
+
+4. Kaydettikten sonra guncelle.bat çalıştır
+
+DOSYA YAPISI:
+─────────────
+katalog/
+└── gorseller/
+    ├── elma.jpg     ← Image #1
+    ├── armut.jpg    ← Image #2
+    ├── muz.jpg      ← Image #3
+    ├── incir.jpg    ← Image #4
+    └── kivi.jpg     ← Image #5
+
+ÖNEMLİ:
+───────
+• Dosya adları küçük harf olmalı
+• Boşluk olmamalı
+• .jpg uzantısı olmalı
+• Tam olarak yukarıdaki isimlerle aynı olmalı
+
+Görselleri kaydettikten sonra:
+→ guncelle.bat çalıştır
+→ Site güncellenecek
+
+═══════════════════════════════════════

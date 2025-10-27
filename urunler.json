@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "urun_adi": "elma",
+    "fiyat": "450 TL",
+    "kategori": "Takı",
+    "gorsel": "elma.jpg",
+    "aciklama": "14 ayar altın kolye",
+    "stok": "Var"
+  },
+  {
+    "id": 2,
+    "urun_adi": "armut",
+    "fiyat": "180 TL",
+    "kategori": "Takı",
+    "gorsel": "armut.jpg",
+    "aciklama": "925 ayar gümüş küpe",
+    "stok": "Var"
+  },
+  {
+    "id": 3,
+    "urun_adi": "incir",
+    "fiyat": "120 TL",
+    "kategori": "Kozmetik",
+    "gorsel": "incir.jpg",
+    "aciklama": "5'li mat ruj seti",
+    "stok": "Yok"
+  },
+  {
+    "id": 4,
+    "urun_adi": "kivi",
+    "fiyat": "280 TL",
+    "kategori": "Kozmetik",
+    "gorsel": "kivi.jpg",
+    "aciklama": "50ml kadın parfümü",
+    "stok": "Var"
+  },
+  {
+    "id": 5,
+    "urun_adi": "muz",
+    "fiyat": "320 TL",
+    "kategori": "Takı",
+    "gorsel": "muz.jpg",
+    "aciklama": "Zarif zincir bilezik",
+    "stok": "Yok"
+  },
+  {
+    "id": 6,
+    "urun_adi": "bardak",
+    "fiyat": "100 TL",
+    "kategori": "Bijuteri",
+    "gorsel": "bardak.jpg",
+    "aciklama": "blablabla",
+    "stok": "Var"
+  },
+  {
+    "id": 7,
+    "urun_adi": "Regular Fit Kot Pantolon-Hawker",
+    "fiyat": "10 TL",
+    "kategori": "Regular Fit",
+    "gorsel": "mrtza.jpg",
+    "aciklama": "Geniş paça kesimiyle rahat hareket etme özgürlüğü sunan erkek baggy kot pantolon, gençlerin günlük stilinde öne çıkar.",
+    "stok": "Var"
+  }
+]

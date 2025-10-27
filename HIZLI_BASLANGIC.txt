@@ -1,0 +1,115 @@
+═══════════════════════════════════════════════════════
+  MAYA KATALOG - HIZLI BAŞLANGIÇ KILAVUZU
+═══════════════════════════════════════════════════════
+
+🎯 BU SİSTEMİ BİR ÇOCUK BİLE KULLANABİLİR!
+
+═══════════════════════════════════════════════════════
+📦 1. İLK KURULUM (Sadece 1 Kez)
+═══════════════════════════════════════════════════════
+
+A) Bu bilgisayarda ilk kez mi kullanıyorsunuz?
+   → "ilk_kurulum.bat" dosyasına çift tıklayın
+   → Ekrandaki talimatları takip edin (5-10 dakika)
+
+B) WhatsApp numaranızı ayarlayın:
+   → "config.js" dosyasını not defteri ile açın
+   → whatsappNumber: '+905XXXXXXXXX' kısmına kendi numaranızı yazın
+   → Kaydedin ve kapatın
+
+═══════════════════════════════════════════════════════
+🚀 2. GÜNLÜK KULLANIM (Her Gün)
+═══════════════════════════════════════════════════════
+
+ADIM 1: Ürünleri Düzenle
+────────────────────────
+✓ "urunler.xlsx" dosyasını açın
+✓ Ürün ekleyin / düzenleyin / silin
+✓ Stok durumlarını güncelleyin (Var/Yok)
+✓ Fiyatları değiştirin
+✓ DOSYAYI KAPATIN! (Çok önemli!)
+
+ADIM 2: Görselleri Ekleyin
+────────────────────────
+✓ Ürün resimlerini "gorseller" klasörüne kopyalayın
+✓ Tüm format desteklenir: jpg, png, webp, gif, vb.
+✓ Dosya adları Excel'deki isimlerle aynı olmalı
+
+ADIM 3: GitHub'a Yükleyin
+────────────────────────
+✓ "guncelle.bat" dosyasına çift tıklayın
+✓ 2-3 dakika bekleyin
+✓ Site otomatik güncellenir!
+
+═══════════════════════════════════════════════════════
+💬 3. MÜŞTERİ SİPARİŞLERİ
+═══════════════════════════════════════════════════════
+
+Müşteri Ne Yapacak?
+────────────────────
+1. Linki açar (sizin gönderdiğiniz)
+2. Ürünleri görür ve seçer
+3. "Sepete Ekle" butonlarına basar
+4. Sepet ikonuna tıklar
+5. "WhatsApp'tan Sipariş Ver" butonuna basar
+6. WhatsApp açılır, mesaj hazır gelir
+7. Size gönderir
+
+Siz Ne Yapacaksınız?
+────────────────────
+✓ WhatsApp'ta siparişi görürsünüz
+✓ Ürün listesi, adetler, fiyatlar hazır
+✓ Müşteriyle iletişime geçersiniz
+
+═══════════════════════════════════════════════════════
+❓ SIK SORULAN SORULAR
+═══════════════════════════════════════════════════════
+
+S: Excel açık hatası alıyorum?
+C: Excel'i kapatın, sonra guncelle.bat'a bas
+
+S: Site güncellenmiyor?
+C: 2-3 dakika bekleyin, tarayıcıyı Ctrl+F5 ile yenileyin
+
+S: Görseller gözükmüyor?
+C: Dosya adlarını kontrol edin, büyük/küçük harf önemli
+
+S: Başka bilgisayarda nasıl kullanırım?
+C: Tüm klasörü kopyalayın, "ilk_kurulum.bat" çalıştırın
+
+S: Python yok hatası alıyorum?
+C: "Excel2JSON.exe" dosyası varsa sorun yok, yoksa Python kurun
+
+S: WebP görsel yükleyebilir miyim?
+C: Evet! jpg, png, webp, gif, svg hepsi desteklenir
+
+S: Sepet sistemi nasıl çalışıyor?
+C: Müşteri ürün seçer, sepete ekler, WhatsApp'tan gönderir
+
+═══════════════════════════════════════════════════════
+🆘 DESTEK
+═══════════════════════════════════════════════════════
+
+Sorun mu yaşıyorsunuz?
+1. README.md dosyasını okuyun
+2. Batch dosyaları açık mesaj verir, okuyun
+3. Excel'in kapalı olduğundan emin olun
+4. İnternet bağlantınızı kontrol edin
+
+═══════════════════════════════════════════════════════
+✨ İPUÇLARI
+═══════════════════════════════════════════════════════
+
+✓ Excel'i her zaman kapatın (çok önemli!)
+✓ Görsel isimleri basit tutun (turkce karakter yok)
+✓ WhatsApp numaranızı +90 ile başlatın
+✓ Sepet tarayıcıda kaydedilir, yenilense de kaybolmaz
+✓ Stokta olmayan ürünler sepete eklenemez
+
+═══════════════════════════════════════════════════════
+
+🎉 BAŞARILAR! 🎉
+
+Artık profesyonel bir online katalog sisteminiz var!
+
+═══════════════════════════════════════════════════════

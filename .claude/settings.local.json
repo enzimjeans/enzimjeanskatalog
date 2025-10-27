@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(python excel_olustur.py:*)",
+      "Bash(python excel_to_json.py:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(cmdkey /list:*)",
+      "Bash(findstr:*)",
+      "Bash(git config:*)",
+      "Bash(git credential-manager-core:*)",
+      "Bash(dir:*)",
+      "Read(//c/Users/PC/**)",
+      "Bash(cmd /c kimlik_temizle.bat)",
+      "Bash(cmdkey /delete:LegacyGeneric:target=git:https://github.com)",
+      "Bash(cmdkey /delete:git:https://github.com)",
+      "Bash(git restore:*)",
+      "Bash(python:*)",
+      "Bash(gh repo view:*)",
+      "Bash(cmd /c guncelle.bat)",
+      "Bash(pyinstaller:*)",
+      "Bash(Excel2JSON.exe)",
+      "Bash(cmd /c \"cd /d C:\\Users\\PC\\Desktop\\katalog && Excel2JSON.exe\")",
+      "Bash(cmd /c \"del /q C:\\Users\\PC\\Desktop\\katalog\\Excel2JSON.spec\")",
+      "Bash(cmd /c \"if exist C:\\Users\\PC\\Desktop\\katalog\\excel_olustur.py del C:\\Users\\PC\\Desktop\\katalog\\excel_olustur.py && if exist C:\\Users\\PC\\Desktop\\katalog\\urun_ekle.py del C:\\Users\\PC\\Desktop\\katalog\\urun_ekle.py && if exist C:\\Users\\PC\\Desktop\\katalog\\Excel2JSON.spec del C:\\Users\\PC\\Desktop\\katalog\\Excel2JSON.spec\")",
+      "Bash(cmd /c \"if exist C:\\Users\\PC\\Desktop\\katalog\\kurulum.bat del C:\\Users\\PC\\Desktop\\katalog\\kurulum.bat && if exist C:\\Users\\PC\\Desktop\\katalog\\yeni_bilgisayar_kurulum.bat del C:\\Users\\PC\\Desktop\\katalog\\yeni_bilgisayar_kurulum.bat && if exist C:\\Users\\PC\\Desktop\\katalog\\KULLANIM_KILAVUZU.txt del C:\\Users\\PC\\Desktop\\katalog\\KULLANIM_KILAVUZU.txt && if exist C:\\Users\\PC\\Desktop\\katalog\\YENI_BILGISAYARDA_KULLANIM.txt del C:\\Users\\PC\\Desktop\\katalog\\YENI_BILGISAYARDA_KULLANIM.txt\")",
+      "Bash(cmd /c:*)",
+      "Bash(git rm:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(git checkout:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,28 @@
+ÜRÜN GÖRSELLERİ BURAYA EKLENİR
+=====================================
+
+Bu klasöre ürün resimlerini ekleyin.
+
+Örnek:
+- kolye1.jpg
+- kupe1.jpg
+- ruj1.jpg
+- parfum1.jpg
+- bilezik1.jpg
+
+ÖNEMLI:
+1. Dosya adları Excel'deki "gorsel" kolonu ile birebir eşleşmeli
+2. Desteklenen formatlar: jpg, jpeg, png, gif, webp
+3. Önerilen boyut: 800x800 piksel veya daha küçük
+4. Büyük/küçük harf duyarlıdır
+
+ÖRNEKLER:
+
+Excel'de "gorsel" kolonu: kolye1.jpg
+Bu klasörde dosya: kolye1.jpg  ✓ DOĞRU
+
+Excel'de "gorsel" kolonu: kolye1.jpg
+Bu klasörde dosya: Kolye1.jpg  ✗ YANLIŞ (büyük K)
+
+Excel'de "gorsel" kolonu: kolye.jpg
+Bu klasörde dosya: kolye1.jpg  ✗ YANLIŞ (1 eksik)

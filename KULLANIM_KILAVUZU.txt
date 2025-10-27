@@ -1,0 +1,132 @@
+═══════════════════════════════════════
+    KATALOG SİSTEMİ KULLANIM KILAVUZU
+═══════════════════════════════════════
+
+Bu sistem ile ürün kataloğunuzu kolayca yönetebilirsiniz.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. İLK KURULUM (Sadece 1 kez)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▶ kurulum.bat dosyasına çift tıklayın
+▶ Program otomatik olarak:
+  - Gerekli kütüphaneleri yükler
+  - GitHub'a projeyi yükler
+
+▶ Ardından GitHub'da şunları yapın:
+  1. https://github.com/mayakozmetikbijuteri-prog adresine gidin
+  2. Settings → Pages
+  3. Source: "main" branch seçin
+  4. Save'e tıklayın
+
+▶ Siteniz hazır!
+  https://mayakozmetikbijuteri-prog.github.io
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. GÜNLÜK KULLANIM (Her güncelleme)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ADIM 1: Excel'i Düzenleyin
+───────────────────────────
+▶ urunler.xlsx dosyasını açın
+▶ Ürün ekleyin, silin veya değiştirin
+
+  Kolonlar:
+  ┌─────────────┬────────────────────────────────┐
+  │ urun_adi    │ Ürün ismi                      │
+  │ fiyat       │ Fiyat (450 TL)                 │
+  │ kategori    │ Takı / Kozmetik                │
+  │ gorsel      │ kolye1.jpg (SADECE DOSYA ADI!) │
+  │ aciklama    │ Kısa açıklama                  │
+  └─────────────┴────────────────────────────────┘
+
+  ⚠️ ÖNEMLİ: gorsel kolonuna "gorseller/" YAZMAYIN!
+     Sadece dosya adını yazın: kolye1.jpg ✓
+     gorseller/kolye1.jpg YANLIŞ ✗
+
+▶ Excel'i kaydedin ve kapatın
+
+
+ADIM 2: Görselleri Ekleyin
+───────────────────────────
+▶ Ürün resimlerini "gorseller/" klasörüne kopyalayın
+▶ Dosya adları Excel'deki "gorsel" kolonu ile aynı olmalı
+
+  Örnek:
+  Excel'de: kolye1.jpg
+  Dosya: gorseller/kolye1.jpg  ✓
+
+
+ADIM 3: Yayınlayın
+───────────────────────────
+▶ guncelle.bat dosyasına çift tıklayın
+▶ İsterseniz commit mesajı yazın (opsiyonel)
+▶ Program:
+  - Excel'i JSON'a çevirir
+  - GitHub'a yükler
+  - Site 2-3 dakika içinde güncellenir
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. HATA GİDERME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ "Excel dosyası açık" hatası
+   → Excel'i kapatın ve tekrar deneyin
+
+❌ Görseller gözükmüyor
+   → Dosya adlarını kontrol edin (büyük/küçük harf)
+   → Görsellerin "gorseller/" klasöründe olduğundan emin olun
+
+❌ Site güncellenmedi
+   → 2-3 dakika bekleyin
+   → Tarayıcıda Ctrl+F5 yapın (önbellek temizleme)
+
+❌ "Python bulunamadı"
+   → Python 3 kurun: https://www.python.org/downloads/
+   → Kurulumda "Add to PATH" seçeneğini işaretleyin
+
+❌ "Git bulunamadı"
+   → Git kurun: https://git-scm.com/downloads
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. İPUÇLARI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 Kategoriler otomatiktir
+   Excel'e yeni kategori yazdığınızda filtrede otomatik görünür
+
+💡 Fiyat formatı önemli değil
+   "450 TL", "450₺", "450" hepsi çalışır
+
+💡 Görseller internetten de olabilir
+   "gorsel" kolonuna tam URL yazabilirsiniz:
+   https://example.com/resim.jpg
+
+💡 Açıklama opsiyoneldir
+   Boş bırakabilirsiniz
+
+💡 Yedek alın
+   Zaman zaman urunler.xlsx dosyasını yedekleyin
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. DOSYA YAPISI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+katalog/
+├── urunler.xlsx              ← BURAYA DOKUN (ürünler)
+├── gorseller/                ← BURAYA DOKUN (resimler)
+├── guncelle.bat              ← BURAYA TIKLA (yayınla)
+├── kurulum.bat               (ilk kurulum)
+├── index.html                (dokunma)
+├── style.css                 (dokunma)
+├── script.js                 (dokunma)
+└── README.md                 (detaylı bilgi)
+
+
+═══════════════════════════════════════
+Başarılar!
+═══════════════════════════════════════

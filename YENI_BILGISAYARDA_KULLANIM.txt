@@ -1,0 +1,101 @@
+═══════════════════════════════════════════════════════
+  MAYA KATALOG - YENİ BİLGİSAYARDA KULLANIM KILAVUZU
+═══════════════════════════════════════════════════════
+
+Bu kataloğu başka bir bilgisayarda kullanmak için 2 yöntem var:
+
+───────────────────────────────────────────────────────
+📁 YÖNTEM 1: USB ile Taşıma (EN KOLAY)
+───────────────────────────────────────────────────────
+
+1. Bu klasörün tamamını USB'ye kopyala
+2. Yeni bilgisayarda istediğin yere yapıştır
+3. "ilk_kurulum.bat" dosyasına çift tıkla
+4. Ekrandaki talimatları takip et
+   ✓ Git kontrolü
+   ✓ Python kontrolü
+   ✓ Kütüphane kurulumu
+   ✓ GitHub bilgileri
+5. Bitince "guncelle.bat" kullanmaya başla!
+
+⏱️ Süre: 5-10 dakika (ilk kez)
+
+───────────────────────────────────────────────────────
+🌐 YÖNTEM 2: GitHub'dan İndirme
+───────────────────────────────────────────────────────
+
+1. "yeni_bilgisayar_kurulum.bat" dosyasını indir
+2. Çift tıkla
+3. Tüm kurulum otomatik yapılacak
+   ✓ Git kontrolü
+   ✓ Python kontrolü
+   ✓ Kütüphane kurulumu
+   ✓ Repository clone
+   ✓ GitHub ayarları
+4. Bitince klasöre git, "guncelle.bat" kullanmaya başla!
+
+⏱️ Süre: 10-15 dakika (ilk kez, internet hızına bağlı)
+
+───────────────────────────────────────────────────────
+⚠️ ÖNEMLI NOTLAR
+───────────────────────────────────────────────────────
+
+GitHub Token Nedir?
+────────────────────
+• GitHub şifren artık yeterli değil
+• "Personal Access Token" denen bir kod gerekiyor
+• Bu kodu SADECE İLK PUSH'TA gir
+• Windows sonrasında hatırlayacak, tekrar girmene gerek yok
+
+Token Nasıl Oluşturulur?
+─────────────────────────
+1. https://github.com/settings/tokens
+2. "Generate new token (classic)" tıkla
+3. Token adı: "MAYA Katalog"
+4. "repo" yetkisini işaretle
+5. Token'ı KOPYALA (bir daha göremezsin!)
+6. İlk push yaparken ŞİFRE YERİNE BUNU YAPISTIR
+
+Excel Dosyası Açık Hatası?
+───────────────────────────
+• Windows Excel'i kilitlediği için Python okuyamıyor
+• Çözüm: Excel'i kapat, sonra guncelle.bat'a bas
+
+Site Güncellenmiyor?
+─────────────────────
+• GitHub Pages 2-3 dakika bekletiyor
+• Tarayıcıyı Ctrl+F5 ile yenile (hard refresh)
+• Sabırlı ol!
+
+───────────────────────────────────────────────────────
+📋 GÜNLÜK KULLANIM (Kurulum Sonrası)
+───────────────────────────────────────────────────────
+
+1. Excel'i aç (urunler.xlsx)
+2. Ürünleri düzenle
+3. Excel'i KAPAT (önemli!)
+4. Görselleri "gorseller" klasörüne ekle
+5. "guncelle.bat"a çift tıkla
+6. 2-3 dakika bekle
+7. Siteyi aç ve kontrol et
+
+───────────────────────────────────────────────────────
+🎯 HIZLI BAŞLANGIÇ
+───────────────────────────────────────────────────────
+
+Yeni bilgisayarda ilk defa mı kullanıyorsun?
+
+→ "ilk_kurulum.bat"a çift tıkla
+→ 10 dakika bekle
+→ Hazırsın!
+
+───────────────────────────────────────────────────────
+📞 SORUN YAŞARSAN
+───────────────────────────────────────────────────────
+
+1. README.md dosyasını oku
+2. Batch dosyaları açık mesaj veriyor, oku
+3. Excel'in kapalı olduğundan emin ol
+4. İnternet bağlantını kontrol et
+
+═══════════════════════════════════════════════════════
