@@ -7,9 +7,30 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     min-height: 100vh;
     color: #333;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(66, 135, 245, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
 }
 
 .container {
@@ -20,13 +41,14 @@ body {
 
 /* Header - Hero Effect */
 header {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 248, 220, 0.95) 100%);
-    backdrop-filter: blur(15px);
-    padding: 50px 0;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    padding: 80px 0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     margin-bottom: 40px;
     position: relative;
     overflow: hidden;
+    border-bottom: 3px solid rgba(59, 130, 246, 0.3);
 }
 
 header::before {
@@ -34,11 +56,23 @@ header::before {
     position: absolute;
     top: -50%;
     right: -10%;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(255, 193, 7, 0.15) 0%, transparent 70%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
     border-radius: 50%;
-    animation: float 6s ease-in-out infinite;
+    animation: float 8s ease-in-out infinite;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 10s ease-in-out infinite reverse;
 }
 
 @keyframes float {
@@ -56,11 +90,26 @@ header::before {
 }
 
 .logo {
-    width: 120px;
-    height: 120px;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
-    filter: drop-shadow(0 4px 8px rgba(74, 53, 25, 0.2));
-    animation: logoFloat 3s ease-in-out infinite;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3));
+    animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 15px 35px rgba(59, 130, 246, 0.4));
+}
+
+@keyframes logoGlow {
+    0%, 100% {
+        filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 10px 30px rgba(59, 130, 246, 0.5));
+    }
 }
 
 @keyframes logoFloat {
@@ -73,19 +122,32 @@ header::before {
 }
 
 header h1 {
-    color: #4a3519;
-    font-size: 3rem;
-    margin-bottom: 8px;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    letter-spacing: 1px;
+    color: #1a1a2e;
+    font-size: 4rem;
+    margin-bottom: 12px;
+    font-weight: 800;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textShine 3s ease-in-out infinite;
+}
+
+@keyframes textShine {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
 }
 
 .subtitle {
-    color: #666;
-    font-size: 1.2rem;
+    color: #334155;
+    font-size: 1.4rem;
     margin: 0;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Kontroller */
@@ -183,12 +245,12 @@ header h1 {
 
 .product-category {
     display: inline-block;
-    background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     color: white;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
-    box-shadow: 0 2px 5px rgba(255, 152, 0, 0.3);
+    box-shadow: 0 2px 5px rgba(59, 130, 246, 0.4);
 }
 
 /* Stok Badge */
@@ -245,7 +307,7 @@ header h1 {
 
 .product-price {
     font-size: 1.5rem;
-    color: #ff9800;
+    color: #3b82f6;
     font-weight: bold;
 }
 
@@ -439,12 +501,20 @@ footer {
     }
 
     .logo {
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
     }
 
     header {
-        padding: 40px 0;
+        padding: 50px 0;
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
     }
 
     .controls {
@@ -479,23 +549,33 @@ footer {
 /* Sepet Butonu (Header) */
 .cart-button {
     position: relative;
-    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     border: none;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
+    animation: cartPulse 2s ease-in-out infinite;
+}
+
+@keyframes cartPulse {
+    0%, 100% {
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+    }
+    50% {
+        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.7);
+    }
 }
 
 .cart-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.5);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 35px rgba(59, 130, 246, 0.6);
 }
 
 .cart-button svg {
