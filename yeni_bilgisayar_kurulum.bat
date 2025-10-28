@@ -1,7 +1,7 @@
 @echo off
 cls
 echo ========================================
-echo   MAYA KATALOG - YENI PC KURULUM
+echo   SİVAL KATALOG - YENI PC KURULUM
 echo ========================================
 echo.
 echo Bu script yeni bir bilgisayarda katalogu
@@ -65,7 +65,7 @@ echo.
 echo [4/5] Katalog dosyalari indiriliyor...
 echo.
 echo Repository adresi:
-echo https://github.com/mayakozmetikbijuteri-prog/mayakozmetikbijuteri-prog.git
+echo https://github.com/enzimjeans/enzimjeanskatalog.git
 echo.
 set /p CLONE_PATH="Bu klasoru nereye indirmek istersiniz? (or: C:\Users\%USERNAME%\Desktop): "
 
@@ -74,7 +74,7 @@ if "%CLONE_PATH%"=="" (
 )
 
 cd /d "%CLONE_PATH%"
-git clone https://github.com/mayakozmetikbijuteri-prog/mayakozmetikbijuteri-prog.git katalog
+git clone https://github.com/enzimjeans/enzimjeanskatalog.git katalog
 
 if %errorlevel% neq 0 (
     echo.

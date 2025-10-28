@@ -1,6 +1,6 @@
 # Ürün Kataloğu
 
-Bijuteri ve kozmetik ürünleri için modern, web tabanlı katalog sistemi.
+Giyim ve tekstil ürünleri için modern, web tabanlı katalog sistemi.
 
 ## Özellikler
 
@@ -21,7 +21,7 @@ Bijuteri ve kozmetik ürünleri için modern, web tabanlı katalog sistemi.
 #### GitHub'a Yükleme
 ```bash
 git init
-git remote add origin https://github.com/mayakozmetikbijuteri-prog/mayakozmetikbijuteri-prog.git
+git remote add origin https://github.com/enzimjeans/enzimjeanskatalog.git
 git add .
 git commit -m "İlk yükleme"
 git branch -M main
@@ -33,7 +33,7 @@ git push -u origin main
 2. Settings → Pages
 3. Source: "main" branch seçin
 4. Save'e tıklayın
-5. Site hazır: `https://mayakozmetikbijuteri-prog.github.io`
+5. Site hazır: `https://enzimjeans.github.io/enzimjeanskatalog`
 
 ### 2. Ürün Ekleme/Güncelleme
 

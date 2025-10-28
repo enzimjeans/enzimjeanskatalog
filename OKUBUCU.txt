@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════
-  MAYA KATALOG - TASINABILIR SISTEM
+  SİVAL KATALOG - TASINABILIR SISTEM
   *** ILK ONCE BUNU OKUYUN ***
 ═══════════════════════════════════════════════════════
 
@@ -29,7 +29,7 @@ WEB DOSYALARI:
   ✓ style.css            → Tasarim
   ✓ script.js            → Islevler
   ✓ config.js            → WhatsApp ayarlari
-  ✓ logo.png             → MAYA logosu
+  ✓ logo.png             → SİVAL logosu
 
 VERI DOSYALARI:
   ✓ urunler.json         → Otomatik olusturulur
@@ -54,7 +54,7 @@ DOKUMANTASYON:
    - Git kurulumu kontrol edilir
    - Excel2JSON.exe kontrol edilir (Python gerekmez!)
    - GitHub baglantisi OTOMATIK kurulur!
-   - mayakozmetikbijuteri-prog repository'e baglanir
+   - enzimjeanskatalog repository'e baglanir
    - 5-10 dakika surer
 
    ONEMLI: GitHub Token gereklidir!
@@ -166,8 +166,8 @@ C: Evet! jpg, png, webp, gif, svg hepsi desteklenir.
 📞 DESTEK
 ═══════════════════════════════════════════════════════
 
-Site: https://mayakozmetikbijuteri-prog.github.io
-GitHub: https://github.com/mayakozmetikbijuteri-prog
+Site: https://enzimjeans.github.io/enzimjeanskatalog
+GitHub: https://github.com/enzimjeans/enzimjeanskatalog
 
 ═══════════════════════════════════════════════════════
 

@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════
-  MAYA KATALOG - YENİ BİLGİSAYARDA KULLANIM KILAVUZU
+  SİVAL KATALOG - YENİ BİLGİSAYARDA KULLANIM KILAVUZU
 ═══════════════════════════════════════════════════════
 
 Bu kataloğu başka bir bilgisayarda kullanmak için 2 yöntem var:
@@ -51,7 +51,7 @@ Token Nasıl Oluşturulur?
 ─────────────────────────
 1. https://github.com/settings/tokens
 2. "Generate new token (classic)" tıkla
-3. Token adı: "MAYA Katalog"
+3. Token adı: "SİVAL Katalog"
 4. "repo" yetkisini işaretle
 5. Token'ı KOPYALA (bir daha göremezsin!)
 6. İlk push yaparken ŞİFRE YERİNE BUNU YAPISTIR

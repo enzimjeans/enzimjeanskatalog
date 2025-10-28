@@ -14,13 +14,13 @@ Bu sistem ile ürün kataloğunuzu kolayca yönetebilirsiniz.
   - GitHub'a projeyi yükler
 
 ▶ Ardından GitHub'da şunları yapın:
-  1. https://github.com/mayakozmetikbijuteri-prog adresine gidin
+  1. https://github.com/enzimjeans/enzimjeanskatalog adresine gidin
   2. Settings → Pages
   3. Source: "main" branch seçin
   4. Save'e tıklayın
 
 ▶ Siteniz hazır!
-  https://mayakozmetikbijuteri-prog.github.io
+  https://enzimjeans.github.io/enzimjeanskatalog
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

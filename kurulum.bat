@@ -11,7 +11,7 @@ pip install pandas openpyxl
 echo.
 echo Git repository olusturuluyor...
 git init
-git remote add origin https://github.com/mayakozmetikbijuteri-prog/mayakozmetikbijuteri-prog.git
+git remote add origin https://github.com/enzimjeans/enzimjeanskatalog.git
 
 echo.
 echo Ilk commit hazirlaniyor...
@@ -29,13 +29,13 @@ echo   KURULUM TAMAMLANDI!
 echo ================================
 echo.
 echo Simdi GitHub'da yapmaniz gerekenler:
-echo 1. https://github.com/mayakozmetikbijuteri-prog adresine gidin
+echo 1. https://github.com/enzimjeans/enzimjeanskatalog adresine gidin
 echo 2. Settings tiklayin
 echo 3. Sol menuden Pages'i secin
 echo 4. Source: main branch secin
 echo 5. Save'e tiklayin
 echo.
 echo Siteniz hazir olacak:
-echo https://mayakozmetikbijuteri-prog.github.io
+echo https://enzimjeans.github.io/enzimjeanskatalog
 echo.
 pause

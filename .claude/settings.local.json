@@ -33,7 +33,18 @@
       "Bash(cmd /c:*)",
       "Bash(git rm:*)",
       "Bash(powershell -Command:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git log:*)",
+      "Bash(xcopy Excel2JSON.exe \"C:\\Users\\PC\\Desktop\\MAYA_KATALOG_PORTABLE\"\" /Y && xcopy urunler.xlsx \"C:UsersPCDesktopMAYA_KATALOG_PORTABLE\"\" /Y)",
+      "Bash(xcopy guncelle.bat \"C:\\Users\\PC\\Desktop\\MAYA_KATALOG_PORTABLE\"\" /Y && xcopy ilk_kurulum.bat \"C:UsersPCDesktopMAYA_KATALOG_PORTABLE\"\" /Y)",
+      "Bash(xcopy config.js \"C:\\Users\\PC\\Desktop\\MAYA_KATALOG_PORTABLE\"\" /Y && xcopy index.html \"C:UsersPCDesktopMAYA_KATALOG_PORTABLE\"\" /Y)",
+      "Bash(xcopy style.css \"C:\\Users\\PC\\Desktop\\MAYA_KATALOG_PORTABLE\"\" /Y && xcopy script.js \"C:UsersPCDesktopMAYA_KATALOG_PORTABLE\"\" /Y)",
+      "Bash(xcopy logo.png \"C:\\Users\\PC\\Desktop\\MAYA_KATALOG_PORTABLE\"\" /Y && xcopy OKUBUCU.txt \"C:UsersPCDesktopMAYA_KATALOG_PORTABLE\"\" /Y)",
+      "Bash(xcopy HIZLI_BASLANGIC.txt \"C:\\Users\\PC\\Desktop\\MAYA_KATALOG_PORTABLE\"\" /Y && xcopy README.md \"C:UsersPCDesktopMAYA_KATALOG_PORTABLE\"\" /Y)",
+      "Bash(xcopy excel_to_json.py \"C:\\Users\\PC\\Desktop\\MAYA_KATALOG_PORTABLE\"\" /Y && xcopy urunler.json \"C:UsersPCDesktopMAYA_KATALOG_PORTABLE\"\" /Y)",
+      "Bash(powershell -ExecutionPolicy Bypass -File:*)",
+      "Bash(gh repo create:*)",
+      "Bash(copy /Y \"C:\\Users\\PC\\Desktop\\katalog\\SivalLogo.png\" \"C:\\Users\\PC\\Desktop\\katalog\\logo.png\")"
     ],
     "deny": [],
     "ask": []

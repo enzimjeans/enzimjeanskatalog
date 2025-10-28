@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 cls
 echo ========================================
-echo   MAYA KATALOG - ILK KURULUM
+echo   SİVAL KATALOG - ILK KURULUM
 echo ========================================
 echo.
 echo Bu klasoru baska bilgisayara kopyaladiysaniz
@@ -84,13 +84,13 @@ echo   GitHub Ayarlari (Otomatik)
 echo ========================================
 echo.
 
-REM MAYA Katalog - Sabit GitHub bilgileri
-set GIT_USERNAME=mayakozmetikbijuteri
-set GIT_EMAIL=mayakozmetikbijuteri@users.noreply.github.com
-set REPO_URL=https://github.com/mayakozmetikbijuteri-prog/mayakozmetikbijuteri-prog.git
+REM SİVAL Katalog - Sabit GitHub bilgileri
+set GIT_USERNAME=enzimjeans
+set GIT_EMAIL=enzimjeans@users.noreply.github.com
+set REPO_URL=https://github.com/enzimjeans/enzimjeanskatalog.git
 
 echo GitHub kullanicisi: %GIT_USERNAME%
-echo Repository: mayakozmetikbijuteri-prog
+echo Repository: enzimjeanskatalog
 echo.
 
 git config user.name "%GIT_USERNAME%"
@@ -116,11 +116,11 @@ git remote get-url origin >nul 2>&1
 if %errorlevel% neq 0 (
     echo [!] GitHub remote baglantisi kuruluyor...
     git remote add origin %REPO_URL%
-    echo [OK] Remote baglanti eklendi: mayakozmetikbijuteri-prog
+    echo [OK] Remote baglanti eklendi: enzimjeanskatalog
 ) else (
     echo [!] Mevcut remote baglanti guncelleniyor...
     git remote set-url origin %REPO_URL%
-    echo [OK] Remote: mayakozmetikbijuteri-prog
+    echo [OK] Remote: enzimjeanskatalog
 )
 
 echo.

@@ -78,6 +78,6 @@ echo.
 echo NOT:
 echo - Site 2-3 dakika sonra guncellenecek
 echo - Tarayici: Ctrl+F5 basin
-echo - Site: https://mayakozmetikbijuteri-prog.github.io
+echo - Site: https://enzimjeans.github.io/enzimjeanskatalog
 echo.
 pause
