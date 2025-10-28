@@ -44,7 +44,8 @@
       "Bash(xcopy excel_to_json.py \"C:\\Users\\PC\\Desktop\\MAYA_KATALOG_PORTABLE\"\" /Y && xcopy urunler.json \"C:UsersPCDesktopMAYA_KATALOG_PORTABLE\"\" /Y)",
       "Bash(powershell -ExecutionPolicy Bypass -File:*)",
       "Bash(gh repo create:*)",
-      "Bash(copy /Y \"C:\\Users\\PC\\Desktop\\katalog\\SivalLogo.png\" \"C:\\Users\\PC\\Desktop\\katalog\\logo.png\")"
+      "Bash(copy /Y \"C:\\Users\\PC\\Desktop\\katalog\\SivalLogo.png\" \"C:\\Users\\PC\\Desktop\\katalog\\logo.png\")",
+      "Bash(gh auth login:*)"
     ],
     "deny": [],
     "ask": []
