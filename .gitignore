@@ -1,0 +1,26 @@
+# Excel2JSON.exe USB ile kopyalanacak, GitHub'a gerek yok
+Excel2JSON.exe
+
+# Python script yedek (opsiyonel)
+excel_to_json.py
+
+# SSH key backup - ASLA GitHub'a yukleme!
+_ssh_backup/
+
+# Git klasoru
+.git/
+
+# Gecici dosyalar
+*.tmp
+*.bak
+~$*
+
+# Log dosyalari
+*.log
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Mac
+.DS_Store
