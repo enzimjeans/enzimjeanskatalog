@@ -25,5 +25,14 @@
     "gorsel": "4616.png",
     "aciklama": "5'li mat ruj seti",
     "stok": "Yok"
+  },
+  {
+    "id": 4,
+    "urun_adi": "Baggy",
+    "fiyat": "350 TL ",
+    "kategori": "Jeans",
+    "gorsel": "BAG1.jpg",
+    "aciklama": "100% Pamuk",
+    "stok": "Var"
   }
 ]
