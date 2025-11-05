@@ -2,7 +2,7 @@
   {
     "id": 1,
     "urun_adi": "Baggy Mavi",
-    "fiyat": "350 TL ",
+    "fiyat": "300 TL ",
     "kategori": "Jeans",
     "gorsel": "BAG1.jpg",
     "aciklama": "100% Pamuk",
@@ -11,9 +11,18 @@
   {
     "id": 2,
     "urun_adi": "Baggy Gri",
-    "fiyat": "350 TL ",
+    "fiyat": "300 TL ",
     "kategori": "Jeans",
     "gorsel": "BAG2.jpg",
+    "aciklama": "100% Pamuk",
+    "stok": "Var"
+  },
+  {
+    "id": 3,
+    "urun_adi": "Baggy Siyah",
+    "fiyat": "300 TL",
+    "kategori": "Jeans",
+    "gorsel": "BAG6.jpg",
     "aciklama": "100% Pamuk",
     "stok": "Var"
   }
