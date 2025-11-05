@@ -1,37 +1,19 @@
 [
   {
     "id": 1,
-    "urun_adi": "elma",
-    "fiyat": "450 TL",
-    "kategori": "Takı",
-    "gorsel": "4602.png",
-    "aciklama": "14 ayar altın kolye",
+    "urun_adi": "Baggy Mavi",
+    "fiyat": "350 TL ",
+    "kategori": "Jeans",
+    "gorsel": "BAG1.jpg",
+    "aciklama": "100% Pamuk",
     "stok": "Var"
   },
   {
     "id": 2,
-    "urun_adi": "armut",
-    "fiyat": "180 TL",
-    "kategori": "Takı",
-    "gorsel": "4609.png",
-    "aciklama": "925 ayar gümüş küpe",
-    "stok": "Yok"
-  },
-  {
-    "id": 3,
-    "urun_adi": "çilek2",
-    "fiyat": "120 TL",
-    "kategori": "Kozmetik",
-    "gorsel": "4616.png",
-    "aciklama": "5'li mat ruj seti",
-    "stok": "Yok"
-  },
-  {
-    "id": 4,
-    "urun_adi": "Baggy",
+    "urun_adi": "Baggy Gri",
     "fiyat": "350 TL ",
     "kategori": "Jeans",
-    "gorsel": "BAG1.jpg",
+    "gorsel": "BAG2.jpg",
     "aciklama": "100% Pamuk",
     "stok": "Var"
   }
