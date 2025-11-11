@@ -5,7 +5,7 @@
     "fiyat": "300 TL ",
     "kategori": "Jeans",
     "gorsel": "BAG1.jpg",
-    "aciklama": "100% Pamuk",
+    "aciklama": "Erkek baggy pantolon, bol ve rahat kesimiyle öne çıkan, modern sokak stilinin vazgeçilmez parçasıdır. Kalçadan paçaya kadar geniş formu sayesinde hareket özgürlüğü sunar.Ürün içeriği 100% Pamuk. Rahatlığından ödün vermeden tarzını yansıtmak isteyen erkekler için ideal bir seçimdir.29-38 Beden beden seçeneği mevcuttur.",
     "stok": "Var"
   },
   {
@@ -14,7 +14,7 @@
     "fiyat": "300 TL ",
     "kategori": "Jeans",
     "gorsel": "BAG2.jpg",
-    "aciklama": "100% Pamuk",
+    "aciklama": "Erkek baggy pantolon, bol ve rahat kesimiyle öne çıkan, modern sokak stilinin vazgeçilmez parçasıdır. Kalçadan paçaya kadar geniş formu sayesinde hareket özgürlüğü sunar.Ürün içeriği 100% Pamuk. Rahatlığından ödün vermeden tarzını yansıtmak isteyen erkekler için ideal bir seçimdir.29-38 Beden beden seçeneği mevcuttur.",
     "stok": "Var"
   },
   {
@@ -23,7 +23,16 @@
     "fiyat": "300 TL",
     "kategori": "Jeans",
     "gorsel": "BAG6.jpg",
-    "aciklama": "100% Pamuk",
+    "aciklama": "Erkek baggy pantolon, bol ve rahat kesimiyle öne çıkan, modern sokak stilinin vazgeçilmez parçasıdır. Kalçadan paçaya kadar geniş formu sayesinde hareket özgürlüğü sunar.Ürün içeriği 100% Pamuk. Rahatlığından ödün vermeden tarzını yansıtmak isteyen erkekler için ideal bir seçimdir.29-38 Beden beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 4,
+    "urun_adi": "Baggy Füme",
+    "fiyat": "300 tl",
+    "kategori": "Jeans",
+    "gorsel": "BAG3.jpg",
+    "aciklama": "Erkek baggy pantolon, bol ve rahat kesimiyle öne çıkan, modern sokak stilinin vazgeçilmez parçasıdır. Kalçadan paçaya kadar geniş formu sayesinde hareket özgürlüğü sunar.Ürün içeriği 100% Pamuk. Rahatlığından ödün vermeden tarzını yansıtmak isteyen erkekler için ideal bir seçimdir.29-38 Beden beden seçeneği mevcuttur.",
     "stok": "Var"
   }
 ]
