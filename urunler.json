@@ -259,5 +259,68 @@
     "gorsel": "EŞREFSİYAH.jpg",
     "aciklama": "Polyester materyali sayesinde hafifliğiyle konforlu bir kullanım sunarken dayanıklılığından da taviz vermez.Uzun kollu oluşu soğuk havalarda ekstra koruma sağlarken çizgili deseniyle trendleri takip eder.S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.",
     "stok": "Var"
+  },
+  {
+    "id": 30,
+    "urun_adi": "Chino Keten Pantolon Antrasit",
+    "fiyat": "360 Tl",
+    "kategori": "Jeans",
+    "gorsel": "KETENANTRASİT.jpg",
+    "aciklama": "Slim fit chino keten pantolon, pamuk ve polyester karışımından oluşan orta kalınlığa sahip kumaşı, konforlu bir kullanım vaat eder.Nefes alan kumaşı ile yaz aylarında serin tutar, terletmez.31-38 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.",
+    "stok": "Var"
+  },
+  {
+    "id": 31,
+    "urun_adi": "Chino Keten Pantolon Bej",
+    "fiyat": "360 Tl",
+    "kategori": "Jeans",
+    "gorsel": "KETENBEJ.jpg",
+    "aciklama": "Slim fit chino keten pantolon, pamuk ve polyester karışımından oluşan orta kalınlığa sahip kumaşı, konforlu bir kullanım vaat eder.Nefes alan kumaşı ile yaz aylarında serin tutar, terletmez.31-38 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.",
+    "stok": "Var"
+  },
+  {
+    "id": 32,
+    "urun_adi": "Chino Keten Pantolon Gri",
+    "fiyat": "360 Tl",
+    "kategori": "Jeans",
+    "gorsel": "KETENGRİ.jpg",
+    "aciklama": "Slim fit chino keten pantolon, pamuk ve polyester karışımından oluşan orta kalınlığa sahip kumaşı, konforlu bir kullanım vaat eder.Nefes alan kumaşı ile yaz aylarında serin tutar, terletmez.31-38 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.",
+    "stok": "Var"
+  },
+  {
+    "id": 33,
+    "urun_adi": "Chino Keten Pantolon Mavi",
+    "fiyat": "360 Tl",
+    "kategori": "Jeans",
+    "gorsel": "KETENMAVİ.jpg",
+    "aciklama": "Slim fit chino keten pantolon, pamuk ve polyester karışımından oluşan orta kalınlığa sahip kumaşı, konforlu bir kullanım vaat eder.Nefes alan kumaşı ile yaz aylarında serin tutar, terletmez.31-38 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.",
+    "stok": "Var"
+  },
+  {
+    "id": 34,
+    "urun_adi": "Chino Keten Pantolon Siyah",
+    "fiyat": "360 Tl",
+    "kategori": "Jeans",
+    "gorsel": "KETENSİYAH.jpg",
+    "aciklama": "Slim fit chino keten pantolon, pamuk ve polyester karışımından oluşan orta kalınlığa sahip kumaşı, konforlu bir kullanım vaat eder.Nefes alan kumaşı ile yaz aylarında serin tutar, terletmez.31-38 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.",
+    "stok": "Var"
+  },
+  {
+    "id": 35,
+    "urun_adi": "Chino Keten Pantolon Taş",
+    "fiyat": "360 Tl",
+    "kategori": "Jeans",
+    "gorsel": "KETENTAŞ.jpg",
+    "aciklama": "Slim fit chino keten pantolon, pamuk ve polyester karışımından oluşan orta kalınlığa sahip kumaşı, konforlu bir kullanım vaat eder.Nefes alan kumaşı ile yaz aylarında serin tutar, terletmez.31-38 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.",
+    "stok": "Var"
+  },
+  {
+    "id": 36,
+    "urun_adi": "Chino Keten Pantolon Yeşil",
+    "fiyat": "360 Tl",
+    "kategori": "Jeans",
+    "gorsel": "YEŞİLKETEN.jpg",
+    "aciklama": "Slim fit chino keten pantolon, pamuk ve polyester karışımından oluşan orta kalınlığa sahip kumaşı, konforlu bir kullanım vaat eder.Nefes alan kumaşı ile yaz aylarında serin tutar, terletmez.31-38 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.",
+    "stok": "Var"
   }
 ]
