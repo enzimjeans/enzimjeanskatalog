@@ -43,5 +43,14 @@
     "gorsel": "BAG4.jpg",
     "aciklama": "Erkek baggy pantolon, bol ve rahat kesimiyle öne çıkan, modern sokak stilinin vazgeçilmez parçasıdır. Kalçadan paçaya kadar geniş formu sayesinde hareket özgürlüğü sunar.Ürün içeriği 100% Pamuk.29-38  beden seçeneği mevcuttur.",
     "stok": "Var"
+  },
+  {
+    "id": 6,
+    "urun_adi": "Baggy Koyu Mavi",
+    "fiyat": "300 Tl",
+    "kategori": "Jeans",
+    "gorsel": "BAG5.jpg",
+    "aciklama": "Erkek baggy pantolon, bol ve rahat kesimiyle öne çıkan, modern sokak stilinin vazgeçilmez parçasıdır. Kalçadan paçaya kadar geniş formu sayesinde hareket özgürlüğü sunar.Ürün içeriği 100% Pamuk.29-38  beden seçeneği mevcuttur.",
+    "stok": "Var"
   }
 ]
