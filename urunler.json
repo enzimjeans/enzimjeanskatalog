@@ -55,10 +55,28 @@
   },
   {
     "id": 7,
-    "urun_adi": "Bel Paça Lastik  Pantolon",
+    "urun_adi": "Bel Paça Lastik  Pantolon Antrasit",
     "fiyat": "350 Tl",
     "kategori": "Jeans",
     "gorsel": "ANTRASİT.jpg",
+    "aciklama": "%98 pamuk içeriği ile nefes alabilen yapıda, cildinize nazik dokunuşlar sunar.Bağcıklı kapama şekliyle kişisel zevke göre ayarlama imkanı taşır.Lastikli bel detayı sayesinde  rahatlığından ödün vermez.34-46 Beden aralığı mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 8,
+    "urun_adi": "Bel Paça Lastik  Pantolon Gri",
+    "fiyat": "350 Tl",
+    "kategori": "Jeans",
+    "gorsel": "GRİ.jpg",
+    "aciklama": "%98 pamuk içeriği ile nefes alabilen yapıda, cildinize nazik dokunuşlar sunar.Bağcıklı kapama şekliyle kişisel zevke göre ayarlama imkanı taşır.Lastikli bel detayı sayesinde  rahatlığından ödün vermez.34-46 Beden aralığı mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 9,
+    "urun_adi": "Bel Paça Lastik  Pantolon Füme",
+    "fiyat": "350 Tl",
+    "kategori": "Jeans",
+    "gorsel": "MAVİİ.jpg",
     "aciklama": "%98 pamuk içeriği ile nefes alabilen yapıda, cildinize nazik dokunuşlar sunar.Bağcıklı kapama şekliyle kişisel zevke göre ayarlama imkanı taşır.Lastikli bel detayı sayesinde  rahatlığından ödün vermez.34-46 Beden aralığı mevcuttur.",
     "stok": "Var"
   }
