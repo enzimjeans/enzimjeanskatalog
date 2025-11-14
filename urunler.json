@@ -79,5 +79,185 @@
     "gorsel": "MAVİİ.jpg",
     "aciklama": "%98 pamuk içeriği ile nefes alabilen yapıda, cildinize nazik dokunuşlar sunar.Bağcıklı kapama şekliyle kişisel zevke göre ayarlama imkanı taşır.Lastikli bel detayı sayesinde  rahatlığından ödün vermez.34-46 Beden aralığı mevcuttur.",
     "stok": "Var"
+  },
+  {
+    "id": 10,
+    "urun_adi": "Kot Gömlek Bej",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "BEJ.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 11,
+    "urun_adi": "Kot Gömlek Bordo",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "BORDOKOTGMLK.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 12,
+    "urun_adi": "Kot Gömlek Denim Blue",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "DENİMBLUEKOTGMLK.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 13,
+    "urun_adi": "Kot Gömlek Fıstık Yeşili",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "FISTIKYEŞİLİ.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 14,
+    "urun_adi": "Kot Gömlek Füme",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "FÜMEKOTGMLK.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 15,
+    "urun_adi": "Kot Gömlek Kahverengi",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "KAHVERENGİ.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 16,
+    "urun_adi": "Kot Gömlek Kraliyet Mavisi",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "KRALİYET MAVİSİ.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 17,
+    "urun_adi": "Kot Gömlek Peygamber Çiçeği",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "PEYGAMBERÇİÇEĞİ.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 18,
+    "urun_adi": "Kot Gömlek Siyah",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "SİYAHKOTGMLK.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 19,
+    "urun_adi": "Kot Gömlek Mavi",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "MAVİKOTGMLK.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 20,
+    "urun_adi": "Kot Gömlek Taş",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "TAŞ.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 21,
+    "urun_adi": "Kot Gömlek Yeşilin 51. Tonu",
+    "fiyat": "300 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "YEŞİLİN51.TONU.jpg",
+    "aciklama": "%85 pamuk, %12 polyester ve %3 spandex karışımından oluşan materyali ile konforlu bir deneyim sağlar.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 22,
+    "urun_adi": "Kot Gömlek Ceket Denim Blue",
+    "fiyat": "400 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "GÖMLEK CEKETDENİMBLUE.jpg",
+    "aciklama": "%100 pamuk materyali ile üretilmiş, Çıt çıt kapama şekliyle güvenli bir kullanım sağlar.İki tarz tek parçada;Hem gömlek hem ceket.XS-S /  M-L /  XL-2XL Beden seçeneği Mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 23,
+    "urun_adi": "Kot Gömlek Ceket Mavi",
+    "fiyat": "400 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "GÖMLEK CEKETMAVİ.jpg",
+    "aciklama": "%100 pamuk materyali ile üretilmiş, Çıt çıt kapama şekliyle güvenli bir kullanım sağlar.İki tarz tek parçada;Hem gömlek hem ceket.XS-S /  M-L /  XL-2XL Beden seçeneği Mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 24,
+    "urun_adi": "Kot Gömlek Ceket Kar Yıkama",
+    "fiyat": "400 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "GÖMLEKCEKETBUZMAVİSİ.jpg",
+    "aciklama": "%100 pamuk materyali ile üretilmiş, Çıt çıt kapama şekliyle güvenli bir kullanım sağlar.İki tarz tek parçada;Hem gömlek hem ceket.XS-S /  M-L /  XL-2XL Beden seçeneği Mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 25,
+    "urun_adi": "Eşref Gömlek Açık Mavi",
+    "fiyat": "260 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "EŞREFAÇIKMAVİ.jpg",
+    "aciklama": "Polyester materyali sayesinde hafifliğiyle konforlu bir kullanım sunarken dayanıklılığından da taviz vermez.Uzun kollu oluşu soğuk havalarda ekstra koruma sağlarken çizgili deseniyle trendleri takip eder.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 26,
+    "urun_adi": "Eşref Gömlek Bej",
+    "fiyat": "260 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "EŞREFBEJ.jpg",
+    "aciklama": "Polyester materyali sayesinde hafifliğiyle konforlu bir kullanım sunarken dayanıklılığından da taviz vermez.Uzun kollu oluşu soğuk havalarda ekstra koruma sağlarken çizgili deseniyle trendleri takip eder.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 27,
+    "urun_adi": "Eşref Gömlek Beyaz",
+    "fiyat": "260 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "EŞREFBEYAZ.jpg",
+    "aciklama": "Polyester materyali sayesinde hafifliğiyle konforlu bir kullanım sunarken dayanıklılığından da taviz vermez.Uzun kollu oluşu soğuk havalarda ekstra koruma sağlarken çizgili deseniyle trendleri takip eder.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 28,
+    "urun_adi": "Eşref Gömlek Koyu Mavi",
+    "fiyat": "260 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "EŞREFKOYUMAVİ.jpg",
+    "aciklama": "Polyester materyali sayesinde hafifliğiyle konforlu bir kullanım sunarken dayanıklılığından da taviz vermez.Uzun kollu oluşu soğuk havalarda ekstra koruma sağlarken çizgili deseniyle trendleri takip eder.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
+  },
+  {
+    "id": 29,
+    "urun_adi": "Eşref Gömlek Siyah",
+    "fiyat": "260 Tl",
+    "kategori": "Gömlek",
+    "gorsel": "EŞREFSİYAH.jpg",
+    "aciklama": "Polyester materyali sayesinde hafifliğiyle konforlu bir kullanım sunarken dayanıklılığından da taviz vermez.Uzun kollu oluşu soğuk havalarda ekstra koruma sağlarken çizgili deseniyle trendleri takip eder.S-M-L-XL-2XL Beden seçeneği mevcuttur.",
+    "stok": "Var"
   }
 ]
