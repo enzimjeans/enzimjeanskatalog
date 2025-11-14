@@ -457,5 +457,59 @@
     "gorsel": "KANVASBEJ.jpg",
     "aciklama": "%98 pamuk ve %2 spandex karışımı materyali sayesinde konforlu bir deneyim sunar.5 cepli tasarımı ve Regular fit kesimi ile vücut hatlarınıza uyum sağlayarak şık bir görünüm kazandırır.29-30-31-32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 52,
+    "urun_adi": "Enzim SoftShell Mont Füme",
+    "fiyat": "600 Tl",
+    "kategori": "Mont",
+    "gorsel": "SOFTFÜME.jpg",
+    "aciklama": "Su ve rüzgar geçirmez özelliği ile her türlü hava koşulunda konforlu bir kullanım sunar.Polar ve astar detayları ile ekstra sıcaklık ve konfor sağlar.S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 53,
+    "urun_adi": "Enzim SoftShell Mont Haki",
+    "fiyat": "600 Tl",
+    "kategori": "Mont",
+    "gorsel": "SOFTHAKİ.jpg",
+    "aciklama": "Su ve rüzgar geçirmez özelliği ile her türlü hava koşulunda konforlu bir kullanım sunar.Polar ve astar detayları ile ekstra sıcaklık ve konfor sağlar.S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 54,
+    "urun_adi": "Enzim SoftShell Mont Siyah",
+    "fiyat": "600 Tl",
+    "kategori": "Mont",
+    "gorsel": "SOFTSİYAH.jpg",
+    "aciklama": "Su ve rüzgar geçirmez özelliği ile her türlü hava koşulunda konforlu bir kullanım sunar.Polar ve astar detayları ile ekstra sıcaklık ve konfor sağlar.S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 55,
+    "urun_adi": "Slim Fit kot Pantolon Dornier",
+    "fiyat": "320 Tl",
+    "kategori": "Jeans",
+    "gorsel": "DORNİER.jpg",
+    "aciklama": "%98 pamuk ve %2 spandex içeriği sayesinde nefes alabilirlik ve esneklik sağlar, gün boyu konforlu bir kullanım sunar.Slim silueti vücut hatlarınıza mükemmel uyum sağlayarak şık bir profil çizer.31-32-33-34-36-38 Beden seçeneği mevcuttur.Ürünümüz tekli olarak satın alınabilir.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 56,
+    "urun_adi": "Slim Fit kot Pantolon Dove",
+    "fiyat": "320 Tl",
+    "kategori": "Jeans",
+    "gorsel": "DOVE.jpg",
+    "aciklama": "%98 pamuk ve %2 spandex içeriği sayesinde nefes alabilirlik ve esneklik sağlar, gün boyu konforlu bir kullanım sunar.Slim silueti vücut hatlarınıza mükemmel uyum sağlayarak şık bir profil çizer.31-32-33-34-36-38 Beden seçeneği mevcuttur.Ürünümüz tekli olarak satın alınabilir.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 57,
+    "urun_adi": "",
+    "fiyat": "",
+    "kategori": "",
+    "gorsel": "",
+    "aciklama": "",
+    "stok": "Var"
   }
 ]
