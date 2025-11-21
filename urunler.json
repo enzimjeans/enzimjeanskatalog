@@ -502,5 +502,59 @@
     "gorsel": "DOVE.jpg",
     "aciklama": "%98 pamuk ve %2 spandex.31-32-33-34-36-38 Beden seçeneği mevcuttur.Ürünümüz tekli olarak satın alınabilir.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 57,
+    "urun_adi": "FİYESMEN 1047 MONT AÇIK YEŞİL",
+    "fiyat": "1300 TL",
+    "kategori": "Mont",
+    "gorsel": "fiyesmen1047montaçıkyeşil.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 58,
+    "urun_adi": "FİYESMEN 1047 MONT ANTRASİT",
+    "fiyat": "1300TL",
+    "kategori": "Mont",
+    "gorsel": "fiyesmen1047montantrasit.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 59,
+    "urun_adi": "FİYESMEN 1047 MONT GRİ",
+    "fiyat": "1300TL",
+    "kategori": "Mont",
+    "gorsel": "fiyesmen1047montgri.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 60,
+    "urun_adi": "FİYESMEN 1047 MONT KAHVERENGİ",
+    "fiyat": "1300TL",
+    "kategori": "Mont",
+    "gorsel": "fiyesmen1047montkahverengi.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 61,
+    "urun_adi": "FİYESMEN 1047 MONT SİYAH",
+    "fiyat": "1300TL",
+    "kategori": "Mont",
+    "gorsel": "fiyesmen1047montsiyah.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 62,
+    "urun_adi": "FİYESMEN 1047 MONT YEŞİL",
+    "fiyat": "1300TL",
+    "kategori": "Mont",
+    "gorsel": "fiyesmen1047montyeşil.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
