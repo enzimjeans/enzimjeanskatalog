@@ -745,5 +745,41 @@
     "gorsel": "5020NOVAYELEKTAŞ.jpg",
     "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 84,
+    "urun_adi": "ŞİŞME YELEK 5010 YELEK KAHVERENGİ",
+    "fiyat": "500 TL",
+    "kategori": "Yelek",
+    "gorsel": "5010yelekkahverengi.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 85,
+    "urun_adi": "ŞİŞME YELEK 5010 YELEK KREM",
+    "fiyat": "500 TL",
+    "kategori": "Yelek",
+    "gorsel": "5010yelekkrem.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 86,
+    "urun_adi": "ŞİŞME YELEK 5010 YELEK SİYAH",
+    "fiyat": "500 TL",
+    "kategori": "Yelek",
+    "gorsel": "5010yeleksiyah.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 87,
+    "urun_adi": "ŞİŞME YELEK 5010 YELEKTAŞ",
+    "fiyat": "500 TL",
+    "kategori": "Yelek",
+    "gorsel": "5010yelektaş.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
