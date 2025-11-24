@@ -664,5 +664,41 @@
     "gorsel": "POOLDEEP3017MONTSİYAH.jpg",
     "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 75,
+    "urun_adi": "ŞİŞME YELEK 5020 SOFT HAKİ",
+    "fiyat": "400 TL",
+    "kategori": "YELEK",
+    "gorsel": "5020HAKİ.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 76,
+    "urun_adi": "ŞİŞME YELEK 5020 SOFT  KAHVERENGİ",
+    "fiyat": "400 TL",
+    "kategori": "YELEK",
+    "gorsel": "5020KAHVERENGİ.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 77,
+    "urun_adi": "ŞİŞME YELEK 5020 SOFT LACİVERT",
+    "fiyat": "400 TL",
+    "kategori": "YELEK",
+    "gorsel": "5020LACİVERT.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 78,
+    "urun_adi": "ŞİŞME YELEK 5020 SOFT SİYAH",
+    "fiyat": "400 TL",
+    "kategori": "YELEK",
+    "gorsel": "5020SİYAH.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
