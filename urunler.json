@@ -700,5 +700,50 @@
     "gorsel": "5020SİYAH.jpg",
     "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 79,
+    "urun_adi": "ŞİŞME YELEK 5020 NOVA KREM",
+    "fiyat": "500 TL",
+    "kategori": "Yelek",
+    "gorsel": "5020 NOVA YELEK KREM.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 80,
+    "urun_adi": "ŞİŞME YELEK 5020 NOVA BEJ",
+    "fiyat": "500 TL",
+    "kategori": "Yelek",
+    "gorsel": "5020novayelekbej.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 81,
+    "urun_adi": "ŞİŞME YELEK 5020 NOVA KAHVERENGİ",
+    "fiyat": "500 TL",
+    "kategori": "Yelek",
+    "gorsel": "5020NOVAYELEKKAHVERENGİ.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 82,
+    "urun_adi": "ŞİŞME YELEK 5020 NOVA SİYAH",
+    "fiyat": "500 TL",
+    "kategori": "Yelek",
+    "gorsel": "5020novayeleksiyah.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 83,
+    "urun_adi": "ŞİŞME YELEK 5020 NOVA TAŞ",
+    "fiyat": "500 TL",
+    "kategori": "Yelek",
+    "gorsel": "5020NOVAYELEKTAŞ.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
