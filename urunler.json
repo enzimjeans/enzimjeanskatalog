@@ -781,5 +781,59 @@
     "gorsel": "5010yelektaş.jpg",
     "aciklama": "S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 88,
+    "urun_adi": "ERKEK NUBUK CEKET TABA",
+    "fiyat": "440 TL",
+    "kategori": "Ceket",
+    "gorsel": "TABANUBUK.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Dilerseniz battal beden mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 89,
+    "urun_adi": "ERKEK NUBUK CEKET GRİ",
+    "fiyat": "440 TL",
+    "kategori": "Ceket",
+    "gorsel": "GRİNUBUK.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Dilerseniz battal beden mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 90,
+    "urun_adi": "ERKEK NUBUK CEKET HAKİ",
+    "fiyat": "440 TL",
+    "kategori": "Ceket",
+    "gorsel": "HAKİNUBUK.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Dilerseniz battal beden mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 91,
+    "urun_adi": "ERKEK NUBUK CEKET KAHVERENGİ",
+    "fiyat": "440 TL",
+    "kategori": "Ceket",
+    "gorsel": "KAHVERENGİNUBUK.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Dilerseniz battal beden mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 92,
+    "urun_adi": "ERKEK NUBUK CEKET LACİVERT",
+    "fiyat": "440 TL",
+    "kategori": "Ceket",
+    "gorsel": "LACİVERTNUBUK.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Dilerseniz battal beden mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 93,
+    "urun_adi": "ERKEK NUBUK CEKET SİYAH",
+    "fiyat": "440 TL",
+    "kategori": "Ceket",
+    "gorsel": "SİYAHNUBUK.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Dilerseniz battal beden mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
