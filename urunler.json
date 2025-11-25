@@ -862,5 +862,32 @@
     "gorsel": "YAKALINUBUKLACİ.jpg",
     "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 97,
+    "urun_adi": "ERKEK KAPİTONE CEKET",
+    "fiyat": "400 TL",
+    "kategori": "Ceket",
+    "gorsel": "kapitone3.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 98,
+    "urun_adi": "ERKEK KAPİTONE CEKET",
+    "fiyat": "400 TL",
+    "kategori": "Ceket",
+    "gorsel": "kapitone2.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 99,
+    "urun_adi": "ERKEK KAPİTONE CEKET",
+    "fiyat": "400 TL",
+    "kategori": "Ceket",
+    "gorsel": "kapitone1.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
