@@ -835,5 +835,32 @@
     "gorsel": "SİYAHNUBUK.jpg",
     "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Dilerseniz battal beden mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 94,
+    "urun_adi": "ERKEK YAKALI NUBUK CEKET SİYAH",
+    "fiyat": "440 TL",
+    "kategori": "Ceket",
+    "gorsel": "YAKALINUBUKSİYAH.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 95,
+    "urun_adi": "ERKEK YAKALI NUBUK CEKET GRİ",
+    "fiyat": "440 TL",
+    "kategori": "Ceket",
+    "gorsel": "YAKALINUBUKGRİ.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 96,
+    "urun_adi": "ERKEK YAKALI NUBUK CEKET LACİVERT",
+    "fiyat": "440 TL",
+    "kategori": "Ceket",
+    "gorsel": "YAKALINUBUKLACİ.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
