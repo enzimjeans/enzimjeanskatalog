@@ -889,5 +889,32 @@
     "gorsel": "kapitone1.jpg",
     "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 100,
+    "urun_adi": "ŞİŞME YELEK 2053 SAVMOD SİYAH",
+    "fiyat": "420 TL",
+    "kategori": "Yelek",
+    "gorsel": "savmod.jpg",
+    "aciklama": "S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 101,
+    "urun_adi": "ŞİŞME YELEK   3004 ALARA DERİ YELEK SİYAH",
+    "fiyat": "590 TL",
+    "kategori": "Yelek",
+    "gorsel": "deriyelek.jpg",
+    "aciklama": "S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 102,
+    "urun_adi": "ŞİŞME YELEK   3004 ALARA DERİ YELEK HAKİ",
+    "fiyat": "590 TL",
+    "kategori": "Yelek",
+    "gorsel": "deriyelekhaki.jpg",
+    "aciklama": "S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
