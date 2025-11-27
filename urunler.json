@@ -970,5 +970,50 @@
     "gorsel": "MASTİF3050SUYEŞ.jpg",
     "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 109,
+    "urun_adi": "BOLD BROTHERS 6011 YARIM FERMUAR SWEAT BEYAZ",
+    "fiyat": "400 Ttl",
+    "kategori": "Sweat",
+    "gorsel": "bold6011beyaz.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 110,
+    "urun_adi": "BOLD BROTHERS 6011 YARIM FERMUAR SWEAT LACİVERT",
+    "fiyat": "400 Ttl",
+    "kategori": "Sweat",
+    "gorsel": "bold6011laci.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 111,
+    "urun_adi": "BOLD BROTHERS 6011 YARIM FERMUAR SWEAT MAVİ",
+    "fiyat": "400 Ttl",
+    "kategori": "Sweat",
+    "gorsel": "bold6011mavi.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 112,
+    "urun_adi": "BOLD BROTHERS 6011 YARIM FERMUAR SWEAT SİYAH",
+    "fiyat": "400 Ttl",
+    "kategori": "Sweat",
+    "gorsel": "bold6011siyahj.pg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 113,
+    "urun_adi": "BOLD BROTHERS 6011 YARIM FERMUAR SWEAT YEŞİL",
+    "fiyat": "400 Ttl",
+    "kategori": "Sweat",
+    "gorsel": "bold6011yeşil.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
