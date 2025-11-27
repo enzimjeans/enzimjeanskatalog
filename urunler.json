@@ -934,5 +934,41 @@
     "gorsel": "erkekyeleksiyah.jpg",
     "aciklama": "S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 105,
+    "urun_adi": "MASTİF 3050  3 İP SWEATSHİRT SİYAH",
+    "fiyat": "280 TL",
+    "kategori": "Sweat",
+    "gorsel": "MASTİF3050SİY.jpg",
+    "aciklama": "S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 106,
+    "urun_adi": "MASTİF 3050  3 İP SWEATSHİRT MAVİ",
+    "fiyat": "280 TL",
+    "kategori": "Sweat",
+    "gorsel": "MASTİF3050MAVİ.jpg",
+    "aciklama": "S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 107,
+    "urun_adi": "MASTİF 3050  3 İP SWEATSHİRT LACİVERT",
+    "fiyat": "280 TL",
+    "kategori": "Sweat",
+    "gorsel": "MASTİF3050LACİ.jpg",
+    "aciklama": "S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 108,
+    "urun_adi": "MASTİF 3050  3 İP SWEATSHİRT SU YEŞİLİ",
+    "fiyat": "280 TL",
+    "kategori": "Sweat",
+    "gorsel": "MASTİF3050SUYEŞ.jpg",
+    "aciklama": "S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
