@@ -1105,5 +1105,77 @@
     "gorsel": "SELANİKYEŞİL.jpg",
     "aciklama": "M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 124,
+    "urun_adi": "STRAİGHT FİT 246",
+    "fiyat": "450 TL",
+    "kategori": "Jeans",
+    "gorsel": "246.jpg",
+    "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 125,
+    "urun_adi": "STRAİGHT FİT 246/3",
+    "fiyat": "450 TL",
+    "kategori": "Jeans",
+    "gorsel": "246-3.jpg",
+    "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 126,
+    "urun_adi": "STRAİGHT FİT 246/4",
+    "fiyat": "450 TL",
+    "kategori": "Jeans",
+    "gorsel": "246-4.jpg",
+    "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 127,
+    "urun_adi": "STRAİGHT FİT 243/1",
+    "fiyat": "450 TL",
+    "kategori": "Jeans",
+    "gorsel": "243-1.jpg",
+    "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 128,
+    "urun_adi": "STRAİGHT FİT 246/2",
+    "fiyat": "450 TL",
+    "kategori": "Jeans",
+    "gorsel": "246-2.jpg",
+    "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 129,
+    "urun_adi": "STRAİGHT FİT 243/4",
+    "fiyat": "450 TL",
+    "kategori": "Jeans",
+    "gorsel": "243-4.jpg",
+    "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 130,
+    "urun_adi": "STRAİGHT FİT 243/5",
+    "fiyat": "450 TL",
+    "kategori": "Jeans",
+    "gorsel": "243-5.jpg",
+    "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 131,
+    "urun_adi": "STRAİGHT FİT 243/2",
+    "fiyat": "450 TL",
+    "kategori": "Jeans",
+    "gorsel": "243-2.jpg",
+    "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
