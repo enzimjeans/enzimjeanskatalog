@@ -1180,10 +1180,55 @@
   },
   {
     "id": 132,
-    "urun_adi": "MASTİF 824 TŞÖRT",
+    "urun_adi": "MASTİF 824 TŞÖRT KAHVERENGİ",
     "fiyat": "300 TL",
     "kategori": "Tşört",
     "gorsel": "KAHVET.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 133,
+    "urun_adi": "MASTİF 824 TŞÖRT SİYAH",
+    "fiyat": "300 TL",
+    "kategori": "Tşört",
+    "gorsel": "SİYAHT.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 134,
+    "urun_adi": "MASTİF 824 TŞÖRT GRİ",
+    "fiyat": "300 TL",
+    "kategori": "Tşört",
+    "gorsel": "GRİT.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 135,
+    "urun_adi": "MASTİF 824 TŞÖRT KREM",
+    "fiyat": "300 TL",
+    "kategori": "Tşört",
+    "gorsel": "KREMT.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 136,
+    "urun_adi": "MASTİF 824 TŞÖRT LACİVERT",
+    "fiyat": "300 TL",
+    "kategori": "Tşört",
+    "gorsel": "LACİT.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
+  },
+  {
+    "id": 137,
+    "urun_adi": "MASTİF 824 TŞÖRT BEYAZ",
+    "fiyat": "300 TL",
+    "kategori": "Tşört",
+    "gorsel": "BEYAZT.jpg",
     "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
   }
