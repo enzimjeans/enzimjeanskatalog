@@ -1240,5 +1240,14 @@
     "gorsel": "battal.jpg",
     "aciklama": "2XL-3XL-4XL-5XL-6XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Var"
+  },
+  {
+    "id": 139,
+    "urun_adi": "MUSİC SIFIR KOL TŞÖRT",
+    "fiyat": "140 TL",
+    "kategori": "Tşört",
+    "gorsel": "SIFIRKOL.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var"
   }
 ]
