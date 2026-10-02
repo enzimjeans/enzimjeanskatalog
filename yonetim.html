@@ -135,6 +135,19 @@
         }
         .photo-box img { max-width: 100%; max-height: 280px; border-radius: 8px; display: block; margin: 0 auto 10px; }
         .photo-box span { color: var(--primary); font-weight: 600; }
+        .variants { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .variant {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            border: 1.5px solid var(--line);
+            border-radius: 10px;
+            padding: 8px;
+        }
+        .variant img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+        .variant input { flex: 1; min-width: 0; }
+        .variant button { background: var(--red-bg); color: var(--red); padding: 10px 14px; flex-shrink: 0; }
         .price-wrap { display: flex; align-items: center; gap: 8px; }
         .price-wrap span { font-weight: 600; }
         .stock-choice { display: flex; gap: 10px; }
@@ -233,12 +246,16 @@
                     <img id="photoPreview" class="hidden" alt="">
                     <span id="photoText">📷 Fotoğraf seç veya çek</span>
                 </div>
-                <input type="file" id="photoInput" accept="image/*" class="hidden">
+                <input type="file" id="photoInput" accept="image/*,.heic,.heif,.tif,.tiff" class="hidden">
+                <p class="hint" id="photoHint">Aynı modelin birden fazla rengi varsa fotoğraflarını birlikte seçin; her biri ayrı ürün olarak eklenir.</p>
+                <div class="variants hidden" id="variantList"></div>
+                <button type="button" class="btn-light hidden" id="addColorBtn" style="width:100%;margin-top:10px">+ Başka renk ekle</button>
             </div>
 
             <div class="field">
-                <label for="fName">Ürün adı</label>
+                <label for="fName" id="fNameLabel">Ürün adı</label>
                 <input type="text" id="fName" placeholder="Örn: Baggy Mavi">
+                <p class="hint hidden" id="fNameHint"></p>
             </div>
 
             <div class="field">
@@ -294,6 +311,8 @@
         let products = [];
         let editingId = null;      // null = yeni ürün
         let pendingPhoto = null;   // { base64, dataUrl }
+        let variants = [];         // yeni üründe birden fazla fotoğraf: [{ base64, dataUrl, color }]
+        let addingColor = false;   // true: seçilen fotoğraflar yeni renk olarak eklenir
         let formStock = 'Var';
         const localPreviews = {};  // yeni yüklenen görseller, site güncellenene kadar buradan gösterilir
 
@@ -427,27 +446,78 @@
             return e.message;
         }
 
-        // ---------- Fotoğrafı küçült (telefon fotoğrafları 5-10 MB olabiliyor) ----------
-        function resizeImage(file) {
+        // ---------- Fotoğraflar ----------
+        // Gerekirse dönüştürücü kütüphaneyi bir kez yükle
+        const scriptCache = {};
+        function loadScript(src) {
+            return scriptCache[src] || (scriptCache[src] = new Promise((resolve, reject) => {
+                const s = document.createElement('script');
+                s.src = src;
+                s.onload = resolve;
+                s.onerror = () => { delete scriptCache[src]; reject(new Error('Dönüştürücü yüklenemedi, internet bağlantısını kontrol edin.')); };
+                document.head.appendChild(s);
+            }));
+        }
+
+        function loadImage(blob) {
             return new Promise((resolve, reject) => {
                 const img = new Image();
-                const url = URL.createObjectURL(file);
-                img.onload = () => {
-                    const scale = Math.min(1, MAX_IMAGE_SIZE / Math.max(img.width, img.height));
-                    const canvas = document.createElement('canvas');
-                    canvas.width = Math.round(img.width * scale);
-                    canvas.height = Math.round(img.height * scale);
-                    const ctx = canvas.getContext('2d');
-                    ctx.fillStyle = '#fff';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    URL.revokeObjectURL(url);
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
-                    resolve({ dataUrl, base64: dataUrl.split(',')[1] });
-                };
-                img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Fotoğraf açılamadı. JPG veya PNG deneyin.')); };
+                const url = URL.createObjectURL(blob);
+                img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+                img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('decode')); };
                 img.src = url;
             });
+        }
+
+        // Tarayıcının doğrudan açamadığı formatlar: iPhone HEIC/HEIF ve TIFF
+        async function decodeSpecial(file) {
+            const name = (file.name || '').toLowerCase();
+            const type = (file.type || '').toLowerCase();
+
+            if (/hei[cf]/.test(type) || /\.hei[cf]$/.test(name)) {
+                busy('iPhone fotoğrafı dönüştürülüyor...');
+                await loadScript('https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js');
+                const out = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
+                return loadImage(Array.isArray(out) ? out[0] : out);
+            }
+
+            if (/tiff?/.test(type) || /\.tiff?$/.test(name)) {
+                busy('TIFF fotoğrafı dönüştürülüyor...');
+                await loadScript('https://cdn.jsdelivr.net/npm/utif@3.1.0/UTIF.js');
+                const buf = await file.arrayBuffer();
+                const ifd = UTIF.decode(buf)[0];
+                UTIF.decodeImage(buf, ifd);
+                const canvas = document.createElement('canvas');
+                canvas.width = ifd.width;
+                canvas.height = ifd.height;
+                canvas.getContext('2d').putImageData(
+                    new ImageData(new Uint8ClampedArray(UTIF.toRGBA8(ifd)), ifd.width, ifd.height), 0, 0);
+                return canvas;
+            }
+
+            throw new Error(`"${file.name}" açılamadı. Dosya bozuk olabilir ya da fotoğraf değil.`);
+        }
+
+        // Fotoğrafı küçült ve JPG yap (telefon fotoğrafları 5-10 MB olabiliyor)
+        async function resizeImage(file) {
+            let source;
+            try {
+                source = await loadImage(file);
+            } catch (e) {
+                source = await decodeSpecial(file);
+            }
+            const w = source.naturalWidth || source.width;
+            const h = source.naturalHeight || source.height;
+            const scale = Math.min(1, MAX_IMAGE_SIZE / Math.max(w, h));
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(w * scale);
+            canvas.height = Math.round(h * scale);
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+            return { dataUrl, base64: dataUrl.split(',')[1] };
         }
 
         // Anahtarın hangi hesaba ait olduğunu ve kataloğa yazabildiğini kontrol et
@@ -606,8 +676,12 @@
         function openForm(id) {
             editingId = id ?? null;
             pendingPhoto = null;
+            variants = [];
             $('photoInput').value = '';
             const p = products.find(x => x.id === editingId);
+            $('photoInput').multiple = !p;          // çoklu renk sadece yeni üründe
+            $('photoHint').classList.toggle('hidden', !!p);
+            renderVariants();
 
             $('formTitle').textContent = p ? 'Ürünü Düzenle' : 'Yeni Ürün';
             $('deleteWrap').classList.toggle('hidden', !p);
@@ -622,7 +696,9 @@
 
         $('newBtn').onclick = () => openForm(null);
         $('cancelBtn').onclick = () => show('listView');
-        $('photoBox').onclick = () => $('photoInput').click();
+        $('photoBox').onclick = () => { addingColor = variants.length > 1; $('photoInput').click(); };
+        $('addColorBtn').onclick = () => { addingColor = true; $('photoInput').click(); };
+        $('fName').addEventListener('input', updateNameHint);
         document.querySelectorAll('.stock-choice button').forEach(b => b.onclick = () => setStock(b.dataset.stok));
 
         $('fCat').addEventListener('change', () => {
@@ -636,13 +712,73 @@
             }
         });
 
+        // Birden fazla renk: her fotoğraf bir satır, altına renk adı yazılır
+        function renderVariants() {
+            const multi = variants.length > 1;
+            $('variantList').classList.toggle('hidden', !multi);
+            $('fNameLabel').textContent = multi ? 'Model adı' : 'Ürün adı';
+            $('fName').placeholder = multi ? 'Örn: Baggy' : 'Örn: Baggy Mavi';
+            $('fNameHint').classList.toggle('hidden', !multi);
+            updateNameHint();
+            $('addColorBtn').classList.toggle('hidden', editingId !== null || variants.length === 0);
+
+            if (multi) {
+                pendingPhoto = null;
+                setPhotoPreview('');
+                $('photoText').textContent = `📷 ${variants.length} renk · Renk eklemek için dokunun`;
+                $('variantList').innerHTML = variants.map((v, i) => `
+                    <div class="variant">
+                        <img src="${v.dataUrl}" alt="">
+                        <input type="text" data-color="${i}" value="${escapeHtml(v.color)}" placeholder="Renk adı (örn. Mavi)">
+                        <button type="button" data-remove="${i}" aria-label="Bu rengi çıkar">✕</button>
+                    </div>`).join('');
+            } else {
+                $('variantList').innerHTML = '';
+                pendingPhoto = variants[0] || pendingPhoto;
+                if (variants[0]) setPhotoPreview(variants[0].dataUrl);
+            }
+        }
+
+        $('variantList').addEventListener('input', e => {
+            const i = e.target.dataset.color;
+            if (i === undefined) return;
+            variants[i].color = e.target.value;
+            updateNameHint();
+        });
+
+        function updateNameHint() {
+            if (variants.length < 2) return;
+            const model = $('fName').value.trim() || 'Baggy';
+            $('fNameHint').textContent = 'Kaydedilecek ürünler: ' +
+                variants.map(v => `${model} ${v.color.trim() || '…'}`).join(', ');
+        }
+
+        $('variantList').addEventListener('click', e => {
+            const i = e.target.closest('[data-remove]')?.dataset.remove;
+            if (i === undefined) return;
+            variants.splice(Number(i), 1);
+            renderVariants();
+        });
+
         $('photoInput').addEventListener('change', async () => {
-            const file = $('photoInput').files[0];
-            if (!file) return;
-            busy('Fotoğraf hazırlanıyor...');
+            const files = [...$('photoInput').files];
+            $('photoInput').value = '';
+            if (!files.length) return;
             try {
-                pendingPhoto = await resizeImage(file);
-                setPhotoPreview(pendingPhoto.dataUrl);
+                const resized = [];
+                for (let i = 0; i < files.length; i++) {
+                    busy(files.length > 1 ? `Fotoğraflar hazırlanıyor (${i + 1}/${files.length})...` : 'Fotoğraf hazırlanıyor...');
+                    resized.push({ ...(await resizeImage(files[i])), color: '' });
+                }
+                if (editingId !== null) {
+                    pendingPhoto = resized[0];
+                    setPhotoPreview(pendingPhoto.dataUrl);
+                } else {
+                    // "Başka renk ekle" ise ekle, değilse fotoğrafı değiştir
+                    variants = addingColor ? [...variants, ...resized] : resized;
+                    renderVariants();
+                    if (variants.length > 1) $('variantList').querySelector('input[value=""]')?.focus();
+                }
             } catch (e) {
                 toast(e.message, true);
             } finally {
@@ -660,7 +796,9 @@
             if (!name) return toast('Ürün adını yazın.', true);
             if (!price) return toast('Fiyatı yazın.', true);
             if (!cat) return toast('Kategori seçin.', true);
-            if (!existing && !pendingPhoto) return toast('Fotoğraf seçin.', true);
+            if (!existing && !pendingPhoto && variants.length < 2) return toast('Fotoğraf seçin.', true);
+
+            if (!existing && variants.length > 1) return saveVariants(name, price, cat, desc);
 
             busy('Kaydediliyor...');
             try {
@@ -696,6 +834,44 @@
                 busy();
             }
         };
+
+        // Aynı modelin renkleri: her renk ayrı ürün, tek seferde kaydedilir
+        async function saveVariants(model, price, cat, desc) {
+            const missing = variants.findIndex(v => !v.color.trim());
+            if (missing !== -1) {
+                $('variantList').querySelectorAll('input')[missing].focus();
+                return toast(`${missing + 1}. fotoğrafın renk adını yazın.`, true);
+            }
+
+            try {
+                const stamp = Date.now().toString(36);
+                const items = [];
+                for (let i = 0; i < variants.length; i++) {
+                    const v = variants[i];
+                    const urun_adi = `${model} ${v.color.trim()}`;
+                    const gorsel = `${slugify(urun_adi)}-${stamp}${i}.jpg`;
+                    busy(`Fotoğraflar yükleniyor (${i + 1}/${variants.length})...`);
+                    await uploadImage(gorsel, v.base64);
+                    localPreviews[gorsel] = v.dataUrl;
+                    items.push({ urun_adi, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock });
+                }
+
+                busy('Ürünler kaydediliyor...');
+                await updateProducts(list => {
+                    let id = list.reduce((m, x) => Math.max(m, Number(x.id) || 0), 0);
+                    return [...list, ...items.map(it => ({ id: ++id, ...it }))];
+                }, `${items.length} renk eklendi: ${model}`);
+
+                variants = [];
+                renderList();
+                show('listView');
+                toast(`${items.length} ürün eklendi ✓ Site 1-2 dakika içinde güncellenir.`);
+            } catch (e) {
+                toast(errorText(e) + ' Tekrar Kaydet\'e basabilirsiniz.', true);
+            } finally {
+                busy();
+            }
+        }
 
         $('deleteBtn').onclick = async () => {
             const p = products.find(x => x.id === editingId);
