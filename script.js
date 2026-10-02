@@ -305,12 +305,21 @@ function renderStats() {
 
     const fresh = newestInStock();
 
-    // Hero: en yeni 3 ürün askılı etiketlerle
-    $('heroFan').innerHTML = fresh.slice(0, 3).map((p, i) => `
-        <figure class="fan-card fan-${i}" data-similar="${p.id}">
-            <img src="${imagePath(p)}" alt="" decoding="async">
-            <figcaption class="tag"><span>${escapeHtml(titleCase(p.urun_adi))}</span><strong>${escapeHtml(displayPrice(p))}</strong></figcaption>
-        </figure>`).join('');
+    // Hero: güncel ürünler. Arka planda mozaik, önde dönen 3'lü vitrin.
+    heroPool = heroProducts();
+    $('heroMosaic').innerHTML = heroPool.slice(0, 12).map(p =>
+        `<img src="${imagePath(p)}" alt="" decoding="async" loading="lazy">`).join('');
+    heroStart = 0;
+    renderHeroFan();
+    clearInterval(heroTimer);
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (heroPool.length > 3 && !calm) {
+        heroTimer = setInterval(() => {
+            if (document.hidden) return;
+            heroStart = (heroStart + 3) % heroPool.length;
+            renderHeroFan(true);
+        }, 5000);
+    }
 
     // Kayan kategori şeridi
     const words = [...new Set(allProducts.map(p => p.kategori))];
@@ -339,6 +348,37 @@ function renderStats() {
             <span class="cat-tile-name">${escapeHtml(name)}</span>
             <span class="cat-tile-count">${c.count} model</span>
         </button>`).join('');
+}
+
+// ---------- Hero vitrini ----------
+let heroPool = [], heroStart = 0, heroTimer = null;
+
+// Çeşitli olsun: önce rozetliler, sonra her kategorinin en yenisi, sonra kalan yeniler
+function heroProducts() {
+    const stocked = allProducts.filter(inStock).sort((a, b) => b.id - a.id);
+    const pool = [], seen = new Set();
+    const add = p => { if (p && !seen.has(p.id)) { seen.add(p.id); pool.push(p); } };
+    stocked.filter(p => badgeOf(p)).forEach(add);
+    [...new Set(stocked.map(p => p.kategori))].forEach(cat => add(stocked.find(p => p.kategori === cat)));
+    stocked.forEach(add);
+    return pool.slice(0, 15);
+}
+
+function renderHeroFan(animate) {
+    const three = [0, 1, 2].map(i => heroPool[(heroStart + i) % heroPool.length]).filter(Boolean);
+    const fan = $('heroFan');
+    const html = three.map((p, i) => {
+        const b = badgeOf(p);
+        return `
+        <figure class="fan-card fan-${i}" data-similar="${p.id}">
+            <img src="${imagePath(p)}" alt="${escapeHtml(titleCase(p.urun_adi))}" decoding="async">
+            ${b ? `<span class="badge ${b.cls}">${b.label}</span>` : ''}
+            <figcaption class="tag"><span>${escapeHtml(titleCase(p.urun_adi))}</span><strong>${escapeHtml(displayPrice(p))}</strong></figcaption>
+        </figure>`;
+    }).join('');
+    if (!animate) { fan.innerHTML = html; return; }
+    fan.classList.add('swap');
+    setTimeout(() => { fan.innerHTML = html; fan.classList.remove('swap'); }, 350);
 }
 
 function updateRailArrows() {
