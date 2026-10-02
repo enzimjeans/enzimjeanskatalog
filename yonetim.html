@@ -3491,8 +3491,9 @@
         // Ücretsiz plan: Umami'nin "paylaşım linki" ile okunur (API anahtarı Pro ister).
         // Link gizli depoda saklanır, bir kez girilince tüm cihazlarda çalışır.
         const UMAMI_SITE = '91cefaf2-0706-425c-ad1e-56dba596ced0';
-        const UMAMI_HOST = 'https://cloud.umami.is';
-        const UMAMI_API = `${UMAMI_HOST}/api/websites/${UMAMI_SITE}`;
+        // Umami Cloud verisi bölgesel sunuculardan okunur (paylaşım sayfası da böyle yapıyor)
+        const UMAMI_HOSTS = ['https://gateway-eu.umami.is', 'https://gateway-us.umami.is', 'https://cloud.umami.is'];
+        let umamiHost = UMAMI_HOSTS[0];
         const UMAMI_SHARE = 'sival_umami_share';
         const STATS_FILE = 'istatistik.json';
         let statsPeriod = 'gun7';
@@ -3512,11 +3513,19 @@
         }
 
         async function fetchShareToken(slug) {
-            const res = await fetch(`${UMAMI_HOST}/api/share/${slug}`, { headers: { Accept: 'application/json' } });
-            if (!res.ok) { const e = new Error(`Umami ${res.status}`); e.status = res.status === 404 ? 401 : res.status; throw e; }
-            const d = await res.json();
-            if (!d.token || (d.websiteId && d.websiteId !== UMAMI_SITE)) { const e = new Error('wrong site'); e.status = 403; throw e; }
-            return d.token;
+            let reached = false;
+            for (const host of UMAMI_HOSTS) {
+                try {
+                    const res = await fetch(`${host}/api/share/${slug}`, { headers: { Accept: 'application/json' } });
+                    reached = true;
+                    if (!res.ok) continue;
+                    const d = await res.json();
+                    if (!d.token || (d.websiteId && d.websiteId !== UMAMI_SITE)) continue;
+                    umamiHost = host;
+                    return d.token;
+                } catch (e) {}
+            }
+            const e = new Error('share'); e.status = reached ? 401 : 0; throw e;
         }
         const nf = n => Number(n || 0).toLocaleString('tr-TR');
 
@@ -3531,7 +3540,7 @@
 
         async function umami(path, params = {}, token = shareToken) {
             const q = new URLSearchParams({ ...periodRange(statsPeriod), ...params });
-            const res = await fetch(`${UMAMI_API}${path}?${q}`, { headers: { 'x-umami-share-token': token, 'x-umami-share-context': '1', Accept: 'application/json' } });
+            const res = await fetch(`${umamiHost}/api/websites/${UMAMI_SITE}${path}?${q}`, { headers: { 'x-umami-share-token': token, 'x-umami-share-context': '1', Accept: 'application/json' } });
             if (!res.ok) { const e = new Error(`Umami ${res.status}`); e.status = res.status; throw e; }
             return res.json();
         }
@@ -3656,7 +3665,7 @@
                     ${barList((notFound || []).slice(0, 10).map(r => ({ label: r.value, n: Number(r.total) || 0 })), 'kez')}
                     ${others.length ? `<h3 class="stats-h">Diğer hareketler</h3>${barList(others, '')}` : ''}
                     <p class="hint" style="margin-top:16px">Sipariş sayısı WhatsApp'a gönderilen siparişlerdir; ödemenin tamamlanıp tamamlanmadığını sistem bilemez.
-                    Ayrıntılı rapor: <a href="https://cloud.umami.is" target="_blank" rel="noopener">cloud.umami.is</a> ·
+                    Ayrıntılı rapor: <a href="https://cloud.umami.is/share/${escapeHtml(slug)}" target="_blank" rel="noopener">cloud.umami.is</a> ·
                     <a href="#" id="umamiKeyReset">Linki değiştir</a></p>`;
                 $('umamiKeyReset').onclick = async e => { e.preventDefault(); busy('Siliniyor...'); await forgetShare(); busy(); loadStats(); };
             } catch (e) {
