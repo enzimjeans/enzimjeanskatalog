@@ -265,10 +265,6 @@
         .seg-row button[data-seg=sessiz]::before { background: #d97706; }
         .seg-row button[data-seg=aktif]::before { background: #15803d; }
         .seg-row button[data-seg=yok]::before { background: #94a3b8; }
-        .hub-icon { color: var(--primary); }
-        .onboard-art { color: var(--green); }
-        .add-opt span { color: var(--primary); }
-        .pdf-file span { color: var(--primary); }
         .star-mark { color: #d97706; }
         .seg-row button.active { background: var(--text); border-color: var(--text); color: #fff; }
         .seg-row button.active small { color: #cbd5e1; }
@@ -708,7 +704,7 @@
         <section id="listView" class="hidden">
             <div class="hub">
                 <button class="hub-tile" id="announceTile">
-                    <span class="hub-icon"><i class="ic ic-megaphone" aria-hidden="true"></i></span>
+                    <span class="hub-icon"><i class="ic duo ic-megaphone" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>Duyuru bandı</strong>
                         <small id="announceStatus">Kapalı</small>
@@ -716,7 +712,7 @@
                     <span class="hub-arrow">›</span>
                 </button>
                 <button class="hub-tile" id="goalsTile">
-                    <span class="hub-icon"><i class="ic ic-target" aria-hidden="true"></i></span>
+                    <span class="hub-icon"><i class="ic duo ic-target" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>Sepet hedefleri</strong>
                         <small id="goalsStatus">Kargo bedava ve toplu alım indirimi</small>
@@ -724,7 +720,7 @@
                     <span class="hub-arrow">›</span>
                 </button>
                 <button class="hub-tile" id="firmTile">
-                    <span class="hub-icon"><i class="ic ic-store" aria-hidden="true"></i></span>
+                    <span class="hub-icon"><i class="ic duo ic-store" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>Firma bilgileri</strong>
                         <small id="firmStatus">Adres, kargo, ödeme: müşteriye güven verir</small>
@@ -732,7 +728,7 @@
                     <span class="hub-arrow">›</span>
                 </button>
                 <button class="hub-tile" id="pdfTile">
-                    <span class="hub-icon"><i class="ic ic-file" aria-hidden="true"></i></span>
+                    <span class="hub-icon"><i class="ic duo ic-file" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>PDF katalog</strong>
                         <small>WhatsApp gruplarına atmak için</small>
@@ -740,7 +736,7 @@
                     <span class="hub-arrow">›</span>
                 </button>
                 <button class="hub-tile" id="customersTile">
-                    <span class="hub-icon"><i class="ic ic-users" aria-hidden="true"></i></span>
+                    <span class="hub-icon"><i class="ic duo ic-users" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>Müşteriler</strong>
                         <small id="customersStatus">Geri kazanma kampanyaları</small>
@@ -827,13 +823,13 @@
 
             <div class="pdf-done hidden" id="pdfDone">
                 <div class="pdf-file">
-                    <span><i class="ic ic-file" aria-hidden="true"></i></span>
+                    <span><i class="ic duo ic-file" aria-hidden="true"></i></span>
                     <div><b>PDF hazır</b><small id="pdfInfo"></small></div>
                 </div>
                 <button class="wa-send" id="pdfShare"><i class="ic ic-share" aria-hidden="true"></i> WhatsApp'ta paylaş</button>
                 <div class="form-actions">
-                    <button class="btn-light" id="pdfDownload" style="flex:1"><i class="ic ic-download" aria-hidden="true"></i> İndir</button>
-                    <button class="btn-light" id="pdfUpload" style="flex:1"><i class="ic ic-globe" aria-hidden="true"></i> Siteye yükle</button>
+                    <button class="btn-light" id="pdfDownload" style="flex:1"><i class="ic duo ic-download" aria-hidden="true"></i> İndir</button>
+                    <button class="btn-light" id="pdfUpload" style="flex:1"><i class="ic duo ic-globe" aria-hidden="true"></i> Siteye yükle</button>
                 </div>
                 <p class="hint">"Siteye yükle" derseniz müşteriler katalogdaki <b>PDF katalog</b> düğmesinden indirebilir.</p>
             </div>
@@ -886,18 +882,18 @@
         <section id="customersView" class="hidden">
             <!-- Boşken: nasıl başlanacağını göster -->
             <div class="onboard" id="cOnboard">
-                <div class="onboard-art"><i class="ic ic-users" aria-hidden="true"></i></div>
+                <div class="onboard-art"><i class="ic duo ic-users" aria-hidden="true"></i></div>
                 <h2>Müşterilerinizi ekleyin</h2>
                 <p>Kimin ne zaman sipariş verdiğini takip edin; uzun süredir sessiz kalanlara tek tek, adıyla WhatsApp mesajı atın.</p>
                 <div class="add-options">
                     <button class="add-opt" data-addmode="contacts" hidden>
-                        <span><i class="ic ic-mobile" aria-hidden="true"></i></span><strong>Rehberden seç</strong><small>Telefon rehberinden işaretle, hepsini ekle</small>
+                        <span><i class="ic duo ic-mobile" aria-hidden="true"></i></span><strong>Rehberden seç</strong><small>Telefon rehberinden işaretle, hepsini ekle</small>
                     </button>
                     <button class="add-opt" data-addmode="manual">
-                        <span><i class="ic ic-pen" aria-hidden="true"></i></span><strong>Tek tek ekle</strong><small>Telefon ve ad yazarak</small>
+                        <span><i class="ic duo ic-pen" aria-hidden="true"></i></span><strong>Tek tek ekle</strong><small>Telefon ve ad yazarak</small>
                     </button>
                     <button class="add-opt" data-addmode="paste">
-                        <span><i class="ic ic-list" aria-hidden="true"></i></span><strong>Listeden yapıştır</strong><small>Excel, not veya WhatsApp'tan kopyala</small>
+                        <span><i class="ic duo ic-list" aria-hidden="true"></i></span><strong>Listeden yapıştır</strong><small>Excel, not veya WhatsApp'tan kopyala</small>
                     </button>
                 </div>
                 <p class="hint">Müşteri listesi gizli bir depoda tutulur, katalogda görünmez.</p>
@@ -1058,7 +1054,7 @@
                 <div class="video-box">
                     <video id="videoPreview" class="hidden" controls playsinline muted preload="metadata"></video>
                     <div id="videoEmpty">
-                        <button type="button" class="btn-light" id="videoPick" style="width:100%"><i class="ic ic-video" aria-hidden="true"></i> Video seç veya çek</button>
+                        <button type="button" class="btn-light" id="videoPick" style="width:100%"><i class="ic duo ic-video" aria-hidden="true"></i> Video seç veya çek</button>
                         <button type="button" class="text-btn" id="videoLinkToggle">veya YouTube / Instagram linki yapıştır</button>
                     </div>
                     <input type="url" id="videoLink" class="hidden" placeholder="https://www.youtube.com/shorts/... veya https://www.instagram.com/reel/...">
@@ -2214,7 +2210,7 @@
             }
             const timer = draft.bitis ? countdownText(draft.bitis) : '';
             box.innerHTML = `<div class="promo"><span>${escapeHtml(draft.metin)}</span>` +
-                (timer ? `<span class="promo-timer"><i class="ic ic-clock" aria-hidden="true"></i> ${timer}</span>` : '') +
+                (timer ? `<span class="promo-timer"><i class="ic duo ic-clock" aria-hidden="true"></i> ${timer}</span>` : '') +
                 (draft.hedef ? '<span>→</span>' : '') + '</div>';
         }
 
@@ -2448,7 +2444,7 @@
                     </div>
                     <div class="item-actions">
                         <button class="order-btn" data-corder="${c.id}" title="Bugün sipariş verdi">✓ Sipariş</button>
-                        <button class="msg-btn" data-cmsg="${c.id}" title="WhatsApp'tan yaz" aria-label="WhatsApp'tan yaz"><i class="ic ic-message" aria-hidden="true"></i></button>
+                        <button class="msg-btn" data-cmsg="${c.id}" title="WhatsApp'tan yaz" aria-label="WhatsApp'tan yaz"><i class="ic duo ic-message" aria-hidden="true"></i></button>
                     </div>
                 </div>`;
             }).join('') || '<p class="hint" style="text-align:center;padding:24px">Aramanıza uygun müşteri yok.</p>';
@@ -2587,7 +2583,7 @@
             const t = normalizePhone($('cPhone').value);
             const dup = t.length >= 11 && customers.find(c => c.telefon === t && c.id !== editingCustomer?.id);
             $('cPhoneHint').innerHTML = dup
-                ? `<i class="ic ic-alert" aria-hidden="true"></i> Bu numara zaten kayıtlı: <b>${escapeHtml(displayName(dup))}</b>`
+                ? `<i class="ic duo ic-alert" aria-hidden="true"></i> Bu numara zaten kayıtlı: <b>${escapeHtml(displayName(dup))}</b>`
                 : t.length >= 12 ? `✓ ${prettyPhone(t)}` : '';
         });
 

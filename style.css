@@ -2369,7 +2369,17 @@ main .section-head h2 small, .spotlight .section-head h2 small { font-size: 0.87
 }
 .trust-strip[hidden], .trust[hidden] { display: none; }
 .trust-strip span { display: inline-flex; align-items: center; gap: 6px; }
-.trust-strip .ic { color: var(--rust); }
+.trust-strip .ic { font-size: 1.15rem; }
+.trust-strip { position: relative; padding-bottom: 12px; }
+.trust-strip::after {
+    content: '';
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 0;
+    height: 2px;
+    background: var(--stitch);
+}
 
 .trust { padding: 8px 0 48px; }
 .trust-grid {
@@ -2381,15 +2391,24 @@ main .section-head h2 small, .spotlight .section-head h2 small { font-size: 0.87
 @media (min-width: 1040px) { .trust-grid { grid-template-columns: repeat(3, 1fr); } }
 
 .trust-card {
+    position: relative;
     display: flex;
     gap: 14px;
     align-items: flex-start;
-    padding: 16px;
-    border-radius: var(--radius);
+    padding: 16px 16px 16px 28px;
+    border-radius: 6px;
     background: var(--card);
-    border: 1px solid var(--line);
+    border: 1.5px solid #1c2f4f;         /* giysi iç etiketi gibi */
 }
-.trust-icon { font-size: 1.6rem; line-height: 1; color: var(--rust); padding-top: 2px; }
+.trust-card::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 10px;
+    bottom: 10px;
+    border-left: 2px dashed var(--thread);
+}
+.trust-icon { font-size: 2rem; line-height: 1; }
 .trust-card b { font-size: 1.05rem; }
 .trust-card p { color: var(--ink-2); margin-top: 2px; white-space: pre-line; }
 .trust-link {

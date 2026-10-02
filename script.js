@@ -333,7 +333,7 @@ function renderTrust(f) {
         t(f.degisim) && ['refresh', t(f.degisimKisa) || 'Değişim imkânı'],
         since && ['store', since]
     ].filter(Boolean).slice(0, 3);
-    $('trustStrip').innerHTML = strip.map(([ic, s]) => `<span><i class="ic ic-${ic}" aria-hidden="true"></i> ${escapeHtml(s)}</span>`).join('');
+    $('trustStrip').innerHTML = strip.map(([ic, s]) => `<span><i class="ic duo ic-${ic}" aria-hidden="true"></i> ${escapeHtml(s)}</span>`).join('');
     $('trustStrip').hidden = !strip.length;
 
     const tel = t(f.telefon).replace(/[^\d+]/g, '');
@@ -351,7 +351,7 @@ function renderTrust(f) {
     ].filter(Boolean);
     $('trustGrid').innerHTML = cards.map(c => `
         <div class="trust-card">
-            <span class="trust-icon"><i class="ic ic-${c.icon}" aria-hidden="true"></i></span>
+            <span class="trust-icon"><i class="ic duo ic-${c.icon}" aria-hidden="true"></i></span>
             <div>
                 <b>${escapeHtml(c.title)}</b>
                 ${c.text ? `<p>${escapeHtml(c.text)}</p>` : ''}
@@ -1189,7 +1189,7 @@ function notifyButton(p, cls) {
     const asked = notifyList().some(n => n.id === p.id);
     return asked
         ? `<button class="${cls} notified" data-notify="${p.id}">✓ Haber verilecek</button>`
-        : `<button class="${cls} notify" data-notify="${p.id}"><i class="ic ic-bell" aria-hidden="true"></i> Gelince haber ver</button>`;
+        : `<button class="${cls} notify" data-notify="${p.id}"><i class="ic duo ic-bell" aria-hidden="true"></i> Gelince haber ver</button>`;
 }
 
 // Müşteri: WhatsApp'tan "gelince haber verin" yazar; bu cihaz da hatırlar
