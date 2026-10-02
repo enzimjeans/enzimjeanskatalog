@@ -2054,6 +2054,21 @@ body::before {
 
 .fan-card .badge { top: 8px; left: 8px; z-index: 2; }
 
+/* Ürün numarası: telefonla siparişte "No 12" demek yeterli */
+.card-no {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink-2);
+    background: var(--paper-2);
+    padding: 2px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.footer-links { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.btn-ghost[hidden], .footer-wa[hidden] { display: none; }
+
 @media (prefers-reduced-motion: reduce) {
     *:not(.ticker-track), *::before, *::after {
         animation: none !important;

@@ -251,13 +251,22 @@ async function loadPromo() {
     try {
         const res = await fetch('ayarlar.json', { cache: 'no-store' });
         if (!res.ok) return;
-        const a = (await res.json()).duyuru;
+        const ayar = await res.json();
+        if (ayar.pdf && ayar.pdf.tarih) showPdfLinks(ayar.pdf);
+        const a = ayar.duyuru;
         if (!a || !a.aktif || !a.metin) return;
         if (a.bitis && new Date(a.bitis) <= Date.now()) return;
         if (readStore(PROMO_CLOSED_KEY, '') === a.id) return;
         promo = a;
         renderPromo();
     } catch (e) {}
+}
+
+function showPdfLinks(pdf) {
+    const date = new Date(pdf.tarih).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
+    const href = `katalog.pdf?v=${new Date(pdf.tarih).getTime()}`;     // yeni PDF'te eskisi önbellekten gelmesin
+    ['heroPdf', 'footerPdf'].forEach(id => { $(id).href = href; $(id).hidden = false; });
+    $('footerPdf').textContent = `📄 PDF katalog indir (${date})`;
 }
 
 function countdownText(end) {
@@ -514,7 +523,7 @@ function productCard(p, index) {
                 </div>
                 <div class="card-meta">
                     <span class="card-price">${priceHtml(p)}</span>
-                    <span class="card-cat">${escapeHtml(p.kategori)}</span>
+                    <span class="card-no">No ${p.id}</span>
                 </div>
                 <div class="card-action" data-compact>${actionHtml(p, true)}</div>
             </div>
@@ -646,7 +655,7 @@ function openModal(id, { updateHash = true } = {}) {
     $('modalTitle').textContent = titleCase(p.urun_adi);
     $('modalPrice').innerHTML = `${priceHtml(p)} <small>/ adet</small>`;
     const mb = badgeOf(p);
-    $('modalCategory').textContent = p.kategori + (mb ? ` · ${mb.label}` : newIds.has(p.id) ? ' · Yeni' : '');
+    $('modalCategory').textContent = `No ${p.id} · ${p.kategori}` + (mb ? ` · ${mb.label}` : newIds.has(p.id) ? ' · Yeni' : '');
     $('modalDescription').textContent = tidyText(p.aciklama);
 
     const stock = $('modalStock');
@@ -667,7 +676,7 @@ function openModal(id, { updateHash = true } = {}) {
             ${colorLabel[x.id] ? `<span>${escapeHtml(colorLabel[x.id])}</span>` : ''}
         </button>`).join('');
 
-    const askText = `Merhaba, "${p.urun_adi}" (${displayPrice(p)}) hakkında bilgi almak istiyorum.\n${productUrl(p)}`;
+    const askText = `Merhaba, No ${p.id} "${p.urun_adi}" (${displayPrice(p)}) hakkında bilgi almak istiyorum.\n${productUrl(p)}`;
     $('modalExtras').innerHTML = `
         <a class="ask-btn" href="${whatsappUrl(askText)}" target="_blank" rel="noopener">WhatsApp'tan sor</a>
         <button class="ask-btn" data-share="${p.id}">Linki paylaş</button>
@@ -904,7 +913,7 @@ function sendWhatsAppOrder() {
         const lines = cart.filter(i => i.id === id);
         const pieces = productPieces(id);
         const s = saleOf(p);
-        message += `${n + 1}. ${p.urun_adi} (${p.kategori})\n`;
+        message += `${n + 1}. [No ${p.id}] ${p.urun_adi} (${p.kategori})\n`;
         if (isSeri(p)) {
             message += `   ${lines[0].quantity} seri (${s.bedenler.join('-')}, seri başı ${s.seriAdet} adet)\n`;
         } else if (needsSize(p)) {
