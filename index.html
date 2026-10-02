@@ -16,6 +16,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="ikonlar.css">
+    <!-- Ziyaret istatistikleri (Umami: çerezsiz, kişisel veri yok). Sadece yayındaki sitede sayar. -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="91cefaf2-0706-425c-ad1e-56dba596ced0" data-domains="enzimjeans.github.io"></script>
 </head>
 <body>
     <!-- Duyuru bandı (yönetim sayfasından düzenlenir) -->
@@ -63,8 +65,8 @@
                 <p class="hero-text">Ürünleri sepete ekleyin, siparişinizi tek dokunuşla WhatsApp'tan iletin.</p>
                 <div class="hero-cta">
                     <a href="#controls" class="btn-paper">Kataloğa göz at</a>
-                    <a href="#" class="btn-ghost" id="heroWhatsApp" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
-                    <a href="katalog.pdf" class="btn-ghost" id="heroPdf" download="SIVAL-katalog.pdf" hidden><i class="ic ic-file" aria-hidden="true"></i> PDF katalog</a>
+                    <a href="#" class="btn-ghost" id="heroWhatsApp" target="_blank" rel="noopener" data-umami-event="whatsapp-yaz">WhatsApp'tan yazın</a>
+                    <a href="katalog.pdf" class="btn-ghost" id="heroPdf" download="SIVAL-katalog.pdf" data-umami-event="pdf-indir" hidden><i class="ic ic-file" aria-hidden="true"></i> PDF katalog</a>
                 </div>
                 <div class="hero-stats" id="heroStats"></div>
             </div>
@@ -169,7 +171,7 @@
         </div>
         <div class="state" id="noProducts" hidden>
             <p>Aramanıza uygun ürün bulunamadı.</p>
-            <a class="ask-btn ask-inline" id="askMissing" href="#" target="_blank" rel="noopener">Aradığınızı WhatsApp'tan sorun</a>
+            <a class="ask-btn ask-inline" id="askMissing" href="#" target="_blank" rel="noopener" data-umami-event="bulunamadi-sor">Aradığınızı WhatsApp'tan sorun</a>
             <br>
             <button class="link-btn" id="resetFilters">Filtreleri temizle</button>
         </div>
@@ -190,8 +192,8 @@
             </div>
             <div class="footer-links">
                 <button class="footer-wa" id="installBtn" hidden><i class="ic ic-mobile" aria-hidden="true"></i> Kataloğu telefonuma ekle</button>
-                <a class="footer-wa" id="footerWhatsApp" href="#" target="_blank" rel="noopener">WhatsApp'tan yazın →</a>
-                <a class="footer-wa" id="footerPdf" href="katalog.pdf" download="SIVAL-katalog.pdf" hidden><i class="ic ic-file" aria-hidden="true"></i> PDF katalog indir</a>
+                <a class="footer-wa" id="footerWhatsApp" href="#" target="_blank" rel="noopener" data-umami-event="whatsapp-yaz">WhatsApp'tan yazın →</a>
+                <a class="footer-wa" id="footerPdf" href="katalog.pdf" download="SIVAL-katalog.pdf" data-umami-event="pdf-indir" hidden><i class="ic ic-file" aria-hidden="true"></i> PDF katalog indir</a>
             </div>
         </div>
     </footer>

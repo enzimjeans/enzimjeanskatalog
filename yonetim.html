@@ -405,6 +405,18 @@
         .wa-send:hover { background: #178a47; }
         #sendView .form-actions button { flex: 1; }
         #pdfView > h2 { display: none; }
+        #statsPeriods button.active { background: var(--text); color: #fff; }
+        .kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .kpi { background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 14px 12px; }
+        .kpi b { display: block; font-size: 1.5rem; line-height: 1.1; }
+        .kpi span { color: var(--muted); font-size: 0.9rem; }
+        .stats-h { font-size: 1.05rem; margin: 22px 0 10px; }
+        .bar-row { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) 4.6em; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.95rem; }
+        .bar-row b { text-align: right; white-space: nowrap; }
+        .bar-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .bar-track { height: 12px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+        .bar-track span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #c9853a, #a8502a); }
+        .stats-setup ol { padding-left: 20px; line-height: 1.8; margin: 8px 0 12px; }
         #firmView .form-actions { position: sticky; bottom: 0; z-index: 6; margin: 16px -20px -20px; padding: 12px 20px; background: var(--card); border-top: 1px solid var(--line); border-radius: 0 0 14px 14px; }
         #goalsView .form-actions { position: sticky; bottom: 0; z-index: 6; margin: 16px -20px -20px; padding: 12px 20px; background: var(--card); border-top: 1px solid var(--line); border-radius: 0 0 14px 14px; }
         .tier { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
@@ -703,6 +715,14 @@
         <!-- 2) Ürün listesi -->
         <section id="listView" class="hidden">
             <div class="hub">
+                <button class="hub-tile" id="statsTile">
+                    <span class="hub-icon"><i class="ic duo ic-chart" aria-hidden="true"></i></span>
+                    <span class="hub-text">
+                        <strong>İstatistikler</strong>
+                        <small>Kaç kişi geldi, neye baktı, kaç sipariş gitti</small>
+                    </span>
+                    <span class="hub-arrow">›</span>
+                </button>
                 <button class="hub-tile" id="announceTile">
                     <span class="hub-icon"><i class="ic duo ic-megaphone" aria-hidden="true"></i></span>
                     <span class="hub-text">
@@ -755,6 +775,16 @@
                 <a href="#" id="adminInstall" hidden>Yönetimi telefonuma ekle</a><br>
                 <a href="#" id="logoutBtn">Bu cihazdan çıkış yap</a>
             </p>
+        </section>
+
+        <!-- İstatistikler -->
+        <section id="statsView" class="hidden">
+            <div class="chips-row" id="statsPeriods" style="margin:0 0 12px">
+                <button type="button" data-period="bugun">Bugün</button>
+                <button type="button" data-period="gun7">Son 7 gün</button>
+                <button type="button" data-period="gun30">Son 30 gün</button>
+            </div>
+            <div class="panel" id="statsBody"></div>
         </section>
 
         <!-- Sepet hedefleri -->
@@ -1350,6 +1380,7 @@
             announceView: 'Duyuru bandı',
             pdfView: 'PDF katalog',
             goalsView: 'Sepet hedefleri',
+            statsView: 'İstatistikler',
             firmView: 'Firma bilgileri',
             customersView: 'Müşteriler',
             customerFormView: 'Müşteri',
@@ -3455,6 +3486,158 @@
                 busy();
             }
         };
+
+        // ---------- İstatistikler (Umami) ----------
+        // Anahtar sadece bu cihazda saklanır; rakamlar doğrudan Umami'den okunur.
+        const UMAMI_SITE = '91cefaf2-0706-425c-ad1e-56dba596ced0';
+        const UMAMI_API = `https://api.umami.is/v1/websites/${UMAMI_SITE}`;
+        const UMAMI_KEY = 'sival_umami_key';
+        let statsPeriod = 'gun7';
+
+        const umamiKey = () => { try { return localStorage.getItem(UMAMI_KEY) || ''; } catch (e) { return ''; } };
+        const nf = n => Number(n || 0).toLocaleString('tr-TR');
+
+        function periodRange(p) {
+            const end = Date.now();
+            const start = new Date();
+            start.setHours(0, 0, 0, 0);
+            if (p === 'gun7') start.setDate(start.getDate() - 6);
+            if (p === 'gun30') start.setDate(start.getDate() - 29);
+            return { startAt: start.getTime(), endAt: end };
+        }
+
+        async function umami(path, params = {}, key = umamiKey()) {
+            const q = new URLSearchParams({ ...periodRange(statsPeriod), ...params });
+            const res = await fetch(`${UMAMI_API}${path}?${q}`, { headers: { 'x-umami-api-key': key, Accept: 'application/json' } });
+            if (!res.ok) { const e = new Error(`Umami ${res.status}`); e.status = res.status; throw e; }
+            return res.json();
+        }
+
+        // Nereden geldi: alan adını herkesin anlayacağı isme çevir
+        function sourceName(x) {
+            const d = String(x || '').toLowerCase();
+            if (!d) return 'Doğrudan / kayıtlı link';
+            if (d.includes('instagram')) return 'Instagram';
+            if (d.includes('facebook') || d === 'fb.me' || d.includes('fb.com')) return 'Facebook';
+            if (d.includes('whatsapp') || d.includes('wa.me')) return 'WhatsApp';
+            if (d.includes('google')) return 'Google';
+            if (d.includes('tiktok')) return 'TikTok';
+            if (d.includes('enzimjeans.com')) return 'enzimjeans.com';
+            return d;
+        }
+
+        function barList(rows, unit) {
+            if (!rows.length) return '<p class="hint">Henüz veri yok.</p>';
+            const max = Math.max(...rows.map(r => r.n), 1);
+            return rows.map(r => `
+                <div class="bar-row">
+                    <span class="bar-label">${escapeHtml(r.label)}</span>
+                    <span class="bar-track"><span style="width:${Math.max(4, r.n / max * 100).toFixed(1)}%"></span></span>
+                    <b>${nf(r.n)}${unit ? ' ' + unit : ''}</b>
+                </div>`).join('');
+        }
+
+        function renderStatsSetup(msg) {
+            $('statsBody').innerHTML = `
+                <div class="stats-setup">
+                    <p><b>Bu cihazda bir kez Umami anahtarı girilmeli.</b></p>
+                    <ol>
+                        <li><a href="https://cloud.umami.is/settings/api-keys" target="_blank" rel="noopener">cloud.umami.is → Ayarlar → API keys</a> sayfasını açın.</li>
+                        <li><b>Create key</b> deyin, çıkan anahtarı kopyalayın.</li>
+                        <li>Aşağıya yapıştırıp <b>Kaydet</b>'e basın.</li>
+                    </ol>
+                    <input type="password" id="umamiKeyInput" placeholder="api_..." autocomplete="off">
+                    <button class="btn-primary" id="umamiKeySave" style="width:100%;margin-top:10px">Kaydet</button>
+                    ${msg ? `<p class="hint" style="color:var(--red);margin-top:8px">${escapeHtml(msg)}</p>` : ''}
+                </div>`;
+            $('umamiKeySave').onclick = async () => {
+                const key = $('umamiKeyInput').value.trim();
+                if (!key) return toast('Anahtarı yapıştırın.', true);
+                busy('Kontrol ediliyor...');
+                try {
+                    await umami('/stats', {}, key);
+                    try { localStorage.setItem(UMAMI_KEY, key); } catch (e) {}
+                    loadStats();
+                } catch (e) {
+                    renderStatsSetup(e.status === 401 || e.status === 403 ? 'Anahtar kabul edilmedi. Doğru kopyaladığınızdan emin olun.' : 'Umami\'ye ulaşılamadı. İnterneti kontrol edin.');
+                } finally { busy(); }
+            };
+        }
+
+        async function loadStats() {
+            document.querySelectorAll('#statsPeriods button').forEach(b => b.classList.toggle('active', b.dataset.period === statsPeriod));
+            if (!umamiKey()) { $('statsPeriods').classList.add('hidden'); return renderStatsSetup(); }
+            $('statsPeriods').classList.remove('hidden');
+            $('statsBody').innerHTML = '<p class="hint" style="text-align:center;padding:30px">Yükleniyor...</p>';
+            try {
+                const [st, events, refs, utm, topProducts, notFound, orders] = await Promise.all([
+                    umami('/stats'),
+                    umami('/metrics', { type: 'event', limit: 50 }),
+                    umami('/metrics', { type: 'referrer', limit: 20 }),
+                    umami('/metrics', { type: 'utmSource', limit: 10 }).catch(() => []),
+                    umami('/event-data/values', { eventName: 'urun', propertyName: 'ad' }).catch(() => []),
+                    umami('/event-data/values', { eventName: 'bulunamadi', propertyName: 'kelime' }).catch(() => []),
+                    umami('/event-data/values', { eventName: 'siparis', propertyName: 'tutar' }).catch(() => [])
+                ]);
+                const ev = Object.fromEntries((events || []).map(e => [e.x, Number(e.y) || 0]));
+                const visitors = Number(st.visitors) || 0;
+                const orderCount = ev['siparis'] || 0;
+                const orderSum = (orders || []).reduce((s, o) => s + (Number(o.value) || 0) * (Number(o.total) || 0), 0);
+
+                // Nereden geldi: reklam etiketi (utm) varsa ayrı göster
+                const src = {};
+                (refs || []).forEach(r => { const k = sourceName(r.x); src[k] = (src[k] || 0) + (Number(r.y) || 0); });
+                (utm || []).forEach(u => { if (u.x) { const k = `Reklam: ${u.x}`; src[k] = (src[k] || 0) + (Number(u.y) || 0); } });
+                const sources = Object.entries(src).map(([label, n]) => ({ label, n })).sort((a, b) => b.n - a.n).slice(0, 6);
+
+                const funnel = [
+                    { label: 'Siteye gelen', n: visitors },
+                    { label: 'Ürüne bakan', n: ev['urun'] || 0 },
+                    { label: 'Sepete ekleyen', n: ev['sepete-ekle'] || 0 },
+                    { label: 'Sipariş gönderen', n: orderCount }
+                ];
+                const others = [
+                    ['WhatsApp\'tan ürün soran', ev['urun-sor']], ['Gelince haber ver', ev['haber-ver']],
+                    ['Hemen ara', ev['hemen-ara']], ['PDF indiren', ev['pdf-indir']],
+                    ['Eksik beden arayan', ev['beden-tamamla']], ['Siparişi tekrarlayan', ev['siparisi-tekrarla']],
+                    ['Telefonuna ekleyen', ev['telefona-ekle']], ['Duyuruya tıklayan', ev['duyuru-tik']]
+                ].filter(([, n]) => n).map(([label, n]) => ({ label, n }));
+
+                $('statsBody').innerHTML = `
+                    <div class="kpis">
+                        <div class="kpi"><b>${nf(visitors)}</b><span>Ziyaretçi</span></div>
+                        <div class="kpi"><b>${nf(st.pageviews)}</b><span>Sayfa gezildi</span></div>
+                        <div class="kpi"><b>${nf(orderCount)}</b><span>Sipariş gönderildi</span></div>
+                        <div class="kpi"><b>${nf(Math.round(orderSum))} TL</b><span>Sipariş tutarı</span></div>
+                    </div>
+                    <h3 class="stats-h">Müşteri nerede kalıyor?</h3>
+                    ${barList(funnel, 'kişi')}
+                    <p class="hint">Siteye gelenlerin %${visitors ? Math.round(orderCount / visitors * 100) : 0}'i sipariş gönderdi.</p>
+                    <h3 class="stats-h">Nereden geldiler?</h3>
+                    ${barList(sources, '')}
+                    <h3 class="stats-h">En çok bakılan ürünler</h3>
+                    ${barList((topProducts || []).slice(0, 10).map(r => ({ label: r.value, n: Number(r.total) || 0 })), '')}
+                    <h3 class="stats-h">Aranıp bulunamayanlar</h3>
+                    <p class="hint" style="margin-top:-6px">Müşterinin aradığı ama katalogda olmayanlar: getirilecek ürün fikri.</p>
+                    ${barList((notFound || []).slice(0, 10).map(r => ({ label: r.value, n: Number(r.total) || 0 })), 'kez')}
+                    ${others.length ? `<h3 class="stats-h">Diğer hareketler</h3>${barList(others, '')}` : ''}
+                    <p class="hint" style="margin-top:16px">Sipariş sayısı WhatsApp'a gönderilen siparişlerdir; ödemenin tamamlanıp tamamlanmadığını sistem bilemez.
+                    Ayrıntılı rapor: <a href="https://cloud.umami.is" target="_blank" rel="noopener">cloud.umami.is</a> ·
+                    <a href="#" id="umamiKeyReset">Anahtarı değiştir</a></p>`;
+                $('umamiKeyReset').onclick = e => { e.preventDefault(); try { localStorage.removeItem(UMAMI_KEY); } catch (er) {} loadStats(); };
+            } catch (e) {
+                if (e.status === 401 || e.status === 403) { try { localStorage.removeItem(UMAMI_KEY); } catch (er) {} return renderStatsSetup('Anahtarın süresi dolmuş ya da silinmiş. Yeni anahtar girin.'); }
+                $('statsBody').innerHTML = `<p class="hint" style="text-align:center;padding:30px">İstatistikler yüklenemedi. İnterneti kontrol edip tekrar deneyin.</p>`;
+            }
+        }
+
+        $('statsTile').onclick = () => { show('statsView'); loadStats(); };
+        $('statsPeriods').addEventListener('click', e => {
+            const b = e.target.closest('[data-period]');
+            if (!b) return;
+            statsPeriod = b.dataset.period;
+            loadStats();
+        });
 
         // ---------- Başlat ----------
         const saved = getSaved();

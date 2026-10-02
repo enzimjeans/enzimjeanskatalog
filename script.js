@@ -26,6 +26,11 @@ function writeStore(key, value) {
 
 const $ = id => document.getElementById(id);
 
+// İstatistik: Umami yüklüyse olayı say (yüklenmediyse sessizce geç)
+function track(name, data) {
+    try { if (window.umami && typeof umami.track === 'function') umami.track(name, data); } catch (e) {}
+}
+
 // ---------- Yardımcılar ----------
 function escapeHtml(s) {
     return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -342,13 +347,13 @@ function renderTrust(f) {
     const ig = t(f.instagram).replace(/^@/, '');
     const cards = [
         since && { icon: 'store', title: since, text: t(f.hakkinda) },
-        t(f.adres) && { icon: 'pin', title: 'Mağazamız', text: t(f.adres), link: mapUrl, linkText: 'Yol tarifi al' },
+        t(f.adres) && { icon: 'pin', title: 'Mağazamız', text: t(f.adres), link: mapUrl, linkText: 'Yol tarifi al', ev: 'yol-tarifi' },
         t(f.saatler) && { icon: 'clock', title: 'Çalışma saatleri', text: t(f.saatler) },
         t(f.kargo) && { icon: 'truck', title: 'Kargo', text: t(f.kargo) },
         t(f.odeme) && { icon: 'card', title: 'Ödeme', text: t(f.odeme) },
         t(f.degisim) && { icon: 'refresh', title: 'Değişim', text: t(f.degisim) },
-        tel && { icon: 'phone', title: 'Telefon', text: t(f.telefon), link: `tel:${tel}`, linkText: 'Hemen ara', big: true },
-        ig && { icon: 'instagram', title: 'Instagram', text: `@${ig}`, link: `https://instagram.com/${encodeURIComponent(ig)}`, linkText: 'Takip et' }
+        tel && { icon: 'phone', title: 'Telefon', text: t(f.telefon), link: `tel:${tel}`, linkText: 'Hemen ara', big: true, ev: 'hemen-ara' },
+        ig && { icon: 'instagram', title: 'Instagram', text: `@${ig}`, link: `https://instagram.com/${encodeURIComponent(ig)}`, linkText: 'Takip et', ev: 'instagram' }
     ].filter(Boolean);
     $('trustGrid').innerHTML = cards.map(c => `
         <div class="trust-card">
@@ -356,7 +361,7 @@ function renderTrust(f) {
             <div>
                 <b>${escapeHtml(c.title)}</b>
                 ${c.text ? `<p>${escapeHtml(c.text)}</p>` : ''}
-                ${c.link ? `<a class="trust-link ${c.big ? 'big' : ''}" href="${escapeHtml(c.link)}" ${c.link.startsWith('tel:') ? '' : 'target="_blank" rel="noopener"'}>${escapeHtml(c.linkText)} →</a>` : ''}
+                ${c.link ? `<a class="trust-link ${c.big ? 'big' : ''}" href="${escapeHtml(c.link)}" data-umami-event="${c.ev}" ${c.link.startsWith('tel:') ? '' : 'target="_blank" rel="noopener"'}>${escapeHtml(c.linkText)} →</a>` : ''}
             </div>
         </div>`).join('');
     $('trust').hidden = !cards.length;
@@ -559,6 +564,20 @@ function getVisibleProducts() {
     return list.sort((a, b) => exact(a) - exact(b) || (inStock(b) - inStock(a)) || featuredFirst(a, b) || sorter(a, b));
 }
 
+let notFoundTimer = null;
+const notFoundSent = new Set();
+function trackNotFound(count) {
+    clearTimeout(notFoundTimer);
+    const q = $('searchInput').value.trim();
+    if (count || q.length < 2) return;
+    notFoundTimer = setTimeout(() => {
+        const k = trLower(q);
+        if ($('searchInput').value.trim() !== q || notFoundSent.has(k)) return;
+        notFoundSent.add(k);
+        track('bulunamadi', { kelime: k });
+    }, 1500);
+}
+
 function renderProducts() {
     if (activeCategory === 'beden' && !wantedSizes.size) activeCategory = 'all';
     renderSizeBanner();
@@ -566,6 +585,7 @@ function renderProducts() {
     const grid = $('productsGrid');
 
     $('noProducts').hidden = list.length > 0;
+    trackNotFound(list.length);
     const searched = $('searchInput').value.trim();
     $('askMissing').href = whatsappUrl(searched
         ? `Merhaba, katalogda "${searched}" bulamadım. Elinizde var mı?`
@@ -761,6 +781,7 @@ function openModal(id, { updateHash = true } = {}) {
     $('modalImage').src = imagePath(p);
     $('modalImage').alt = p.urun_adi;
     setupMedia(p);
+    track('urun', { no: p.id, ad: titleCase(p.urun_adi), kategori: p.kategori });
     $('modalTitle').textContent = titleCase(p.urun_adi);
     $('modalPrice').innerHTML = `${priceHtml(p)} <small>/ adet</small>`;
     const mb = badgeOf(p);
@@ -787,7 +808,7 @@ function openModal(id, { updateHash = true } = {}) {
 
     const askText = `Merhaba, No ${p.id} "${p.urun_adi}" (${displayPrice(p)}) hakkında bilgi almak istiyorum.\n${productUrl(p)}`;
     $('modalExtras').innerHTML = `
-        <a class="ask-btn" href="${whatsappUrl(askText)}" target="_blank" rel="noopener">WhatsApp'tan sor</a>
+        <a class="ask-btn" href="${whatsappUrl(askText)}" target="_blank" rel="noopener" data-umami-event="urun-sor" data-umami-event-no="${p.id}">WhatsApp'tan sor</a>
         <button class="ask-btn" data-share="${p.id}">Linki paylaş</button>
         ${favButton(p).replace('class="fav', 'class="fav fav-inline')}`;
 
@@ -892,6 +913,7 @@ function openSizeFinder() {
 }
 
 function showSizeResults() {
+    track('beden-tamamla', { bedenler: [...wantedSizes].join(', ') });
     $('sizeModal').close();
     selectCategory('beden');
 }
@@ -1011,7 +1033,10 @@ function setQuantity(id, size, quantity) {
     if ($('cartModal').open) renderCart();
     if (productPieces(id) > before) {
         bumpCartCount();
-        if (before === 0) toast(`Sepete eklendi ✓ ${titleCase(p.urun_adi)}`);
+        if (before === 0) {
+            toast(`Sepete eklendi ✓ ${titleCase(p.urun_adi)}`);
+            track('sepete-ekle', { no: p.id, ad: titleCase(p.urun_adi) });
+        }
     }
 }
 
@@ -1172,6 +1197,7 @@ function sendWhatsAppOrder() {
         items: cart.filter(i => ids.includes(i.id)).map(i => ({ id: i.id, size: i.size, quantity: i.quantity }))
     });
 
+    track('siparis', { adet: items, tutar: Math.round(g.final), urun: ids.length });
     window.open(whatsappUrl(message), '_blank');
     setTimeout(() => offerInstall(true), 2500);     // sipariş gönderildi: tam zamanı
 }
@@ -1207,7 +1233,10 @@ async function runInstall() {
     installPrompt = null;
     $('installModal').close();
     updateInstallButton();
-    if (choice && choice.outcome === 'accepted') toast('Eklendi ✓ Ana ekranınızda SİVAL simgesi var');
+    if (choice && choice.outcome === 'accepted') {
+        toast('Eklendi ✓ Ana ekranınızda SİVAL simgesi var');
+        track('telefona-ekle');
+    }
 }
 
 window.addEventListener('beforeinstallprompt', e => {
@@ -1254,6 +1283,7 @@ function requestNotify(id) {
     let msg = `Merhaba, No ${p.id} "${p.urun_adi}" şu an stokta yok. Stoğa girince bana haber verir misiniz?`;
     if (buyer.name) msg += `\nFirma / Ad: ${buyer.name}`;
     if (buyer.city) msg += `\nŞehir: ${buyer.city}`;
+    track('haber-ver', { no: p.id, ad: titleCase(p.urun_adi) });
     window.open(whatsappUrl(msg), '_blank');
     const list = notifyList().filter(n => n.id !== id);
     list.push({ id, date: new Date().toISOString() });
@@ -1298,6 +1328,7 @@ function renderReorder() {
 }
 
 function reorder() {
+    track('siparisi-tekrarla');
     const { items } = reorderableItems();
     items.forEach(i => {
         const size = String(i.size || '');
@@ -1374,7 +1405,11 @@ function setupEvents() {
     ['buyerName', 'buyerCity'].forEach(id => $(id).addEventListener('change', () =>
         writeStore(BUYER_KEY, { name: $('buyerName').value.trim(), city: $('buyerCity').value.trim() })));
 
-    $('promoMain').addEventListener('click', () => { if (promo && promo.hedef) selectCategory(promo.hedef); });
+    $('promoMain').addEventListener('click', () => {
+        if (!promo || !promo.hedef) return;
+        track('duyuru-tik', { hedef: promo.hedef });
+        selectCategory(promo.hedef);
+    });
     $('promoClose').addEventListener('click', () => {
         if (promo) writeStore(PROMO_CLOSED_KEY, promo.id);
         hidePromo();
