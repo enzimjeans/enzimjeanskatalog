@@ -3488,13 +3488,36 @@
         };
 
         // ---------- İstatistikler (Umami) ----------
-        // Anahtar sadece bu cihazda saklanır; rakamlar doğrudan Umami'den okunur.
+        // Ücretsiz plan: Umami'nin "paylaşım linki" ile okunur (API anahtarı Pro ister).
+        // Link gizli depoda saklanır, bir kez girilince tüm cihazlarda çalışır.
         const UMAMI_SITE = '91cefaf2-0706-425c-ad1e-56dba596ced0';
-        const UMAMI_API = `https://api.umami.is/v1/websites/${UMAMI_SITE}`;
-        const UMAMI_KEY = 'sival_umami_key';
+        const UMAMI_HOST = 'https://cloud.umami.is';
+        const UMAMI_API = `${UMAMI_HOST}/api/websites/${UMAMI_SITE}`;
+        const UMAMI_SHARE = 'sival_umami_share';
+        const STATS_FILE = 'istatistik.json';
         let statsPeriod = 'gun7';
+        let shareToken = null;
 
-        const umamiKey = () => { try { return localStorage.getItem(UMAMI_KEY) || ''; } catch (e) { return ''; } };
+        const localShare = () => { try { return localStorage.getItem(UMAMI_SHARE) || ''; } catch (e) { return ''; } };
+        const shareSlug = text => (String(text || '').match(/\/share\/([a-zA-Z0-9]{8,50})/) || String(text || '').trim().match(/^([a-zA-Z0-9]{8,50})$/) || [])[1] || '';
+
+        async function getShareSlug() {
+            const local = localShare();
+            if (local) return local;
+            try {
+                const { data } = await readJson(STATS_FILE, {}, CUSTOMER_REPO);
+                if (data && data.paylasim) { try { localStorage.setItem(UMAMI_SHARE, data.paylasim); } catch (e) {} return data.paylasim; }
+            } catch (e) {}
+            return '';
+        }
+
+        async function fetchShareToken(slug) {
+            const res = await fetch(`${UMAMI_HOST}/api/share/${slug}`, { headers: { Accept: 'application/json' } });
+            if (!res.ok) { const e = new Error(`Umami ${res.status}`); e.status = res.status === 404 ? 401 : res.status; throw e; }
+            const d = await res.json();
+            if (!d.token || (d.websiteId && d.websiteId !== UMAMI_SITE)) { const e = new Error('wrong site'); e.status = 403; throw e; }
+            return d.token;
+        }
         const nf = n => Number(n || 0).toLocaleString('tr-TR');
 
         function periodRange(p) {
@@ -3506,9 +3529,9 @@
             return { startAt: start.getTime(), endAt: end };
         }
 
-        async function umami(path, params = {}, key = umamiKey()) {
+        async function umami(path, params = {}, token = shareToken) {
             const q = new URLSearchParams({ ...periodRange(statsPeriod), ...params });
-            const res = await fetch(`${UMAMI_API}${path}?${q}`, { headers: { 'x-umami-api-key': key, Accept: 'application/json' } });
+            const res = await fetch(`${UMAMI_API}${path}?${q}`, { headers: { 'x-umami-share-token': token, 'x-umami-share-context': '1', Accept: 'application/json' } });
             if (!res.ok) { const e = new Error(`Umami ${res.status}`); e.status = res.status; throw e; }
             return res.json();
         }
@@ -3540,36 +3563,47 @@
         function renderStatsSetup(msg) {
             $('statsBody').innerHTML = `
                 <div class="stats-setup">
-                    <p><b>Bu cihazda bir kez Umami anahtarı girilmeli.</b></p>
+                    <p><b>Bir kereliğine Umami'den paylaşım linki alınmalı.</b> Ücretsizdir, sonra hiç sorulmaz.</p>
                     <ol>
-                        <li><a href="https://cloud.umami.is/settings/api-keys" target="_blank" rel="noopener">cloud.umami.is → Ayarlar → API keys</a> sayfasını açın.</li>
-                        <li><b>Create key</b> deyin, çıkan anahtarı kopyalayın.</li>
-                        <li>Aşağıya yapıştırıp <b>Kaydet</b>'e basın.</li>
+                        <li><a href="https://cloud.umami.is/websites/${UMAMI_SITE}/settings" target="_blank" rel="noopener">Umami'de sitenin ayarlarını açın</a> (giriş yapın).</li>
+                        <li><b>Share</b> bölümünde <b>Add</b>'e basın, isim yerine <b>sival</b> yazıp <b>Save</b> deyin.</li>
+                        <li>Çıkan <b>/share/</b> ile başlayan linki kopyalayın, aşağıya yapıştırıp <b>Kaydet</b>'e basın.</li>
                     </ol>
-                    <input type="password" id="umamiKeyInput" placeholder="api_..." autocomplete="off">
-                    <button class="btn-primary" id="umamiKeySave" style="width:100%;margin-top:10px">Kaydet</button>
+                    <input type="url" id="umamiShareInput" placeholder="https://cloud.umami.is/share/..." autocomplete="off">
+                    <button class="btn-primary" id="umamiShareSave" style="width:100%;margin-top:10px">Kaydet</button>
                     ${msg ? `<p class="hint" style="color:var(--red);margin-top:8px">${escapeHtml(msg)}</p>` : ''}
                 </div>`;
-            $('umamiKeySave').onclick = async () => {
-                const key = $('umamiKeyInput').value.trim();
-                if (!key) return toast('Anahtarı yapıştırın.', true);
+            $('umamiShareSave').onclick = async () => {
+                const slug = shareSlug($('umamiShareInput').value);
+                if (!slug) return renderStatsSetup('Bu bir paylaşım linki değil. Linkin içinde "/share/" olmalı.');
                 busy('Kontrol ediliyor...');
                 try {
-                    await umami('/stats', {}, key);
-                    try { localStorage.setItem(UMAMI_KEY, key); } catch (e) {}
+                    const token = await fetchShareToken(slug);
+                    await umami('/stats', {}, token);
+                    shareToken = token;
+                    try { localStorage.setItem(UMAMI_SHARE, slug); } catch (e) {}
+                    try { await updateJson(STATS_FILE, d => ({ ...(d || {}), paylasim: slug }), 'İstatistik linki', {}, CUSTOMER_REPO); } catch (e) {}
                     loadStats();
                 } catch (e) {
-                    renderStatsSetup(e.status === 401 || e.status === 403 ? 'Anahtar kabul edilmedi. Doğru kopyaladığınızdan emin olun.' : 'Umami\'ye ulaşılamadı. İnterneti kontrol edin.');
+                    renderStatsSetup(e.status === 401 || e.status === 403 ? 'Link kabul edilmedi. Paylaşımın açık olduğundan ve linki tam kopyaladığınızdan emin olun.' : 'Umami\'ye ulaşılamadı. İnterneti kontrol edin.');
                 } finally { busy(); }
             };
         }
 
-        async function loadStats() {
+        async function forgetShare() {
+            shareToken = null;
+            try { localStorage.removeItem(UMAMI_SHARE); } catch (e) {}
+            try { await updateJson(STATS_FILE, d => { const n = { ...(d || {}) }; delete n.paylasim; return n; }, 'İstatistik linki silindi', {}, CUSTOMER_REPO); } catch (e) {}
+        }
+
+        async function loadStats(retried = false) {
             document.querySelectorAll('#statsPeriods button').forEach(b => b.classList.toggle('active', b.dataset.period === statsPeriod));
-            if (!umamiKey()) { $('statsPeriods').classList.add('hidden'); return renderStatsSetup(); }
-            $('statsPeriods').classList.remove('hidden');
             $('statsBody').innerHTML = '<p class="hint" style="text-align:center;padding:30px">Yükleniyor...</p>';
+            const slug = await getShareSlug();
+            if (!slug) { $('statsPeriods').classList.add('hidden'); return renderStatsSetup(); }
+            $('statsPeriods').classList.remove('hidden');
             try {
+                if (!shareToken) shareToken = await fetchShareToken(slug);
                 const [st, events, refs, utm, topProducts, notFound, orders] = await Promise.all([
                     umami('/stats'),
                     umami('/metrics', { type: 'event', limit: 50 }),
@@ -3623,10 +3657,14 @@
                     ${others.length ? `<h3 class="stats-h">Diğer hareketler</h3>${barList(others, '')}` : ''}
                     <p class="hint" style="margin-top:16px">Sipariş sayısı WhatsApp'a gönderilen siparişlerdir; ödemenin tamamlanıp tamamlanmadığını sistem bilemez.
                     Ayrıntılı rapor: <a href="https://cloud.umami.is" target="_blank" rel="noopener">cloud.umami.is</a> ·
-                    <a href="#" id="umamiKeyReset">Anahtarı değiştir</a></p>`;
-                $('umamiKeyReset').onclick = e => { e.preventDefault(); try { localStorage.removeItem(UMAMI_KEY); } catch (er) {} loadStats(); };
+                    <a href="#" id="umamiKeyReset">Linki değiştir</a></p>`;
+                $('umamiKeyReset').onclick = async e => { e.preventDefault(); busy('Siliniyor...'); await forgetShare(); busy(); loadStats(); };
             } catch (e) {
-                if (e.status === 401 || e.status === 403) { try { localStorage.removeItem(UMAMI_KEY); } catch (er) {} return renderStatsSetup('Anahtarın süresi dolmuş ya da silinmiş. Yeni anahtar girin.'); }
+                if (e.status === 401 || e.status === 403) {
+                    if (!retried) { shareToken = null; return loadStats(true); }
+                    await forgetShare();
+                    return renderStatsSetup('Paylaşım linki kapatılmış ya da değişmiş. Yeni linki girin.');
+                }
                 $('statsBody').innerHTML = `<p class="hint" style="text-align:center;padding:30px">İstatistikler yüklenemedi. İnterneti kontrol edip tekrar deneyin.</p>`;
             }
         }
