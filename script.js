@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Ürünleri yükle
 async function loadProducts() {
     try {
-        const response = await fetch('urunler.json');
+        const response = await fetch('urunler.json', { cache: 'no-store' });
 
         if (!response.ok) {
             throw new Error('Ürünler yüklenemedi');
