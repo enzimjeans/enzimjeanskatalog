@@ -229,6 +229,7 @@ async function loadProducts() {
 
         renderStats();
         renderReorder();
+        renderBackIn();
         renderChips();
         renderProducts();
         updateCartUI();
@@ -590,7 +591,7 @@ function actionHtml(p, compact = false) {
     const unit = isSeri(p) ? 'seri' : 'adet';
     // Kartta yazılı, büyük düğmeler: herkesin anlayacağı dil
     if (compact) {
-        if (!inStock(p)) return '<button class="card-btn" disabled>Stokta yok</button>';
+        if (!inStock(p)) return notifyButton(p, 'card-btn');
         if (needsSize(p)) {
             const pieces = productPieces(p.id);
             return pieces
@@ -607,7 +608,7 @@ function actionHtml(p, compact = false) {
             </div>`;
     }
 
-    if (!inStock(p)) return '<button class="add-btn" disabled>Stokta yok</button>';
+    if (!inStock(p)) return notifyButton(p, 'add-btn notify-big');
     const price = extractPrice(p.fiyat);
     const s = saleOf(p);
 
@@ -1092,6 +1093,52 @@ function reorderableItems() {
     return { last, items };
 }
 
+// ---------- Gelince haber ver ----------
+const NOTIFY_KEY = 'sival_notify';
+const notifyList = () => readStore(NOTIFY_KEY, []).filter(n => n && Number.isFinite(n.id));
+
+function notifyButton(p, cls) {
+    const asked = notifyList().some(n => n.id === p.id);
+    return asked
+        ? `<button class="${cls} notified" data-notify="${p.id}">✓ Haber verilecek</button>`
+        : `<button class="${cls} notify" data-notify="${p.id}">🔔 Gelince haber ver</button>`;
+}
+
+// Müşteri: WhatsApp'tan "gelince haber verin" yazar; bu cihaz da hatırlar
+function requestNotify(id) {
+    const p = findProduct(id);
+    if (!p) return;
+    const buyer = readStore(BUYER_KEY, {});
+    let msg = `Merhaba, No ${p.id} "${p.urun_adi}" şu an stokta yok. Stoğa girince bana haber verir misiniz?`;
+    if (buyer.name) msg += `\nFirma / Ad: ${buyer.name}`;
+    if (buyer.city) msg += `\nŞehir: ${buyer.city}`;
+    window.open(whatsappUrl(msg), '_blank');
+    const list = notifyList().filter(n => n.id !== id);
+    list.push({ id, date: new Date().toISOString() });
+    writeStore(NOTIFY_KEY, list);
+    refreshActions(id);
+    toast('Tamam! Ürün gelince haber vereceğiz 🔔');
+}
+
+// Siteye dönen müşteriye: beklediği ürün stoğa girdiyse en üstte göster
+function renderBackIn() {
+    const back = notifyList().map(n => findProduct(n.id)).filter(p => p && inStock(p));
+    $('backInBox').hidden = back.length === 0;
+    if (!back.length) return;
+    $('backInList').innerHTML = back.map(p => `
+        <button class="back-in-item" data-similar="${p.id}">
+            <img src="${imagePath(p)}" alt="">
+            <span><b>${escapeHtml(titleCase(p.urun_adi))}</b><small>No ${p.id} · ${escapeHtml(displayPrice(p))}</small></span>
+            <em>Göster →</em>
+        </button>`).join('');
+}
+
+function clearBackIn() {
+    // Stoğa girenleri listeden çıkar, beklemeye devam edenler kalsın
+    writeStore(NOTIFY_KEY, notifyList().filter(n => { const p = findProduct(n.id); return p && !inStock(p); }));
+    $('backInBox').hidden = true;
+}
+
 function renderReorder() {
     const { last, items } = reorderableItems();
     let dismissed = false;
@@ -1150,10 +1197,11 @@ function setupEvents() {
 
     // Kart, detay ve sepet içindeki tüm butonlar
     document.addEventListener('click', e => {
-        const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open],[data-open-id],[data-similar],[data-share],[data-close],[data-goto],[data-fav],[data-go-cart]');
+        const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open],[data-open-id],[data-similar],[data-share],[data-close],[data-goto],[data-fav],[data-go-cart],[data-notify]');
         if (!t) return;
         const d = t.dataset;
-        if ('goCart' in d) { $('productModal').close(); setTimeout(openCart, 50); }
+        if (d.notify) requestNotify(Number(d.notify));
+        else if ('goCart' in d) { $('productModal').close(); setTimeout(openCart, 50); }
         else if (d.fav) toggleFav(Number(d.fav));
         else if (d.goto) selectCategory(d.goto);
         else if (d.add) addToCart(Number(d.add));
@@ -1195,6 +1243,7 @@ function setupEvents() {
     });
 
     $('reorderBtn').addEventListener('click', reorder);
+    $('backInClose').addEventListener('click', clearBackIn);
     $('reorderClose').addEventListener('click', () => {
         $('reorderBox').hidden = true;
         try { sessionStorage.setItem('sival_reorder_closed', '1'); } catch (e) {}

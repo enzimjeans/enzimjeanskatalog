@@ -725,7 +725,7 @@
             </div>
             <div class="toolbar">
                 <button class="btn-primary" id="newBtn">+ Yeni Ürün Ekle</button>
-                <input type="search" id="search" placeholder="Ürün ara...">
+                <input type="search" id="search" placeholder="Ürün adı veya numarası...">
                 <select id="catFilter"></select>
             </div>
             <div class="count" id="count"></div>
@@ -911,6 +911,11 @@
                     <button type="button" data-when="">Bilmiyorum</button>
                 </div>
                 <p class="hint" id="cWhenHint"></p>
+            </div>
+            <div class="field">
+                <label for="cWait">🔔 Beklediği ürünler <small style="color:var(--muted);font-weight:400">(isteğe bağlı)</small></label>
+                <input type="text" id="cWait" inputmode="numeric" placeholder="Ürün numaraları, örn: 52, 61">
+                <p class="hint">Müşteri "gelince haber verin" dediyse numarayı yazın. Ürün stoğa girince size hatırlatırım.</p>
             </div>
             <details class="more" id="cMore">
                 <summary>Daha fazla (not, mesaj tercihi)</summary>
@@ -1276,13 +1281,13 @@
         }
 
         let toastTimer;
-        function toast(msg, isError, undo) {
+        function toast(msg, isError, undo, actionLabel = 'GERİ AL') {
             const t = $('toast');
             t.textContent = msg;
             if (undo) {
                 const b = document.createElement('button');
                 b.className = 'toast-undo';
-                b.textContent = 'GERİ AL';
+                b.textContent = actionLabel;
                 b.onclick = () => { t.className = 'toast'; undo(); };
                 t.appendChild(b);
             }
@@ -1518,7 +1523,7 @@
             const cat = $('catFilter').value;
             const shown = products
                 .filter(p => cat === 'all' || p.kategori === cat)
-                .filter(p => !q || String(p.urun_adi).toLocaleLowerCase('tr').includes(q))
+                .filter(p => !q || String(p.urun_adi).toLocaleLowerCase('tr').includes(q) || String(p.id) === q.replace(/^no\s*[.:]?\s*/, ''))   // numarayla da bulunsun
                 .slice()
                 .reverse(); // en son eklenen en üstte
 
@@ -1564,6 +1569,7 @@
                         renderList();
                         const msg = `${p.urun_adi}: ${value === 'Var' ? 'STOKTA' : 'TÜKENDİ'} olarak işaretlendi`;
                         toast(msg, false, undoable ? () => setStockTo(value === 'Var' ? 'Yok' : 'Var', false) : null);
+                        if (value === 'Var') setTimeout(() => offerWaitingNotify(id), 900);
                     } catch (err) {
                         toast(errorText(err), true);
                     } finally {
@@ -2038,6 +2044,7 @@
                         `Ürün güncellendi: ${name}`
                     );
                     if (oldImage !== gorsel) deleteImageIfUnused(oldImage);
+                    if (existing.stok === 'Yok' && formStock === 'Var') setTimeout(() => offerWaitingNotify(editingId), 900);
                     if (existing.video && existing.video !== video) deleteVideoIfUnused(existing.video);
                 } else {
                     await updateProducts(list => {
@@ -2384,7 +2391,8 @@
             $('cList').innerHTML = list.map(c => {
                 const seg = segmentOf(c);
                 const last = c.sonSiparis ? `son sipariş <b>${agoText(c.sonSiparis)}</b>` : 'sipariş bilgisi yok';
-                const msg = c.sonMesaj ? ` · 💬 ${agoText(c.sonMesaj)}` : '';
+                const msg = (c.sonMesaj ? ` · 💬 ${agoText(c.sonMesaj)}` : '') +
+                    ((c.bekliyor || []).length ? ` · 🔔 No ${c.bekliyor.join(', ')} bekliyor` : '');
                 return `
                 <div class="item c-item" data-cid="${c.id}">
                     <div class="avatar ${seg}">${escapeHtml(initials(c))}</div>
@@ -2517,6 +2525,7 @@
             $('cWhenHint').textContent = c.sonSiparis
                 ? `Kayıtlı: ${new Date(c.sonSiparis).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}` : '';
             $('cNote').value = c.not || '';
+            $('cWait').value = (c.bekliyor || []).join(', ');
             $('cOptOut').checked = !!c.ret;
             $('cMore').open = !!(c.not || c.ret);
             $('cSaveNext').classList.toggle('hidden', !!editingCustomer);
@@ -2549,7 +2558,8 @@
             if (editingCustomer && !cWhenTouched) sonSiparis = editingCustomer.sonSiparis || null;
             else sonSiparis = cWhen === '' ? null : new Date(Date.now() - Number(cWhen) * 86400000).toISOString();
 
-            const fields = { ad, firma: '', telefon, sehir: $('cCity').value.trim(), sonSiparis, not: $('cNote').value.trim(), ret: $('cOptOut').checked };
+            const bekliyor = [...new Set(($('cWait').value.match(/\d+/g) || []).map(Number))];
+            const fields = { ad, firma: '', telefon, sehir: $('cCity').value.trim(), sonSiparis, not: $('cNote').value.trim(), ret: $('cOptOut').checked, bekliyor };
             busy('Kaydediliyor...');
             try {
                 if (editingCustomer) {
@@ -2715,6 +2725,7 @@
         function openCampaign(selectAll) {
             if (!customers.length) return toast('Önce müşteri ekleyin.', true);
             campSelected = new Set(customers.filter(c => !c.ret && (selectAll || isRecommended(c))).map(c => c.id));
+            $('campOptOut').checked = true;          // stok haberinde kapatılmış olabilir
             $('campText').value = TEMPLATES[campTpl].text();
             renderCampaign();
             show('campaignView');
@@ -2788,13 +2799,18 @@
         // Mesaj atılanların "son mesaj" tarihini tek seferde kaydet
         async function finishCampaign() {
             const sentIds = new Set(queue.filter(c => c._sent).map(c => c.id));
+            const doneProduct = notifyProductId;
+            notifyProductId = null;
             $('sendBar').style.width = '100%';
             if (sentIds.size) {
                 busy('Kaydediliyor...');
                 try {
                     const now = new Date().toISOString();
-                    await saveCustomers(list => list.map(x => sentIds.has(x.id) ? { ...x, sonMesaj: now } : x),
-                        `Kampanya: ${sentIds.size} kişiye mesaj`);
+                    // "Gelince haber ver" gönderiminde, haber verilenlerin bekleme listesinden ürünü düş
+                    await saveCustomers(list => list.map(x => sentIds.has(x.id)
+                        ? { ...x, sonMesaj: now, ...(doneProduct ? { bekliyor: (x.bekliyor || []).filter(i => i !== doneProduct) } : {}) }
+                        : x),
+                        doneProduct ? `Stok haberi: No ${doneProduct}, ${sentIds.size} kişi` : `Kampanya: ${sentIds.size} kişiye mesaj`);
                 } catch (e) { toast(customerErrorText(e), true); }
                 finally { busy(); }
             }
@@ -2802,6 +2818,28 @@
             renderCustomers();
             show('customersView');
             toast(sentIds.size ? `🎉 ${sentIds.size} kişiye mesaj hazırlandı` : 'Kampanya bitti');
+        }
+
+        // ---------- Gelince haber ver: ürün stoğa girince bekleyenlere ----------
+        let notifyProductId = null;
+
+        async function offerWaitingNotify(productId) {
+            try { if (!customers) await loadCustomers(); } catch (e) { return; }
+            const p = products.find(x => x.id === productId);
+            const waiting = (customers || []).filter(c => !c.ret && (c.bekliyor || []).includes(productId));
+            if (!p || !waiting.length) return;
+            toast(`🔔 ${waiting.length} müşteri bu ürünü bekliyor`, false, () => startWaitingNotify(p, waiting), 'HABER VER');
+        }
+
+        function startWaitingNotify(p, waiting) {
+            notifyProductId = p.id;
+            $('campOptOut').checked = false;          // istedikleri bilgi; ticari ileti değil
+            $('campText').value = `Merhaba {ad}, beklediğiniz No ${p.id} ${p.urun_adi} tekrar stokta! 🎉\nGörmek ve sipariş vermek için: ${CATALOG_URL}#urun-${p.id}`;
+            queue = waiting.map(c => ({ ...c }));
+            queueIndex = 0;
+            sentCount = 0;
+            renderSendStep();
+            show('sendView');
         }
 
         // ---------- PDF katalog ----------

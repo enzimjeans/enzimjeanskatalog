@@ -2275,6 +2275,51 @@ main .section-head h2 small, .spotlight .section-head h2 small { font-size: 0.87
 }
 .cart-lines p.disc { color: #1a7a43; font-weight: 700; }
 
+/* ============================================
+   Gelince haber ver
+   ============================================ */
+.card-btn.notify, .add-btn.notify {
+    background: #fff7ec;
+    border: 1.5px dashed var(--thread);
+    color: var(--ink);
+    font-size: 0.9rem;
+}
+.card-btn.notify:hover, .add-btn.notify:hover { background: #fdecd5; color: var(--ink); }
+.card-btn.notified, .add-btn.notified {
+    background: var(--paper-2);
+    border: 1.5px solid var(--line);
+    color: #1a7a43;
+    font-size: 0.9rem;
+}
+.add-btn.notify-big { padding: 14px; font-size: 1rem; }
+
+.back-in {
+    margin: 18px 0 0;
+    padding: 14px;
+    border-radius: var(--radius);
+    background: #effaf3;
+    border: 1.5px solid #9ed4b2;
+    animation: rise 0.4s ease both;
+}
+.back-in[hidden] { display: none; }
+.back-in-wrap .back-in { margin: 12px 0; }
+.back-in-head { display: flex; align-items: center; justify-content: space-between; }
+.back-in-head strong { font-family: var(--display); font-weight: 500; font-size: 1.2rem; }
+.back-in-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.back-in-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 12px;
+    background: var(--card);
+    text-align: left;
+}
+.back-in-item img { width: 56px; height: 70px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+.back-in-item span { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.back-in-item small { color: var(--muted); font-size: 0.875rem; }
+.back-in-item em { font-style: normal; font-weight: 700; color: #1a7a43; white-space: nowrap; }
+
 @media (prefers-reduced-motion: reduce) {
     *:not(.ticker-track), *::before, *::after {
         animation: none !important;
