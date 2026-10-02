@@ -153,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('buyerCity').value = buyer.city || '';
     setupEvents();
     loadProducts();
+    loadPromo();
 });
 
 async function loadProducts() {
@@ -184,6 +185,55 @@ async function loadProducts() {
     } finally {
         $('loading').hidden = true;
     }
+}
+
+// ---------- Duyuru bandı ----------
+const PROMO_CLOSED_KEY = 'sival_promo_closed';
+let promo = null;
+let promoTimer = null;
+
+async function loadPromo() {
+    try {
+        const res = await fetch('ayarlar.json', { cache: 'no-store' });
+        if (!res.ok) return;
+        const a = (await res.json()).duyuru;
+        if (!a || !a.aktif || !a.metin) return;
+        if (a.bitis && new Date(a.bitis) <= Date.now()) return;
+        if (readStore(PROMO_CLOSED_KEY, '') === a.id) return;
+        promo = a;
+        renderPromo();
+    } catch (e) {}
+}
+
+function countdownText(end) {
+    const ms = new Date(end) - Date.now();
+    if (!(ms > 0)) return '';
+    const s = Math.floor(ms / 1000);
+    const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+    const pad = n => String(n).padStart(2, '0');
+    return (d ? `${d} gün ` : '') + `${pad(h)}:${pad(m)}:${pad(sec)}`;
+}
+
+function renderPromo() {
+    $('promoText').textContent = promo.metin;
+    $('promoGo').hidden = !promo.hedef;
+    $('promoMain').disabled = !promo.hedef;
+    $('promo').hidden = false;
+    if (promo.bitis) {
+        const tick = () => {
+            const t = countdownText(promo.bitis);
+            if (!t) { hidePromo(); return; }      // süre bitti
+            $('promoTimer').textContent = `⏳ ${t}`;
+            $('promoTimer').hidden = false;
+        };
+        tick();
+        promoTimer = setInterval(tick, 1000);
+    }
+}
+
+function hidePromo() {
+    clearInterval(promoTimer);
+    $('promo').hidden = true;
 }
 
 function renderStats() {
@@ -759,6 +809,12 @@ function setupEvents() {
     // Firma / şehir bir kez yazılsın, hatırlansın
     ['buyerName', 'buyerCity'].forEach(id => $(id).addEventListener('change', () =>
         writeStore(BUYER_KEY, { name: $('buyerName').value.trim(), city: $('buyerCity').value.trim() })));
+
+    $('promoMain').addEventListener('click', () => { if (promo && promo.hedef) selectCategory(promo.hedef); });
+    $('promoClose').addEventListener('click', () => {
+        if (promo) writeStore(PROMO_CLOSED_KEY, promo.id);
+        hidePromo();
+    });
 
     $('reorderBtn').addEventListener('click', reorder);
     $('reorderClose').addEventListener('click', () => {

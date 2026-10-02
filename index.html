@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Duyuru bandı (yönetim sayfasından düzenlenir) -->
+    <div class="promo" id="promo" hidden>
+        <button class="promo-main" id="promoMain">
+            <span id="promoText"></span>
+            <span class="promo-timer" id="promoTimer" hidden></span>
+            <span class="promo-go" id="promoGo" hidden>→</span>
+        </button>
+        <button class="promo-close" id="promoClose" aria-label="Duyuruyu kapat">&times;</button>
+    </div>
+
     <header class="topbar">
         <div class="wrap topbar-row">
             <a href="#" class="brand" aria-label="Sayfanın başına dön">
