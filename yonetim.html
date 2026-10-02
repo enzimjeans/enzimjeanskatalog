@@ -508,6 +508,24 @@
         .size-chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
         .size-chip { padding: 4px 10px; border-radius: 6px; background: var(--line); font-weight: 700; font-size: 0.85rem; }
 
+        /* Rozet seçimi */
+        .badge-choice { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .badge-choice button {
+            padding: 12px;
+            background: var(--card);
+            border: 2px solid var(--line);
+            color: var(--text);
+        }
+        .badge-choice button.active { color: #fff; border-color: transparent; background: var(--text); }
+        .badge-choice button.active.hot { background: #c2410c; }
+        .badge-choice button.active.star { background: #233a5e; }
+        .badge-choice button.active.deal { background: #b91c1c; }
+        .old-price-wrap { margin-top: 12px; }
+        .row-badge { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 1px 7px; border-radius: 999px; color: #fff; margin-left: 4px; vertical-align: 1px; }
+        .row-badge.hot { background: #c2410c; }
+        .row-badge.star { background: #233a5e; }
+        .row-badge.deal { background: #b91c1c; }
+
         .variants { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .variant {
             display: flex;
@@ -888,6 +906,24 @@
                 <div class="stock-choice">
                     <button type="button" class="var" data-stok="Var">Stokta var</button>
                     <button type="button" class="yok" data-stok="Yok">Stokta yok</button>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Rozet <small style="color:var(--muted);font-weight:400">(katalogda öne çıkarır)</small></label>
+                <div class="badge-choice" id="badgeChoice">
+                    <button type="button" data-rozet="">Yok</button>
+                    <button type="button" data-rozet="cok-satan" class="hot">🔥 Çok satan</button>
+                    <button type="button" data-rozet="one-cikan" class="star">⭐ Öne çıkan</button>
+                    <button type="button" data-rozet="firsat" class="deal">💥 Fırsat</button>
+                </div>
+                <div class="old-price-wrap hidden" id="oldPriceWrap">
+                    <label for="fOldPrice">İndirimden önceki fiyat <small style="color:var(--muted);font-weight:400">(isteğe bağlı)</small></label>
+                    <div class="price-wrap">
+                        <input type="text" inputmode="decimal" id="fOldPrice" placeholder="Örn: 420">
+                        <span>TL</span>
+                    </div>
+                    <p class="hint">Yazarsanız katalogda eski fiyatın üstü çizili görünür.</p>
                 </div>
             </div>
 
@@ -1310,7 +1346,7 @@
                     <img src="${escapeHtml(imageSrc(p))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
                     <div class="item-info">
                         <div class="item-name">${escapeHtml(p.urun_adi)}</div>
-                        <div class="item-meta">${escapeHtml(p.fiyat)} · ${escapeHtml(p.kategori)}</div>
+                        <div class="item-meta">${escapeHtml(p.fiyat)} · ${escapeHtml(p.kategori)}${BADGE_LABELS[p.rozet] ? ` <span class="row-badge ${BADGE_LABELS[p.rozet].cls}">${BADGE_LABELS[p.rozet].label}</span>` : ''}</div>
                     </div>
                     <div class="item-actions">
                         <button class="stock-btn ${p.stok === 'Yok' ? 'yok' : 'var'}" data-action="stock">
@@ -1394,6 +1430,8 @@
             setStock(p ? (p.stok === 'Yok' ? 'Yok' : 'Var') : 'Var');
             setPhotoPreview(p ? imageSrc(p) : '');
             fillSale(p ? saleOf(p) : { satis: 'seri', bedenler: [], seriAdet: 0 });
+            setBadge(p ? (p.rozet || '') : '');
+            $('fOldPrice').value = p && p.eskiFiyat ? priceNumber(p.eskiFiyat) : '';
             show('formView');
         }
 
@@ -1431,6 +1469,26 @@
             if (!v) return [];
             const parts = v.includes('/') ? v.split('/') : v.split(/[\s,;-]+/);
             return [...new Set(parts.map(x => x.replace(/\s+/g, '').toUpperCase()).filter(Boolean))];
+        }
+
+        // ---------- Rozet ----------
+        const BADGE_LABELS = {
+            'cok-satan': { label: '🔥 Çok satan', cls: 'hot' },
+            'one-cikan': { label: '⭐ Öne çıkan', cls: 'star' },
+            'firsat': { label: '💥 Fırsat', cls: 'deal' }
+        };
+        let formBadge = '';
+
+        function setBadge(v) {
+            formBadge = v;
+            document.querySelectorAll('#badgeChoice button').forEach(b => b.classList.toggle('active', b.dataset.rozet === v));
+            $('oldPriceWrap').classList.toggle('hidden', v !== 'firsat');
+        }
+        document.querySelectorAll('#badgeChoice button').forEach(b => b.onclick = () => setBadge(b.dataset.rozet));
+
+        function badgeFields() {
+            const old = String($('fOldPrice').value).trim().replace(/\s*(tl|₺)$/i, '');
+            return { rozet: formBadge, eskiFiyat: formBadge === 'firsat' && old ? `${old} TL` : '' };
         }
 
         let formSale = 'seri';
@@ -1606,7 +1664,7 @@
                 }
 
                 busy('Ürün kaydediliyor...');
-                const fields = { urun_adi: name, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock, ...saleFields() };
+                const fields = { urun_adi: name, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock, ...saleFields(), ...badgeFields() };
 
                 if (existing) {
                     const oldImage = existing.gorsel;
@@ -1650,7 +1708,7 @@
                     busy(`Fotoğraflar yükleniyor (${i + 1}/${variants.length})...`);
                     await uploadImage(gorsel, v.base64);
                     localPreviews[gorsel] = v.dataUrl;
-                    items.push({ urun_adi, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock, ...saleFields() });
+                    items.push({ urun_adi, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock, ...saleFields(), ...badgeFields() });
                 }
 
                 busy('Ürünler kaydediliyor...');

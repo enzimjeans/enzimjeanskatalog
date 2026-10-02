@@ -103,6 +103,26 @@ function saleOf(p) {
 }
 
 const isSeri = p => saleOf(p).satis === 'seri';
+
+// ---------- Rozetler (yönetimden seçilir) ----------
+const BADGES = {
+    'cok-satan': { label: '🔥 Çok satan', cls: 'hot' },
+    'one-cikan': { label: '⭐ Öne çıkan', cls: 'star' },
+    'firsat': { label: '💥 Fırsat', cls: 'deal' }
+};
+const badgeOf = p => BADGES[p.rozet] || null;
+const isFeatured = p => !!badgeOf(p) && inStock(p);
+
+// İndirimden önceki fiyat (sadece gerçekten yüksekse gösterilir)
+function oldPrice(p) {
+    const old = extractPrice(p.eskiFiyat);
+    return old > extractPrice(p.fiyat) ? old : 0;
+}
+
+function priceHtml(p) {
+    const old = oldPrice(p);
+    return (old ? `<s class="old-price">${formatPrice(old)}</s> ` : '') + escapeHtml(displayPrice(p));
+}
 const needsSize = p => !isSeri(p) && saleOf(p).bedenler.length > 0;
 
 // Renk seçenekleri: aynı kategoride, adı sadece son kelime(ler)de ayrışan ürünler.
@@ -299,6 +319,11 @@ function renderStats() {
 
     // Yeni gelenler vitrini
     $('newRail').innerHTML = fresh.map((p, i) => productCard(p, i)).join('');
+    // Öne çıkanlar: çok satan, öne çıkan, fırsat sırasıyla
+    const order = Object.keys(BADGES);
+    $('featRail').innerHTML = allProducts.filter(isFeatured)
+        .sort((a, b) => order.indexOf(a.rozet) - order.indexOf(b.rozet) || b.id - a.id)
+        .map((p, i) => productCard(p, i)).join('');
     requestAnimationFrame(updateRailArrows);
 
     // Kategori kutuları
@@ -317,10 +342,12 @@ function renderStats() {
 }
 
 function updateRailArrows() {
-    const rail = $('newRail');
-    const max = rail.scrollWidth - rail.clientWidth - 2;
-    document.querySelector('.rail-arrow.prev').disabled = rail.scrollLeft <= 2;
-    document.querySelector('.rail-arrow.next').disabled = rail.scrollLeft >= max;
+    document.querySelectorAll('.rail-wrap').forEach(wrap => {
+        const rail = wrap.querySelector('.rail');
+        const max = rail.scrollWidth - rail.clientWidth - 2;
+        wrap.querySelector('.rail-arrow.prev').disabled = rail.scrollLeft <= 2;
+        wrap.querySelector('.rail-arrow.next').disabled = rail.scrollLeft >= max;
+    });
 }
 
 function newestInStock() {
@@ -349,6 +376,7 @@ function renderChips() {
     $('categoryChips').innerHTML =
         chip('all', 'Tümü', allProducts.length) +
         (favs.size ? chip('fav', '♥ Favorilerim', favs.size) : '') +
+        (allProducts.some(badgeOf) ? chip('featured', '🔥 Öne çıkanlar', allProducts.filter(badgeOf).length) : '') +
         chip('new', '✦ Yeni gelenler', newIds.size) +
         Object.keys(counts).map(c => chip(c, c, counts[c])).join('');
 }
@@ -361,7 +389,8 @@ function getVisibleProducts() {
     let list = allProducts.filter(p => {
         if (activeCategory === 'new' && !newIds.has(p.id)) return false;
         if (activeCategory === 'fav' && !favs.has(p.id)) return false;
-        if (!['all', 'new', 'fav'].includes(activeCategory) && p.kategori !== activeCategory) return false;
+        if (activeCategory === 'featured' && !badgeOf(p)) return false;
+        if (!['all', 'new', 'fav', 'featured'].includes(activeCategory) && p.kategori !== activeCategory) return false;
         if (!q) return true;
         return trLower(`${p.urun_adi} ${p.kategori} ${p.aciklama}`).includes(q);
     });
@@ -375,7 +404,10 @@ function getVisibleProducts() {
     const sorter = sorters[sort] || sorters.default;
 
     // Stokta olanlar her zaman önce
-    return list.sort((a, b) => (inStock(b) - inStock(a)) || sorter(a, b));
+    // Stokta olanlar önce; "Önerilen" sıralamada rozetli ürünler de öne çıkar
+    const rank = p => badgeOf(p) ? Object.keys(BADGES).indexOf(p.rozet) : 99;   // çok satan > öne çıkan > fırsat
+    const featuredFirst = sort === 'default' ? (a, b) => rank(a) - rank(b) : () => 0;
+    return list.sort((a, b) => (inStock(b) - inStock(a)) || featuredFirst(a, b) || sorter(a, b));
 }
 
 function renderProducts() {
@@ -394,6 +426,7 @@ function renderProducts() {
 
     const browsing = activeCategory === 'all' && !$('searchInput').value.trim() && $('sortSelect').value === 'default';
     $('spotlight').hidden = !browsing || newestInStock().length === 0;
+    $('featured').hidden = !browsing || !allProducts.some(isFeatured);
     $('catTilesWrap').hidden = !browsing;
 
     if (browsing) {
@@ -417,8 +450,10 @@ function renderProducts() {
 }
 
 function productCard(p, index) {
+    const b = badgeOf(p);
     const badge = !inStock(p)
         ? '<span class="badge">Tükendi</span>'
+        : b ? `<span class="badge ${b.cls}">${b.label}</span>`
         : newIds.has(p.id) ? '<span class="badge">Yeni</span>' : '';
 
     return `
@@ -438,7 +473,7 @@ function productCard(p, index) {
                     ${colorsOf(p).length > 1 ? `<span class="card-colors" data-open>${colorsOf(p).length} renk</span>` : ''}
                 </div>
                 <div class="card-meta">
-                    <span class="card-price">${escapeHtml(displayPrice(p))}</span>
+                    <span class="card-price">${priceHtml(p)}</span>
                     <span class="card-cat">${escapeHtml(p.kategori)}</span>
                 </div>
                 <div class="card-action" data-compact>${actionHtml(p, true)}</div>
@@ -569,8 +604,9 @@ function openModal(id, { updateHash = true } = {}) {
     $('modalImage').src = imagePath(p);
     $('modalImage').alt = p.urun_adi;
     $('modalTitle').textContent = titleCase(p.urun_adi);
-    $('modalCategory').textContent = p.kategori + (newIds.has(p.id) ? ' · Yeni' : '');
-    $('modalPrice').textContent = `${displayPrice(p)} / adet`;
+    $('modalPrice').innerHTML = `${priceHtml(p)} <small>/ adet</small>`;
+    const mb = badgeOf(p);
+    $('modalCategory').textContent = p.kategori + (mb ? ` · ${mb.label}` : newIds.has(p.id) ? ' · Yeni' : '');
     $('modalDescription').textContent = tidyText(p.aciklama);
 
     const stock = $('modalStock');
@@ -981,10 +1017,10 @@ function setupEvents() {
     window.addEventListener('hashchange', openFromHash);
 
     // Vitrin okları
-    const rail = $('newRail');
     document.querySelectorAll('[data-rail]').forEach(btn => btn.addEventListener('click', () => {
+        const rail = btn.closest('.rail-wrap').querySelector('.rail');
         rail.scrollBy({ left: Number(btn.dataset.rail) * rail.clientWidth * 0.8, behavior: 'smooth' });
     }));
-    rail.addEventListener('scroll', updateRailArrows, { passive: true });
+    document.querySelectorAll('.rail').forEach(r => r.addEventListener('scroll', updateRailArrows, { passive: true }));
     window.addEventListener('resize', updateRailArrows);
 }

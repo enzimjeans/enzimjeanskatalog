@@ -1952,6 +1952,51 @@ body::before {
     color: var(--denim);
 }
 
+/* ============================================
+   Rozetler: çok satan, öne çıkan, fırsat
+   ============================================ */
+.badge.hot,
+.card:not(.soldout) .badge.hot { background: #c2410c; }
+.badge.star,
+.card:not(.soldout) .badge.star { background: var(--denim); }
+.badge.deal,
+.card:not(.soldout) .badge.deal { background: #b91c1c; }
+
+.badge.hot, .badge.star, .badge.deal {
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    padding: 5px 11px 5px 16px;
+    box-shadow: 0 4px 12px rgba(20, 19, 15, 0.25);
+}
+
+/* İndirimden önceki fiyat */
+.old-price {
+    font-family: var(--body);
+    font-size: 0.8em;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration-thickness: 1.5px;
+    margin-right: 2px;
+}
+
+.detail-price small {
+    font-family: var(--body);
+    font-size: 0.6em;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+/* Öne çıkanlar vitrini: sıcak zemin */
+.spotlight.featured {
+    background:
+        radial-gradient(ellipse 70% 100% at 10% 0%, rgba(201, 133, 58, 0.16), transparent 70%),
+        var(--paper);
+    padding-bottom: 16px;
+}
+
+.spotlight.featured .section-head::after { opacity: 1; }
+
 @media (prefers-reduced-motion: reduce) {
     *:not(.ticker-track), *::before, *::after {
         animation: none !important;
