@@ -3,7 +3,7 @@
 const CACHE = 'sival-v1';
 
 // İlk açılışta temel dosyaları sakla: bir sonraki açılış internetsiz de olur
-const SHELL = ['./', 'index.html', 'style.css', 'script.js', 'config.js', 'urunler.json', 'ayarlar.json', 'manifest.webmanifest', 'ikonlar/ikon-192.png'];
+const SHELL = ['./', 'index.html', 'style.css', 'ikonlar.css', 'script.js', 'config.js', 'urunler.json', 'ayarlar.json', 'manifest.webmanifest', 'ikonlar/ikon-192.png'];
 
 self.addEventListener('install', e => {
     self.skipWaiting();

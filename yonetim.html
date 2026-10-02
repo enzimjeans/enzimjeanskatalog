@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>SİVAL - Ürün Yönetimi</title>
+    <link rel="stylesheet" href="ikonlar.css">
     <link rel="manifest" href="manifest-yonetim.webmanifest">
     <link rel="apple-touch-icon" href="ikonlar/apple-touch-yonetim.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -259,6 +260,16 @@
             font-weight: 600;
         }
         .seg-row button small { color: var(--muted); font-weight: 500; margin-left: 4px; }
+        .seg-row button[data-seg]:not([data-seg=all])::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+        .seg-row button[data-seg=kayip]::before { background: #dc2626; }
+        .seg-row button[data-seg=sessiz]::before { background: #d97706; }
+        .seg-row button[data-seg=aktif]::before { background: #15803d; }
+        .seg-row button[data-seg=yok]::before { background: #94a3b8; }
+        .hub-icon { color: var(--primary); }
+        .onboard-art { color: var(--green); }
+        .add-opt span { color: var(--primary); }
+        .pdf-file span { color: var(--primary); }
+        .star-mark { color: #d97706; }
         .seg-row button.active { background: var(--text); border-color: var(--text); color: #fff; }
         .seg-row button.active small { color: #cbd5e1; }
 
@@ -697,7 +708,7 @@
         <section id="listView" class="hidden">
             <div class="hub">
                 <button class="hub-tile" id="announceTile">
-                    <span class="hub-icon">📣</span>
+                    <span class="hub-icon"><i class="ic ic-megaphone" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>Duyuru bandı</strong>
                         <small id="announceStatus">Kapalı</small>
@@ -705,7 +716,7 @@
                     <span class="hub-arrow">›</span>
                 </button>
                 <button class="hub-tile" id="goalsTile">
-                    <span class="hub-icon">🎯</span>
+                    <span class="hub-icon"><i class="ic ic-target" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>Sepet hedefleri</strong>
                         <small id="goalsStatus">Kargo bedava ve toplu alım indirimi</small>
@@ -713,7 +724,7 @@
                     <span class="hub-arrow">›</span>
                 </button>
                 <button class="hub-tile" id="firmTile">
-                    <span class="hub-icon">🏪</span>
+                    <span class="hub-icon"><i class="ic ic-store" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>Firma bilgileri</strong>
                         <small id="firmStatus">Adres, kargo, ödeme: müşteriye güven verir</small>
@@ -721,7 +732,7 @@
                     <span class="hub-arrow">›</span>
                 </button>
                 <button class="hub-tile" id="pdfTile">
-                    <span class="hub-icon">📄</span>
+                    <span class="hub-icon"><i class="ic ic-file" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>PDF katalog</strong>
                         <small>WhatsApp gruplarına atmak için</small>
@@ -729,7 +740,7 @@
                     <span class="hub-arrow">›</span>
                 </button>
                 <button class="hub-tile" id="customersTile">
-                    <span class="hub-icon">👥</span>
+                    <span class="hub-icon"><i class="ic ic-users" aria-hidden="true"></i></span>
                     <span class="hub-text">
                         <strong>Müşteriler</strong>
                         <small id="customersStatus">Geri kazanma kampanyaları</small>
@@ -745,7 +756,7 @@
             <div class="count" id="count"></div>
             <div class="list" id="list"></div>
             <p class="hint" style="margin-top:24px;text-align:center">
-                <a href="#" id="adminInstall" hidden>📲 Yönetimi telefonuma ekle</a><br>
+                <a href="#" id="adminInstall" hidden>Yönetimi telefonuma ekle</a><br>
                 <a href="#" id="logoutBtn">Bu cihazdan çıkış yap</a>
             </p>
         </section>
@@ -755,7 +766,7 @@
             <p class="hint" style="margin:0 0 16px">Müşteri sepette <b>"1.250 TL daha ekleyin → kargo bedava"</b> gibi bir çubuk görür. Hedefe yaklaşan müşteri bir ürün daha ekler.</p>
 
             <div class="field">
-                <label class="check" style="margin:0 0 10px"><input type="checkbox" id="gShipOn"> 🚚 Kargo bedava</label>
+                <label class="check" style="margin:0 0 10px"><input type="checkbox" id="gShipOn"> Kargo bedava</label>
                 <div class="price-wrap" id="gShipWrap">
                     <input type="text" inputmode="numeric" id="gShip" placeholder="Örn: 5000">
                     <span>TL ve üzeri</span>
@@ -763,7 +774,7 @@
             </div>
 
             <div class="field">
-                <label>💰 Toplu alım indirimi</label>
+                <label>Toplu alım indirimi</label>
                 <div id="gTiers"></div>
                 <button type="button" class="btn-light" id="gAddTier" style="width:100%;margin-top:8px">+ İndirim basamağı ekle</button>
                 <p class="hint">Örn: 10.000 TL ve üzeri %3, 20.000 TL ve üzeri %5. Müşteri ulaştığı en yüksek basamağın indirimini alır.</p>
@@ -783,15 +794,15 @@
         <!-- Firma bilgileri -->
         <section id="firmView" class="panel hidden">
             <p class="hint" style="margin:0 0 16px">Katalogun sonunda <b>"Bizi tanıyın"</b> bölümünde görünür. Boş bıraktığınız bilgi gösterilmez.</p>
-            <div class="field"><label for="fiYear">🏪 Kuruluş yılı</label><input type="text" id="fiYear" inputmode="numeric" placeholder="Örn: 2010"></div>
+            <div class="field"><label for="fiYear">Kuruluş yılı</label><input type="text" id="fiYear" inputmode="numeric" placeholder="Örn: 2010"></div>
             <div class="field"><label for="fiAbout">Kısa tanıtım</label><textarea id="fiAbout" rows="2" placeholder="Örn: Toptan erkek giyimde 15 yıllık tecrübe. Kendi üretimimiz."></textarea></div>
-            <div class="field"><label for="fiAddr">📍 Mağaza adresi</label><textarea id="fiAddr" rows="2" placeholder="Mahalle, sokak, no, ilçe / il"></textarea><p class="hint">Yazınca "Yol tarifi al" düğmesi otomatik çıkar.</p></div>
-            <div class="field"><label for="fiHours">🕘 Çalışma saatleri</label><input type="text" id="fiHours" placeholder="Örn: Pzt-Cmt 09:00-19:00"></div>
-            <div class="field"><label for="fiShip">📦 Kargo</label><input type="text" id="fiShip" placeholder="Örn: Siparişler 1-2 iş gününde kargoda"></div>
-            <div class="field"><label for="fiPay">💳 Ödeme</label><input type="text" id="fiPay" placeholder="Örn: Havale / EFT, kapıda ödeme"></div>
-            <div class="field"><label for="fiSwap">🔄 Değişim</label><input type="text" id="fiSwap" placeholder="Örn: Beden değişimi 7 gün içinde yapılır"></div>
-            <div class="field"><label for="fiTel">📞 Telefon</label><input type="tel" id="fiTel" placeholder="Örn: 0543 783 72 79"><p class="hint">Müşteri "Hemen ara" düğmesiyle tek dokunuşla arar.</p></div>
-            <div class="field"><label for="fiIg">📸 Instagram kullanıcı adı</label><input type="text" id="fiIg" placeholder="Örn: sivaltoptan"></div>
+            <div class="field"><label for="fiAddr">Mağaza adresi</label><textarea id="fiAddr" rows="2" placeholder="Mahalle, sokak, no, ilçe / il"></textarea><p class="hint">Yazınca "Yol tarifi al" düğmesi otomatik çıkar.</p></div>
+            <div class="field"><label for="fiHours">Çalışma saatleri</label><input type="text" id="fiHours" placeholder="Örn: Pzt-Cmt 09:00-19:00"></div>
+            <div class="field"><label for="fiShip">Kargo</label><input type="text" id="fiShip" placeholder="Örn: Siparişler 1-2 iş gününde kargoda"></div>
+            <div class="field"><label for="fiPay">Ödeme</label><input type="text" id="fiPay" placeholder="Örn: Havale / EFT, kapıda ödeme"></div>
+            <div class="field"><label for="fiSwap">Değişim</label><input type="text" id="fiSwap" placeholder="Örn: Beden değişimi 7 gün içinde yapılır"></div>
+            <div class="field"><label for="fiTel">Telefon</label><input type="tel" id="fiTel" placeholder="Örn: 0543 783 72 79"><p class="hint">Müşteri "Hemen ara" düğmesiyle tek dokunuşla arar.</p></div>
+            <div class="field"><label for="fiIg">Instagram kullanıcı adı</label><input type="text" id="fiIg" placeholder="Örn: sivaltoptan"></div>
             <div class="form-actions">
                 <button class="btn-light" id="fiCancel">Vazgeç</button>
                 <button class="btn-primary" id="fiSave">Kaydet</button>
@@ -800,7 +811,7 @@
 
         <!-- PDF katalog -->
         <section id="pdfView" class="panel hidden">
-            <h2>📄 PDF katalog</h2>
+            <h2>PDF katalog</h2>
             <p class="hint" style="margin:0 0 16px">Ürünlerden otomatik bir PDF hazırlanır: kapakta karekod ve sipariş tarifi, her üründe büyük <b>ürün numarası</b>, fiyat ve seri/beden bilgisi.</p>
 
             <div class="field">
@@ -816,13 +827,13 @@
 
             <div class="pdf-done hidden" id="pdfDone">
                 <div class="pdf-file">
-                    <span>📄</span>
+                    <span><i class="ic ic-file" aria-hidden="true"></i></span>
                     <div><b>PDF hazır</b><small id="pdfInfo"></small></div>
                 </div>
-                <button class="wa-send" id="pdfShare">📲 WhatsApp'ta paylaş</button>
+                <button class="wa-send" id="pdfShare"><i class="ic ic-share" aria-hidden="true"></i> WhatsApp'ta paylaş</button>
                 <div class="form-actions">
-                    <button class="btn-light" id="pdfDownload" style="flex:1">⬇️ İndir</button>
-                    <button class="btn-light" id="pdfUpload" style="flex:1">🌐 Siteye yükle</button>
+                    <button class="btn-light" id="pdfDownload" style="flex:1"><i class="ic ic-download" aria-hidden="true"></i> İndir</button>
+                    <button class="btn-light" id="pdfUpload" style="flex:1"><i class="ic ic-globe" aria-hidden="true"></i> Siteye yükle</button>
                 </div>
                 <p class="hint">"Siteye yükle" derseniz müşteriler katalogdaki <b>PDF katalog</b> düğmesinden indirebilir.</p>
             </div>
@@ -830,7 +841,7 @@
 
         <!-- Duyuru bandı -->
         <section id="announceView" class="panel hidden">
-            <h2>📣 Duyuru bandı</h2>
+            <h2>Duyuru bandı</h2>
             <p class="hint" style="margin:-6px 0 16px">Kataloğun en üstünde görünür. Kampanya, yeni sezon, kargo duyurusu için.</p>
 
             <div class="field">
@@ -875,21 +886,21 @@
         <section id="customersView" class="hidden">
             <!-- Boşken: nasıl başlanacağını göster -->
             <div class="onboard" id="cOnboard">
-                <div class="onboard-art">👥</div>
+                <div class="onboard-art"><i class="ic ic-users" aria-hidden="true"></i></div>
                 <h2>Müşterilerinizi ekleyin</h2>
                 <p>Kimin ne zaman sipariş verdiğini takip edin; uzun süredir sessiz kalanlara tek tek, adıyla WhatsApp mesajı atın.</p>
                 <div class="add-options">
                     <button class="add-opt" data-addmode="contacts" hidden>
-                        <span>📱</span><strong>Rehberden seç</strong><small>Telefon rehberinden işaretle, hepsini ekle</small>
+                        <span><i class="ic ic-mobile" aria-hidden="true"></i></span><strong>Rehberden seç</strong><small>Telefon rehberinden işaretle, hepsini ekle</small>
                     </button>
                     <button class="add-opt" data-addmode="manual">
-                        <span>✍️</span><strong>Tek tek ekle</strong><small>Telefon ve ad yazarak</small>
+                        <span><i class="ic ic-pen" aria-hidden="true"></i></span><strong>Tek tek ekle</strong><small>Telefon ve ad yazarak</small>
                     </button>
                     <button class="add-opt" data-addmode="paste">
-                        <span>📋</span><strong>Listeden yapıştır</strong><small>Excel, not veya WhatsApp'tan kopyala</small>
+                        <span><i class="ic ic-list" aria-hidden="true"></i></span><strong>Listeden yapıştır</strong><small>Excel, not veya WhatsApp'tan kopyala</small>
                     </button>
                 </div>
-                <p class="hint">🔒 Müşteri listesi gizli bir depoda tutulur, katalogda görünmez.</p>
+                <p class="hint">Müşteri listesi gizli bir depoda tutulur, katalogda görünmez.</p>
             </div>
 
             <!-- Doluyken -->
@@ -901,12 +912,12 @@
                         <small>Kişiye özel WhatsApp mesajı hazırla →</small>
                     </span>
                 </button>
-                <div class="all-good" id="allGood">👏 Herkes son 30 günde sipariş vermiş. Kampanya için yine de <a href="#" id="campaignLink">mesaj hazırlayabilirsiniz</a>.</div>
+                <div class="all-good" id="allGood">Herkes son 30 günde sipariş vermiş. Kampanya için yine de <a href="#" id="campaignLink">mesaj hazırlayabilirsiniz</a>.</div>
 
-                <input type="search" id="cSearch" placeholder="🔍  İsim, şehir veya telefon ara..." style="margin-bottom:10px">
+                <input type="search" id="cSearch" placeholder=" İsim, şehir veya telefon ara..." style="margin-bottom:10px">
                 <div class="seg-row" id="segChips"></div>
                 <div class="list" id="cList"></div>
-                <p class="hint" style="margin-top:18px;text-align:center">🔒 Müşteri listesi gizli bir depoda tutulur, katalogda görünmez.</p>
+                <p class="hint" style="margin-top:18px;text-align:center">Müşteri listesi gizli bir depoda tutulur, katalogda görünmez.</p>
             </div>
             <button class="fab" id="cFab" aria-label="Müşteri ekle">+</button>
         </section>
@@ -946,7 +957,7 @@
                 <p class="hint" id="cWhenHint"></p>
             </div>
             <div class="field">
-                <label for="cWait">🔔 Beklediği ürünler <small style="color:var(--muted);font-weight:400">(isteğe bağlı)</small></label>
+                <label for="cWait">Beklediği ürünler <small style="color:var(--muted);font-weight:400">(isteğe bağlı)</small></label>
                 <input type="text" id="cWait" inputmode="numeric" placeholder="Ürün numaraları, örn: 52, 61">
                 <p class="hint">Müşteri "gelince haber verin" dediyse numarayı yazın. Ürün stoğa girince size hatırlatırım.</p>
             </div>
@@ -964,7 +975,7 @@
 
         <!-- Listeden yapıştır -->
         <section id="bulkView" class="panel hidden">
-            <h2>📋 Listeden yapıştır</h2>
+            <h2>Listeden yapıştır</h2>
             <p class="hint" style="margin:-6px 0 14px">Excel, not defteri ya da WhatsApp'tan kopyaladığınız listeyi yapıştırın. Telefon numaralarını kendim bulurum; satırın geri kalanı isim olur.</p>
             <textarea id="bulkText" rows="6" placeholder="Ahmet Yılmaz 0532 111 22 33 Bursa&#10;Demir Tekstil - +90 544 123 45 67&#10;05051234567 Mehmet"></textarea>
             <div class="bulk-preview" id="bulkPreview"></div>
@@ -975,16 +986,16 @@
 
         <!-- Geri kazanma sihirbazı -->
         <section id="campaignView" class="panel hidden">
-            <h2>💬 Geri kazanma kampanyası</h2>
+            <h2>Geri kazanma kampanyası</h2>
 
             <div class="step">
                 <div class="step-title"><span>1</span> Kime gönderilsin?</div>
                 <div class="pick-bar" id="campPick">
-                    <button type="button" data-pick="onerilen">⭐ Önerilenler</button>
+                    <button type="button" data-pick="onerilen">Önerilenler</button>
                     <button type="button" data-pick="hepsi">Herkes</button>
                     <button type="button" data-pick="hic">Hiçbiri</button>
                 </div>
-                <p class="hint" style="margin:-2px 0 8px">⭐ Önerilen: 30 günden uzun süredir sipariş vermeyen ve son 7 günde mesaj atılmamış kişiler.</p>
+                <p class="hint" style="margin:-2px 0 8px">Önerilen: 30 günden uzun süredir sipariş vermeyen ve son 7 günde mesaj atılmamış kişiler.</p>
                 <div class="recip-list" id="campList"></div>
                 <p class="recip-count" id="campCount"></p>
             </div>
@@ -995,7 +1006,7 @@
                 <textarea id="campText" rows="6"></textarea>
                 <p class="hint"><b>{ad}</b> müşterinin adı, <b>{link}</b> katalog linki olur.</p>
                 <label class="check"><input type="checkbox" id="campOptOut" checked> Sona "istemiyorsanız RET yazın" notu ekle (ticari ileti kuralı)</label>
-                <label class="check desktop-only" id="campAppWrap"><input type="checkbox" id="campApp"> 💻 WhatsApp masaüstü uygulamasında aç (tarayıcıda yeni sekme açılmaz)</label>
+                <label class="check desktop-only" id="campAppWrap"><input type="checkbox" id="campApp"> WhatsApp masaüstü uygulamasında aç (tarayıcıda yeni sekme açılmaz)</label>
                 <div class="wa-preview">
                     <div class="wa-head" id="campPreviewTo">Önizleme</div>
                     <div class="wa-bubble" id="campPreview"></div>
@@ -1034,7 +1045,7 @@
                 <label>Fotoğraf</label>
                 <div class="photo-box" id="photoBox">
                     <img id="photoPreview" class="hidden" alt="">
-                    <span id="photoText">📷 Fotoğraf seç veya çek</span>
+                    <span id="photoText">+ Fotoğraf seç veya çek</span>
                 </div>
                 <input type="file" id="photoInput" accept="image/*,.heic,.heif,.tif,.tiff" class="hidden">
                 <p class="hint" id="photoHint">Aynı modelin birden fazla rengi varsa fotoğraflarını birlikte seçin; her biri ayrı ürün olarak eklenir.</p>
@@ -1047,7 +1058,7 @@
                 <div class="video-box">
                     <video id="videoPreview" class="hidden" controls playsinline muted preload="metadata"></video>
                     <div id="videoEmpty">
-                        <button type="button" class="btn-light" id="videoPick" style="width:100%">🎬 Video seç veya çek</button>
+                        <button type="button" class="btn-light" id="videoPick" style="width:100%"><i class="ic ic-video" aria-hidden="true"></i> Video seç veya çek</button>
                         <button type="button" class="text-btn" id="videoLinkToggle">veya YouTube / Instagram linki yapıştır</button>
                     </div>
                     <input type="url" id="videoLink" class="hidden" placeholder="https://www.youtube.com/shorts/... veya https://www.instagram.com/reel/...">
@@ -1115,9 +1126,9 @@
                 <label>Rozet <small style="color:var(--muted);font-weight:400">(katalogda öne çıkarır)</small></label>
                 <div class="badge-choice" id="badgeChoice">
                     <button type="button" data-rozet="">Yok</button>
-                    <button type="button" data-rozet="cok-satan" class="hot">🔥 Çok satan</button>
-                    <button type="button" data-rozet="one-cikan" class="star">⭐ Öne çıkan</button>
-                    <button type="button" data-rozet="firsat" class="deal">💥 Fırsat</button>
+                    <button type="button" data-rozet="cok-satan" class="hot">Çok satan</button>
+                    <button type="button" data-rozet="one-cikan" class="star">Öne çıkan</button>
+                    <button type="button" data-rozet="firsat" class="deal">Fırsat</button>
                 </div>
                 <div class="old-price-wrap hidden" id="oldPriceWrap">
                     <label for="fOldPrice">İndirimden önceki fiyat <small style="color:var(--muted);font-weight:400">(isteğe bağlı)</small></label>
@@ -1571,7 +1582,7 @@
                     <img src="${escapeHtml(imageSrc(p))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
                     <div class="item-info">
                         <div class="item-name">${escapeHtml(p.urun_adi)}</div>
-                        <div class="item-meta">${escapeHtml(p.fiyat)} · ${escapeHtml(p.kategori)}${BADGE_LABELS[p.rozet] ? ` <span class="row-badge ${BADGE_LABELS[p.rozet].cls}">${BADGE_LABELS[p.rozet].label}</span>` : ''}${p.video ? ' · 🎬' : ''}</div>
+                        <div class="item-meta">${escapeHtml(p.fiyat)} · ${escapeHtml(p.kategori)}${BADGE_LABELS[p.rozet] ? ` <span class="row-badge ${BADGE_LABELS[p.rozet].cls}">${BADGE_LABELS[p.rozet].label}</span>` : ''}${p.video ? ' · ' : ''}</div>
                     </div>
                     <div class="item-actions">
                         <button class="stock-btn ${p.stok === 'Yok' ? 'yok' : 'var'}" data-action="stock">
@@ -1637,7 +1648,7 @@
         function setPhotoPreview(src) {
             $('photoPreview').src = src || '';
             $('photoPreview').classList.toggle('hidden', !src);
-            $('photoText').textContent = src ? '📷 Fotoğrafı değiştir' : '📷 Fotoğraf seç veya çek';
+            $('photoText').textContent = src ? 'Fotoğrafı değiştir' : '+ Fotoğraf seç veya çek';
         }
 
         function openForm(id) {
@@ -1873,9 +1884,9 @@
 
         // ---------- Rozet ----------
         const BADGE_LABELS = {
-            'cok-satan': { label: '🔥 Çok satan', cls: 'hot' },
-            'one-cikan': { label: '⭐ Öne çıkan', cls: 'star' },
-            'firsat': { label: '💥 Fırsat', cls: 'deal' }
+            'cok-satan': { label: 'Çok satan', cls: 'hot' },
+            'one-cikan': { label: 'Öne çıkan', cls: 'star' },
+            'firsat': { label: 'Fırsat', cls: 'deal' }
         };
         let formBadge = '';
 
@@ -1979,7 +1990,7 @@
             if (multi) {
                 pendingPhoto = null;
                 setPhotoPreview('');
-                $('photoText').textContent = `📷 ${variants.length} renk · Renk eklemek için dokunun`;
+                $('photoText').textContent = `${variants.length} renk · Renk eklemek için dokunun`;
                 $('variantList').innerHTML = variants.map((v, i) => `
                     <div class="variant">
                         <img src="${v.dataUrl}" alt="">
@@ -2159,10 +2170,10 @@
         let draft = {};            // ekranda düzenlenen duyuru
 
         const ANNOUNCE_IDEAS = [
-            '🔥 Yeni sezon ürünleri katalogda!',
-            '🚚 Bu hafta toptan siparişlerde kargo bizden',
-            '⚡ Stoklar sınırlı, siparişinizi erken verin',
-            '🧥 Mont sezonu açıldı, yeni modeller geldi'
+            'Yeni sezon ürünleri katalogda',
+            'Bu hafta toptan siparişlerde kargo bizden',
+            'Stoklar sınırlı, siparişinizi erken verin',
+            'Mont sezonu açıldı, yeni modeller geldi'
         ];
 
         // Katalogdakiyle aynı geri sayım biçimi
@@ -2203,7 +2214,7 @@
             }
             const timer = draft.bitis ? countdownText(draft.bitis) : '';
             box.innerHTML = `<div class="promo"><span>${escapeHtml(draft.metin)}</span>` +
-                (timer ? `<span class="promo-timer">⏳ ${timer}</span>` : '') +
+                (timer ? `<span class="promo-timer"><i class="ic ic-clock" aria-hidden="true"></i> ${timer}</span>` : '') +
                 (draft.hedef ? '<span>→</span>' : '') + '</div>';
         }
 
@@ -2214,7 +2225,7 @@
             $('aCount').textContent = $('aText').value.length;
             $('aEnd').value = toLocalInput(draft.bitis);
             $('aIdeas').innerHTML = ANNOUNCE_IDEAS.map(t => `<button type="button">${escapeHtml(t)}</button>`).join('');
-            $('aTarget').innerHTML = '<option value="">Hiçbir yere gitmesin</option><option value="new">✦ Yeni gelenler</option>' +
+            $('aTarget').innerHTML = '<option value="">Hiçbir yere gitmesin</option><option value="new">Yeni gelenler</option>' +
                 categories().map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)} kategorisi</option>`).join('');
             $('aTarget').value = draft.hedef || '';
             $('aRemove').classList.toggle('hidden', !announceLive(settings.duyuru));
@@ -2296,10 +2307,10 @@
         const CATALOG_URL = 'https://enzimjeans.github.io/enzimjeanskatalog/';
         const SEGMENTS = [
             { key: 'all', label: 'Tümü' },
-            { key: 'kayip', label: '🔴 Kayıp (90+ gün)' },
-            { key: 'sessiz', label: '🟡 Sessiz (30-90 gün)' },
-            { key: 'aktif', label: '🟢 Aktif' },
-            { key: 'yok', label: '⚪ Sipariş kaydı yok' }
+            { key: 'kayip', label: 'Kayıp (90+ gün)' },
+            { key: 'sessiz', label: 'Sessiz (30-90 gün)' },
+            { key: 'aktif', label: 'Aktif' },
+            { key: 'yok', label: 'Sipariş kaydı yok' }
         ];
 
         let customers = null;         // yüklenene kadar null
@@ -2426,8 +2437,8 @@
             $('cList').innerHTML = list.map(c => {
                 const seg = segmentOf(c);
                 const last = c.sonSiparis ? `son sipariş <b>${agoText(c.sonSiparis)}</b>` : 'sipariş bilgisi yok';
-                const msg = (c.sonMesaj ? ` · 💬 ${agoText(c.sonMesaj)}` : '') +
-                    ((c.bekliyor || []).length ? ` · 🔔 No ${c.bekliyor.join(', ')} bekliyor` : '');
+                const msg = (c.sonMesaj ? ` · ${agoText(c.sonMesaj)}` : '') +
+                    ((c.bekliyor || []).length ? ` · No ${c.bekliyor.join(', ')} bekliyor` : '');
                 return `
                 <div class="item c-item" data-cid="${c.id}">
                     <div class="avatar ${seg}">${escapeHtml(initials(c))}</div>
@@ -2437,7 +2448,7 @@
                     </div>
                     <div class="item-actions">
                         <button class="order-btn" data-corder="${c.id}" title="Bugün sipariş verdi">✓ Sipariş</button>
-                        <button class="msg-btn" data-cmsg="${c.id}" title="WhatsApp'tan yaz" aria-label="WhatsApp'tan yaz">💬</button>
+                        <button class="msg-btn" data-cmsg="${c.id}" title="WhatsApp'tan yaz" aria-label="WhatsApp'tan yaz"><i class="ic ic-message" aria-hidden="true"></i></button>
                     </div>
                 </div>`;
             }).join('') || '<p class="hint" style="text-align:center;padding:24px">Aramanıza uygun müşteri yok.</p>';
@@ -2576,7 +2587,7 @@
             const t = normalizePhone($('cPhone').value);
             const dup = t.length >= 11 && customers.find(c => c.telefon === t && c.id !== editingCustomer?.id);
             $('cPhoneHint').innerHTML = dup
-                ? `⚠️ Bu numara zaten kayıtlı: <b>${escapeHtml(displayName(dup))}</b>`
+                ? `<i class="ic ic-alert" aria-hidden="true"></i> Bu numara zaten kayıtlı: <b>${escapeHtml(displayName(dup))}</b>`
                 : t.length >= 12 ? `✓ ${prettyPhone(t)}` : '';
         });
 
@@ -2685,23 +2696,23 @@
 
         const TEMPLATES = {
             ozledik: {
-                title: '💙 Sizi özledik', sub: 'Samimi hatırlatma',
-                text: () => 'Merhaba {ad}, sizi özledik! 🙌\nYeni sezon ürünlerimiz katalogda, göz atmak ister misiniz?\n{link}'
+                title: 'Sizi özledik', sub: 'Samimi hatırlatma',
+                text: () => 'Merhaba {ad}, sizi özledik.\nYeni sezon ürünlerimiz katalogda, göz atmak ister misiniz?\n{link}'
             },
             yeni: {
-                title: '✦ Yeni gelenler', sub: 'Son 3 ürün otomatik',
+                title: 'Yeni gelenler', sub: 'Son 3 ürün otomatik',
                 text: () => `Merhaba {ad}, yeni ürünlerimiz geldi:\n${newestProductsText()}\n\nTüm katalog: {link}`
             },
             kampanya: {
-                title: '📣 Kampanya', sub: 'Duyuru bandındaki metin',
+                title: 'Kampanya', sub: 'Duyuru bandındaki metin',
                 text: () => {
                     const a = settings.duyuru;
                     if (!announceLive(a)) return 'Merhaba {ad}, bu haftaya özel fırsatlarımız var!\n{link}';
-                    const end = a.bitis ? `\n⏳ Son gün: ${new Date(a.bitis).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' })}` : '';
+                    const end = a.bitis ? `\nSon gün: ${new Date(a.bitis).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' })}` : '';
                     return `Merhaba {ad}, ${a.metin}${end}\n{link}`;
                 }
             },
-            ozel: { title: '✍️ Kendi mesajım', sub: 'Serbest yazın', text: () => 'Merhaba {ad}, ' }
+            ozel: { title: 'Kendi mesajım', sub: 'Serbest yazın', text: () => 'Merhaba {ad}, ' }
         };
 
         // Önerilen: sessiz/kayıp, mesaj istemiyor değil, son 7 günde mesaj atılmamış
@@ -2714,7 +2725,7 @@
         function recipientReason(c) {
             if (c.ret) return 'mesaj istemiyor';
             const parts = [c.sonSiparis ? `son sipariş ${agoText(c.sonSiparis)}` : 'sipariş bilgisi yok'];
-            if (c.sonMesaj) parts.push(`💬 mesaj ${agoText(c.sonMesaj)}`);
+            if (c.sonMesaj) parts.push(`mesaj ${agoText(c.sonMesaj)}`);
             return parts.join(' · ');
         }
 
@@ -2726,7 +2737,7 @@
                     <input type="checkbox" data-rid="${c.id}" ${campSelected.has(c.id) ? 'checked' : ''} ${c.ret ? 'disabled' : ''}>
                     <span class="avatar ${segmentOf(c)}">${escapeHtml(initials(c))}</span>
                     <span class="recip-text">
-                        <b>${escapeHtml(displayName(c))}${isRecommended(c) ? ' ⭐' : ''}</b>
+                        <b>${escapeHtml(displayName(c))}${isRecommended(c) ? ' <span class="star-mark"></span>' : ''}</b>
                         <small>${escapeHtml(recipientReason(c))}</small>
                     </span>
                 </label>`).join('');
@@ -2852,7 +2863,7 @@
             queue = [];
             renderCustomers();
             show('customersView');
-            toast(sentIds.size ? `🎉 ${sentIds.size} kişiye mesaj hazırlandı` : 'Kampanya bitti');
+            toast(sentIds.size ? `${sentIds.size} kişiye mesaj hazırlandı ✓` : 'Kampanya bitti');
         }
 
         // ---------- Gelince haber ver: ürün stoğa girince bekleyenlere ----------
@@ -2863,13 +2874,13 @@
             const p = products.find(x => x.id === productId);
             const waiting = (customers || []).filter(c => !c.ret && (c.bekliyor || []).includes(productId));
             if (!p || !waiting.length) return;
-            toast(`🔔 ${waiting.length} müşteri bu ürünü bekliyor`, false, () => startWaitingNotify(p, waiting), 'HABER VER');
+            toast(`${waiting.length} müşteri bu ürünü bekliyor`, false, () => startWaitingNotify(p, waiting), 'HABER VER');
         }
 
         function startWaitingNotify(p, waiting) {
             notifyProductId = p.id;
             $('campOptOut').checked = false;          // istedikleri bilgi; ticari ileti değil
-            $('campText').value = `Merhaba {ad}, beklediğiniz No ${p.id} ${p.urun_adi} tekrar stokta! 🎉\nGörmek ve sipariş vermek için: ${CATALOG_URL}#urun-${p.id}`;
+            $('campText').value = `Merhaba {ad}, beklediğiniz No ${p.id} ${p.urun_adi} tekrar stokta.\nGörmek ve sipariş vermek için: ${CATALOG_URL}#urun-${p.id}`;
             queue = waiting.map(c => ({ ...c }));
             queueIndex = 0;
             sentCount = 0;
@@ -2882,7 +2893,7 @@
         const PDF_W = 1240, PDF_H = 1754, PDF_M = 70;
         const WA_NUMBER = '0543 783 72 79';
         const PC = { ink: '#14130f', paper: '#f3efe8', card: '#fbf9f5', denim: '#1c2f4f', denim2: '#233a5e', rust: '#a8502a', thread: '#c9853a', gold: '#f0c995', muted: '#857e72', line: '#dcd5c8' };
-        const PDF_BADGES = { 'cok-satan': ['🔥 Çok satan', '#c2410c'], 'one-cikan': ['⭐ Öne çıkan', '#233a5e'], 'firsat': ['💥 Fırsat', '#b91c1c'] };
+        const PDF_BADGES = { 'cok-satan': ['Çok satan', '#c2410c'], 'one-cikan': ['Öne çıkan', '#233a5e'], 'firsat': ['Fırsat', '#b91c1c'] };
         let pdfCats = null;            // seçili kategoriler (null = hepsi)
         let pdfResult = null;          // { blob, pages, name }
 

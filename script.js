@@ -106,9 +106,9 @@ const isSeri = p => saleOf(p).satis === 'seri';
 
 // ---------- Rozetler (yönetimden seçilir) ----------
 const BADGES = {
-    'cok-satan': { label: '🔥 Çok satan', cls: 'hot' },
-    'one-cikan': { label: '⭐ Öne çıkan', cls: 'star' },
-    'firsat': { label: '💥 Fırsat', cls: 'deal' }
+    'cok-satan': { label: 'Çok satan', cls: 'hot' },
+    'one-cikan': { label: 'Öne çıkan', cls: 'star' },
+    'firsat': { label: 'Fırsat', cls: 'deal' }
 };
 const badgeOf = p => BADGES[p.rozet] || null;
 const isFeatured = p => !!badgeOf(p) && inStock(p);
@@ -269,7 +269,7 @@ function showPdfLinks(pdf) {
     const date = new Date(pdf.tarih).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
     const href = `katalog.pdf?v=${new Date(pdf.tarih).getTime()}`;     // yeni PDF'te eskisi önbellekten gelmesin
     ['heroPdf', 'footerPdf'].forEach(id => { $(id).href = href; $(id).hidden = false; });
-    $('footerPdf').textContent = `📄 PDF katalog indir (${date})`;
+    $('footerPdf').innerHTML = `<i class="ic ic-file" aria-hidden="true"></i> PDF katalog indir (${date})`;
 }
 
 // ---------- Sepet hedefleri: kargo bedava ve kademeli indirim ----------
@@ -309,7 +309,7 @@ function goalProgressHtml(total) {
     if (g.won) wins.push(`%${g.won.indirim} indirim`);
     if (g.freeShip) wins.push('kargo bedava');
     let html = '';
-    if (wins.length) html += `<p class="goal-won">🎉 Kazandınız: <b>${wins.join(' + ')}</b></p>`;
+    if (wins.length) html += `<p class="goal-won"><i class="ic ic-check" aria-hidden="true"></i> Kazandınız: <b>${wins.join(' + ')}</b></p>`;
     if (g.next) {
         const prev = [0, goals.kargo, ...goals.kademeler.map(k => k.min)].filter(m => m <= total).sort((a, b) => b - a)[0] || 0;
         const pct = Math.max(4, Math.min(100, ((total - prev) / (g.next.min - prev)) * 100));
@@ -329,29 +329,29 @@ function renderTrust(f) {
 
     // Üstte kısa şerit: en güven veren 3 bilgi
     const strip = [
-        t(f.kargo) && `📦 ${t(f.kargoKisa) || t(f.kargo)}`,
-        t(f.degisim) && `🔄 ${t(f.degisimKisa) || 'Değişim imkânı'}`,
-        since && `🏪 ${since}`
+        t(f.kargo) && ['truck', t(f.kargoKisa) || t(f.kargo)],
+        t(f.degisim) && ['refresh', t(f.degisimKisa) || 'Değişim imkânı'],
+        since && ['store', since]
     ].filter(Boolean).slice(0, 3);
-    $('trustStrip').innerHTML = strip.map(s => `<span>${escapeHtml(s)}</span>`).join('');
+    $('trustStrip').innerHTML = strip.map(([ic, s]) => `<span><i class="ic ic-${ic}" aria-hidden="true"></i> ${escapeHtml(s)}</span>`).join('');
     $('trustStrip').hidden = !strip.length;
 
     const tel = t(f.telefon).replace(/[^\d+]/g, '');
     const mapUrl = t(f.harita) || (t(f.adres) ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t(f.adres))}` : '');
     const ig = t(f.instagram).replace(/^@/, '');
     const cards = [
-        since && { icon: '🏪', title: since, text: t(f.hakkinda) },
-        t(f.adres) && { icon: '📍', title: 'Mağazamız', text: t(f.adres), link: mapUrl, linkText: 'Yol tarifi al' },
-        t(f.saatler) && { icon: '🕘', title: 'Çalışma saatleri', text: t(f.saatler) },
-        t(f.kargo) && { icon: '📦', title: 'Kargo', text: t(f.kargo) },
-        t(f.odeme) && { icon: '💳', title: 'Ödeme', text: t(f.odeme) },
-        t(f.degisim) && { icon: '🔄', title: 'Değişim', text: t(f.degisim) },
-        tel && { icon: '📞', title: 'Telefon', text: t(f.telefon), link: `tel:${tel}`, linkText: 'Hemen ara', big: true },
-        ig && { icon: '📸', title: 'Instagram', text: `@${ig}`, link: `https://instagram.com/${encodeURIComponent(ig)}`, linkText: 'Takip et' }
+        since && { icon: 'store', title: since, text: t(f.hakkinda) },
+        t(f.adres) && { icon: 'pin', title: 'Mağazamız', text: t(f.adres), link: mapUrl, linkText: 'Yol tarifi al' },
+        t(f.saatler) && { icon: 'clock', title: 'Çalışma saatleri', text: t(f.saatler) },
+        t(f.kargo) && { icon: 'truck', title: 'Kargo', text: t(f.kargo) },
+        t(f.odeme) && { icon: 'card', title: 'Ödeme', text: t(f.odeme) },
+        t(f.degisim) && { icon: 'refresh', title: 'Değişim', text: t(f.degisim) },
+        tel && { icon: 'phone', title: 'Telefon', text: t(f.telefon), link: `tel:${tel}`, linkText: 'Hemen ara', big: true },
+        ig && { icon: 'instagram', title: 'Instagram', text: `@${ig}`, link: `https://instagram.com/${encodeURIComponent(ig)}`, linkText: 'Takip et' }
     ].filter(Boolean);
     $('trustGrid').innerHTML = cards.map(c => `
         <div class="trust-card">
-            <span class="trust-icon">${c.icon}</span>
+            <span class="trust-icon"><i class="ic ic-${c.icon}" aria-hidden="true"></i></span>
             <div>
                 <b>${escapeHtml(c.title)}</b>
                 ${c.text ? `<p>${escapeHtml(c.text)}</p>` : ''}
@@ -379,7 +379,7 @@ function renderPromo() {
         const tick = () => {
             const t = countdownText(promo.bitis);
             if (!t) { hidePromo(); return; }      // süre bitti
-            $('promoTimer').textContent = `⏳ ${t}`;
+            $('promoTimer').innerHTML = `<i class="ic ic-clock" aria-hidden="true"></i> ${t}`;
             $('promoTimer').hidden = false;
         };
         tick();
@@ -424,7 +424,7 @@ function renderStats() {
 
     // Kayan kategori şeridi
     const words = [...new Set(allProducts.map(p => p.kategori))];
-    const strip = words.map(w => `<span>${escapeHtml(w)}</span><i>✦</i>`).join('');
+    const strip = words.map(w => `<span>${escapeHtml(w)}</span><i class="tick-sep"></i>`).join('');
     $('ticker').innerHTML = strip + strip + strip + strip;
 
     // Yeni gelenler vitrini
@@ -516,9 +516,9 @@ function renderChips() {
     if (activeCategory === 'fav' && favs.size === 0) activeCategory = 'all';
     $('categoryChips').innerHTML =
         chip('all', 'Tümü', allProducts.length) +
-        (favs.size ? chip('fav', '♥ Favorilerim', favs.size) : '') +
-        (allProducts.some(badgeOf) ? chip('featured', '🔥 Öne çıkanlar', allProducts.filter(badgeOf).length) : '') +
-        chip('new', '✦ Yeni gelenler', newIds.size) +
+        (favs.size ? chip('fav', 'Favorilerim', favs.size) : '') +
+        (allProducts.some(badgeOf) ? chip('featured', 'Öne çıkanlar', allProducts.filter(badgeOf).length) : '') +
+        chip('new', 'Yeni gelenler', newIds.size) +
         Object.keys(counts).map(c => chip(c, c, counts[c])).join('');
 }
 
@@ -611,7 +611,7 @@ function productCard(p, index) {
                 </button>
                 ${badge}
                 ${favButton(p)}
-                ${p.video ? '<span class="video-chip" aria-hidden="true">▶ Video</span>' : ''}
+                ${p.video ? '<span class="video-chip" aria-hidden="true"><i class="ic ic-play"></i> Video</span>' : ''}
             </div>
             <div class="card-body">
                 <h3 class="card-name" data-open>${escapeHtml(titleCase(p.urun_adi))}</h3>
@@ -719,7 +719,7 @@ function toggleFav(id) {
         toast('Favorilerden çıkarıldı');
     } else {
         favs.add(id);
-        toast('Favorilere eklendi ♥');
+        toast('Favorilere eklendi');
     }
     writeStore(FAV_KEY, [...favs]);
     document.querySelectorAll(`[data-fav="${id}"]`).forEach(btn => {
@@ -984,7 +984,7 @@ function updateCartUI() {
     $('cartBarTotal').textContent = formatPrice(g.final);
     const goalText = !g.any || !items ? ''
         : g.next ? `${formatPrice(g.next.remaining)} daha → ${g.next.label}`
-        : '🎉 Tüm hedeflere ulaştınız';
+        : '✓ Tüm hedeflere ulaştınız';
     $('cartBarGoal').textContent = goalText;
     $('cartBarGoal').hidden = !goalText;
 }
@@ -1189,7 +1189,7 @@ function notifyButton(p, cls) {
     const asked = notifyList().some(n => n.id === p.id);
     return asked
         ? `<button class="${cls} notified" data-notify="${p.id}">✓ Haber verilecek</button>`
-        : `<button class="${cls} notify" data-notify="${p.id}">🔔 Gelince haber ver</button>`;
+        : `<button class="${cls} notify" data-notify="${p.id}"><i class="ic ic-bell" aria-hidden="true"></i> Gelince haber ver</button>`;
 }
 
 // Müşteri: WhatsApp'tan "gelince haber verin" yazar; bu cihaz da hatırlar
@@ -1205,7 +1205,7 @@ function requestNotify(id) {
     list.push({ id, date: new Date().toISOString() });
     writeStore(NOTIFY_KEY, list);
     refreshActions(id);
-    toast('Tamam! Ürün gelince haber vereceğiz 🔔');
+    toast('Tamam, ürün gelince size haber vereceğiz.');
 }
 
 // Siteye dönen müşteriye: beklediği ürün stoğa girdiyse en üstte göster

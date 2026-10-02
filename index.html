@@ -15,6 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ikonlar.css">
 </head>
 <body>
     <!-- Duyuru bandı (yönetim sayfasından düzenlenir) -->
@@ -46,7 +47,7 @@
     <div class="wrap back-in-wrap">
         <div class="back-in" id="backInBox" hidden>
             <div class="back-in-head">
-                <strong>🔔 Beklediğiniz ürün geldi!</strong>
+                <strong><i class="ic ic-bell" aria-hidden="true"></i> Beklediğiniz ürün geldi</strong>
                 <button class="reorder-close" id="backInClose" aria-label="Kapat">&times;</button>
             </div>
             <div class="back-in-list" id="backInList"></div>
@@ -63,7 +64,7 @@
                 <div class="hero-cta">
                     <a href="#controls" class="btn-paper">Kataloğa göz at</a>
                     <a href="#" class="btn-ghost" id="heroWhatsApp" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
-                    <a href="katalog.pdf" class="btn-ghost" id="heroPdf" download="SIVAL-katalog.pdf" hidden>📄 PDF katalog</a>
+                    <a href="katalog.pdf" class="btn-ghost" id="heroPdf" download="SIVAL-katalog.pdf" hidden><i class="ic ic-file" aria-hidden="true"></i> PDF katalog</a>
                 </div>
                 <div class="hero-stats" id="heroStats"></div>
             </div>
@@ -97,7 +98,7 @@
     <section class="spotlight featured" id="featured" hidden>
         <div class="wrap">
             <div class="section-head">
-                <h2>🔥 Öne çıkanlar</h2>
+                <h2>Öne çıkanlar</h2>
                 <button class="section-link" data-goto="featured">Tümünü gör →</button>
             </div>
         </div>
@@ -176,9 +177,9 @@
                 <p class="footer-text">Toptan satış ve fiyat bilgisi için bize yazın.</p>
             </div>
             <div class="footer-links">
-                <button class="footer-wa" id="installBtn" hidden>📲 Kataloğu telefonuma ekle</button>
+                <button class="footer-wa" id="installBtn" hidden><i class="ic ic-mobile" aria-hidden="true"></i> Kataloğu telefonuma ekle</button>
                 <a class="footer-wa" id="footerWhatsApp" href="#" target="_blank" rel="noopener">WhatsApp'tan yazın →</a>
-                <a class="footer-wa" id="footerPdf" href="katalog.pdf" download="SIVAL-katalog.pdf" hidden>📄 PDF katalog indir</a>
+                <a class="footer-wa" id="footerPdf" href="katalog.pdf" download="SIVAL-katalog.pdf" hidden><i class="ic ic-file" aria-hidden="true"></i> PDF katalog indir</a>
             </div>
         </div>
     </footer>
@@ -201,8 +202,8 @@
                 <video id="modalVideo" playsinline muted loop controls preload="none" hidden></video>
                 <iframe id="modalEmbed" title="Ürün videosu" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen hidden></iframe>
                 <div class="media-switch" id="mediaSwitch" hidden>
-                    <button type="button" data-media="photo">📷 Fotoğraf</button>
-                    <button type="button" data-media="video">▶ Video</button>
+                    <button type="button" data-media="photo"><i class="ic ic-image" aria-hidden="true"></i> Fotoğraf</button>
+                    <button type="button" data-media="video"><i class="ic ic-play" aria-hidden="true"></i> Video</button>
                 </div>
             </div>
             <div class="detail-info">
@@ -262,7 +263,7 @@
             <h2 id="installTitle">SİVAL'i telefonunuza ekleyin</h2>
             <p>Bir dahaki sefere linki aramayın: ana ekrandaki <b>SİVAL</b> simgesine dokunun, katalog açılsın.</p>
             <div id="installAndroid">
-                <button class="go-cart" id="installGo">📲 Telefonuma ekle</button>
+                <button class="go-cart" id="installGo"><i class="ic ic-mobile" aria-hidden="true"></i> Telefonuma ekle</button>
             </div>
             <ol class="install-steps" id="installIos" hidden>
                 <li><span>1</span><p>Ekranın altındaki <b>Paylaş</b> düğmesine basın <i class="ios-share" aria-hidden="true"></i></p></li>
