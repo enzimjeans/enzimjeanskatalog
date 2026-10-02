@@ -341,6 +341,105 @@
         }
         .wa-send:hover { background: #178a47; }
         #sendView .form-actions button { flex: 1; }
+        /* Başlık üst çubukta yazıyor; panel içinde tekrar etmesin */
+        #formView > h2, #customerFormView > h2, #bulkView > h2, #addChoiceView > h2, #announceView > h2, #campaignView > h2 { display: none; }
+
+        /* Boş müşteri ekranı */
+        .onboard { text-align: center; padding: 24px 8px 8px; }
+        .onboard-art {
+            width: 84px; height: 84px; margin: 0 auto 14px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.6rem;
+            background: var(--green-bg);
+        }
+        .onboard h2 { font-size: 1.35rem; margin-bottom: 6px; }
+        .onboard > p { color: var(--muted); max-width: 420px; margin: 0 auto 18px; }
+        .add-options { display: grid; gap: 10px; margin-bottom: 16px; text-align: left; }
+        .add-opt {
+            display: grid;
+            grid-template-columns: 44px 1fr;
+            grid-template-rows: auto auto;
+            column-gap: 12px;
+            align-items: center;
+            padding: 14px 16px;
+            background: var(--card);
+            border: 1.5px solid var(--line);
+            border-radius: 14px;
+            color: var(--text);
+            text-align: left;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: border-color 0.15s, transform 0.15s;
+        }
+        .add-opt:hover { border-color: var(--primary); transform: translateY(-1px); }
+        .add-opt span { grid-row: span 2; font-size: 1.8rem; text-align: center; }
+        .add-opt strong { font-size: 1.02rem; }
+        .add-opt small { color: var(--muted); font-weight: 400; }
+        .add-opt[hidden] { display: none; }
+
+        .all-good {
+            background: var(--green-bg);
+            color: #166534;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            font-size: 0.92rem;
+        }
+        .all-good a { color: inherit; font-weight: 600; }
+
+        /* Sağ altta sabit ekle düğmesi */
+        .fab {
+            position: fixed;
+            right: max(16px, calc((100vw - 900px) / 2 + 16px));
+            bottom: calc(20px + env(safe-area-inset-bottom));
+            z-index: 30;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            padding: 0;
+            background: var(--primary);
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 400;
+            box-shadow: 0 10px 24px rgba(29, 78, 216, 0.4);
+        }
+        .fab:hover { background: var(--primary-dark); }
+        #customersView { padding-bottom: 90px; }
+
+        /* Son sipariş seçimi */
+        .pick-row { display: flex; flex-wrap: wrap; gap: 6px; }
+        .pick-row button {
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: var(--card);
+            border: 1.5px solid var(--line);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .pick-row button.active { background: var(--text); border-color: var(--text); color: #fff; }
+
+        details.more { margin: 4px 0 8px; }
+        details.more summary { cursor: pointer; color: var(--primary); font-weight: 600; padding: 6px 0; }
+
+        .form-actions.stack { flex-direction: column; }
+        .form-actions.stack button { width: 100%; }
+
+        /* Yapıştırma önizlemesi */
+        .bulk-preview { margin: 12px 0 4px; }
+        .bulk-preview .bp-head { font-weight: 700; margin-bottom: 6px; }
+        .bulk-preview .bp-row {
+            display: flex; justify-content: space-between; gap: 10px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+        .bulk-preview .bp-row span:last-child { color: var(--muted); white-space: nowrap; }
+        .bulk-preview .bp-row.dup { opacity: 0.5; text-decoration: line-through; }
+
+        @media (hover: none), (pointer: coarse) { .desktop-only { display: none !important; } }
 
         .variants { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .variant {
@@ -507,61 +606,98 @@
 
         <!-- Müşteriler -->
         <section id="customersView" class="hidden">
-            <div class="view-head">
-                <button class="btn-light" data-back>‹ Ürünler</button>
-                <h2>👥 Müşteriler</h2>
+            <!-- Boşken: nasıl başlanacağını göster -->
+            <div class="onboard" id="cOnboard">
+                <div class="onboard-art">👥</div>
+                <h2>Müşterilerinizi ekleyin</h2>
+                <p>Kimin ne zaman sipariş verdiğini takip edin; uzun süredir sessiz kalanlara tek tek, adıyla WhatsApp mesajı atın.</p>
+                <div class="add-options">
+                    <button class="add-opt" data-addmode="contacts" hidden>
+                        <span>📱</span><strong>Rehberden seç</strong><small>Telefon rehberinden işaretle, hepsini ekle</small>
+                    </button>
+                    <button class="add-opt" data-addmode="manual">
+                        <span>✍️</span><strong>Tek tek ekle</strong><small>Telefon ve ad yazarak</small>
+                    </button>
+                    <button class="add-opt" data-addmode="paste">
+                        <span>📋</span><strong>Listeden yapıştır</strong><small>Excel, not veya WhatsApp'tan kopyala</small>
+                    </button>
+                </div>
+                <p class="hint">🔒 Müşteri listesi gizli bir depoda tutulur, katalogda görünmez.</p>
             </div>
 
-            <button class="winback-cta" id="campaignBtn">
-                <span class="winback-big" id="winbackCount">0</span>
-                <span class="winback-text">
-                    <strong>müşteri geri kazanılmayı bekliyor</strong>
-                    <small>Kişiye özel WhatsApp mesajı hazırla →</small>
-                </span>
-            </button>
+            <!-- Doluyken -->
+            <div id="cMain">
+                <button class="winback-cta" id="campaignBtn">
+                    <span class="winback-big" id="winbackCount">0</span>
+                    <span class="winback-text">
+                        <strong id="winbackTitle">müşteri geri kazanılmayı bekliyor</strong>
+                        <small>Kişiye özel WhatsApp mesajı hazırla →</small>
+                    </span>
+                </button>
+                <div class="all-good" id="allGood">👏 Herkes son 30 günde sipariş vermiş. Kampanya için yine de <a href="#" id="campaignLink">mesaj hazırlayabilirsiniz</a>.</div>
 
-            <div class="seg-row" id="segChips"></div>
-            <div class="toolbar">
-                <input type="search" id="cSearch" placeholder="İsim, firma, şehir veya telefon ara...">
+                <input type="search" id="cSearch" placeholder="🔍  İsim, şehir veya telefon ara..." style="margin-bottom:10px">
+                <div class="seg-row" id="segChips"></div>
+                <div class="list" id="cList"></div>
+                <p class="hint" style="margin-top:18px;text-align:center">🔒 Müşteri listesi gizli bir depoda tutulur, katalogda görünmez.</p>
             </div>
-            <div class="toolbar">
-                <button class="btn-primary" id="cNewBtn" style="flex:1">+ Müşteri ekle</button>
-                <button class="btn-light" id="cBulkBtn" style="flex:1">📋 Toplu ekle</button>
-            </div>
-            <div class="list" id="cList"></div>
-            <p class="hint" style="margin-top:18px;text-align:center">🔒 Müşteri listesi gizli bir depoda tutulur, katalogda görünmez.</p>
+            <button class="fab" id="cFab" aria-label="Müşteri ekle">+</button>
         </section>
 
-        <!-- Müşteri ekle / düzenle -->
+        <!-- Ekleme yöntemi seçimi (+ düğmesinden) -->
+        <section id="addChoiceView" class="panel hidden">
+            <h2>Müşteri ekle</h2>
+            <div class="add-options" id="addChoiceList"></div>
+        </section>
+
+        <!-- Müşteri ekle / düzenle (kısa form) -->
         <section id="customerFormView" class="panel hidden">
             <h2 id="cFormTitle">Yeni müşteri</h2>
-            <div class="field"><label for="cName">Ad Soyad</label><input type="text" id="cName" placeholder="Örn: Ahmet Yılmaz"></div>
-            <div class="field"><label for="cFirm">Firma</label><input type="text" id="cFirm" placeholder="Örn: Yılmaz Tekstil (isteğe bağlı)"></div>
-            <div class="field"><label for="cPhone">Telefon</label><input type="tel" id="cPhone" placeholder="05xx xxx xx xx"></div>
-            <div class="field"><label for="cCity">Şehir</label><input type="text" id="cCity" placeholder="Örn: Bursa"></div>
             <div class="field">
-                <label for="cLast">Son sipariş tarihi</label>
-                <input type="date" id="cLast">
-                <p class="hint">Listede "✓ Sipariş" düğmesine basınca bugünün tarihi otomatik yazılır.</p>
+                <label for="cPhone">Telefon</label>
+                <input type="tel" id="cPhone" inputmode="tel" placeholder="05xx xxx xx xx" autocomplete="tel">
+                <p class="hint" id="cPhoneHint"></p>
             </div>
-            <div class="field"><label for="cNote">Not</label><textarea id="cNote" rows="2" placeholder="Örn: Hep jean alır, 30-36 beden"></textarea></div>
-            <label class="check"><input type="checkbox" id="cOptOut"> Mesaj istemiyor (kampanyalara dahil edilmez)</label>
-            <div class="form-actions">
-                <button class="btn-light" id="cCancel">Vazgeç</button>
+            <div class="field">
+                <label for="cName">Ad veya firma</label>
+                <input type="text" id="cName" placeholder="Örn: Ahmet Yılmaz / Yılmaz Tekstil" autocomplete="name">
+            </div>
+            <div class="field">
+                <label for="cCity">Şehir <small style="color:var(--muted);font-weight:400">(isteğe bağlı)</small></label>
+                <input type="text" id="cCity" placeholder="Örn: Bursa" list="cityList">
+                <datalist id="cityList"></datalist>
+            </div>
+            <div class="field">
+                <label>Son sipariş ne zaman?</label>
+                <div class="pick-row" id="cWhen">
+                    <button type="button" data-when="0">Bugün</button>
+                    <button type="button" data-when="15">Bu ay</button>
+                    <button type="button" data-when="60">1-3 ay önce</button>
+                    <button type="button" data-when="120">3 aydan eski</button>
+                    <button type="button" data-when="">Bilmiyorum</button>
+                </div>
+                <p class="hint" id="cWhenHint"></p>
+            </div>
+            <details class="more" id="cMore">
+                <summary>Daha fazla (not, mesaj tercihi)</summary>
+                <div class="field" style="margin-top:12px"><label for="cNote">Not</label><textarea id="cNote" rows="2" placeholder="Örn: Hep jean alır, 30-36 beden"></textarea></div>
+                <label class="check"><input type="checkbox" id="cOptOut"> Mesaj istemiyor (kampanyalara dahil edilmez)</label>
+            </details>
+            <div class="form-actions stack">
                 <button class="btn-primary" id="cSave">Kaydet</button>
+                <button class="btn-light" id="cSaveNext">Kaydet ve yenisini ekle</button>
             </div>
             <div class="form-delete" id="cDeleteWrap"><button class="btn-danger" id="cDelete">Müşteriyi sil</button></div>
         </section>
 
-        <!-- Toplu ekle -->
+        <!-- Listeden yapıştır -->
         <section id="bulkView" class="panel hidden">
-            <h2>📋 Toplu müşteri ekle</h2>
-            <p class="hint" style="margin:-6px 0 14px">Her satıra bir müşteri: <b>Ad, Telefon, Şehir</b>. Excel'den veya rehberden kopyalayıp yapıştırabilirsiniz.</p>
-            <textarea id="bulkText" rows="8" placeholder="Ahmet Yılmaz, 0532 111 22 33, Bursa&#10;Demir Tekstil, 05441234567, İstanbul"></textarea>
-            <p class="hint" id="bulkInfo">0 müşteri bulundu</p>
+            <h2>📋 Listeden yapıştır</h2>
+            <p class="hint" style="margin:-6px 0 14px">Excel, not defteri ya da WhatsApp'tan kopyaladığınız listeyi yapıştırın. Telefon numaralarını kendim bulurum; satırın geri kalanı isim olur.</p>
+            <textarea id="bulkText" rows="6" placeholder="Ahmet Yılmaz 0532 111 22 33 Bursa&#10;Demir Tekstil - +90 544 123 45 67&#10;05051234567 Mehmet"></textarea>
+            <div class="bulk-preview" id="bulkPreview"></div>
             <div class="form-actions">
-                <button class="btn-light" id="bulkCancel">Vazgeç</button>
-                <button class="btn-primary" id="bulkSave">Ekle</button>
+                <button class="btn-primary" id="bulkSave" style="flex:1">Ekle</button>
             </div>
         </section>
 
@@ -582,6 +718,7 @@
                 <textarea id="campText" rows="6"></textarea>
                 <p class="hint"><b>{ad}</b> müşterinin adı, <b>{link}</b> katalog linki olur.</p>
                 <label class="check"><input type="checkbox" id="campOptOut" checked> Sona "istemiyorsanız RET yazın" notu ekle (ticari ileti kuralı)</label>
+                <label class="check desktop-only" id="campAppWrap"><input type="checkbox" id="campApp"> 💻 WhatsApp masaüstü uygulamasında aç (tarayıcıda yeni sekme açılmaz)</label>
                 <div class="wa-preview">
                     <div class="wa-head" id="campPreviewTo">Önizleme</div>
                     <div class="wa-bubble" id="campPreview"></div>
@@ -858,6 +995,7 @@
             announceView: 'Duyuru bandı',
             customersView: 'Müşteriler',
             customerFormView: 'Müşteri',
+            addChoiceView: 'Müşteri ekle',
             bulkView: 'Toplu ekle',
             campaignView: 'Geri kazanma',
             sendView: 'Mesaj gönderimi'
@@ -1589,12 +1727,42 @@
             show('customersView');
         }
 
+        // WhatsApp'ı aç: telefonda uygulama, bilgisayarda isteğe göre masaüstü uygulaması
+        const APP_KEY = 'sival_wa_desktop';
+        function useDesktopApp() {
+            try { return localStorage.getItem(APP_KEY) === '1'; } catch (e) { return false; }
+        }
+        function openWhatsApp(phone, text) {
+            const t = encodeURIComponent(text || '');
+            if (useDesktopApp() && !matchMedia('(pointer: coarse)').matches) {
+                location.href = `whatsapp://send?phone=${phone}&text=${t}`;   // sekme açmadan uygulamaya gider
+            } else {
+                window.open(`https://wa.me/${phone}?text=${t}`, '_blank');
+            }
+        }
+
+        const displayName = c => c.ad || c.firma || prettyPhone(c.telefon);
+        const canPickContacts = 'contacts' in navigator && 'select' in navigator.contacts;
+
         function renderCustomers() {
+            const empty = customers.length === 0;
+            $('cOnboard').classList.toggle('hidden', !empty);
+            $('cMain').classList.toggle('hidden', empty);
+            $('cFab').classList.toggle('hidden', empty);
+            document.querySelectorAll('[data-addmode="contacts"]').forEach(b => b.hidden = !canPickContacts);
+            if (empty) return;
+
+            const waiting = waitingWinback().length;
+            $('campaignBtn').classList.toggle('hidden', waiting === 0);
+            $('allGood').classList.toggle('hidden', waiting > 0);
+            $('winbackCount').textContent = waiting;
+
+            // Sadece içinde müşteri olan gruplar görünsün
             const counts = { all: customers.length };
             customers.forEach(c => { const s = segmentOf(c); counts[s] = (counts[s] || 0) + 1; });
-            $('segChips').innerHTML = SEGMENTS.map(s => `
-                <button class="${cSegment === s.key ? 'active' : ''}" data-seg="${s.key}">${s.label}<small>${counts[s.key] || 0}</small></button>`).join('');
-            $('winbackCount').textContent = waitingWinback().length;
+            if (cSegment !== 'all' && !counts[cSegment]) cSegment = 'all';
+            $('segChips').innerHTML = SEGMENTS.filter(s => counts[s.key]).map(s => `
+                <button class="${cSegment === s.key ? 'active' : ''}" data-seg="${s.key}">${s.label}<small>${counts[s.key]}</small></button>`).join('');
 
             const q = $('cSearch').value.trim().toLocaleLowerCase('tr');
             const qDigits = q.replace(/\D/g, '');
@@ -1605,13 +1773,13 @@
 
             $('cList').innerHTML = list.map(c => {
                 const seg = segmentOf(c);
-                const last = c.sonSiparis ? `son sipariş <b>${agoText(c.sonSiparis)}</b>` : 'sipariş kaydı yok';
-                const msg = c.sonMesaj ? ` · mesaj ${agoText(c.sonMesaj)}` : '';
+                const last = c.sonSiparis ? `son sipariş <b>${agoText(c.sonSiparis)}</b>` : 'sipariş bilgisi yok';
+                const msg = c.sonMesaj ? ` · 💬 ${agoText(c.sonMesaj)}` : '';
                 return `
                 <div class="item c-item" data-cid="${c.id}">
                     <div class="avatar ${seg}">${escapeHtml(initials(c))}</div>
                     <div class="item-info">
-                        <div class="item-name">${escapeHtml(c.ad || c.firma)}${c.firma && c.ad ? ` <small style="color:var(--muted);font-weight:500">· ${escapeHtml(c.firma)}</small>` : ''}</div>
+                        <div class="item-name">${escapeHtml(displayName(c))}</div>
                         <div class="item-meta">${c.sehir ? escapeHtml(c.sehir) + ' · ' : ''}${last}${msg}${c.ret ? ' · <span class="tag-ret">mesaj istemiyor</span>' : ''}</div>
                     </div>
                     <div class="item-actions">
@@ -1619,7 +1787,7 @@
                         <button class="msg-btn" data-cmsg="${c.id}" title="WhatsApp'tan yaz" aria-label="WhatsApp'tan yaz">💬</button>
                     </div>
                 </div>`;
-            }).join('') || `<p class="hint" style="text-align:center;padding:24px">${customers.length ? 'Bu grupta müşteri yok.' : 'Henüz müşteri yok. "+ Müşteri ekle" veya "Toplu ekle" ile başlayın.'}</p>`;
+            }).join('') || '<p class="hint" style="text-align:center;padding:24px">Aramanıza uygun müşteri yok.</p>';
         }
 
         $('customersTile').onclick = openCustomers;
@@ -1642,104 +1810,51 @@
                 busy('Kaydediliyor...');
                 try {
                     await saveCustomers(list => list.map(x => x.id === c.id ? { ...x, sonSiparis: new Date().toISOString() } : x),
-                        `Sipariş: ${c.ad || c.firma}`);
+                        `Sipariş: ${displayName(c)}`);
                     renderCustomers();
-                    toast(`${c.ad || c.firma}: bugün sipariş verdi ✓`);
+                    toast(`${displayName(c)}: bugün sipariş verdi ✓`);
                 } catch (err) { toast(customerErrorText(err), true); }
                 finally { busy(); }
             } else if (msg) {
                 const c = customers.find(x => x.id === msg.dataset.cmsg);
-                const name = (c.ad || c.firma).split(' ')[0];
-                window.open(`https://wa.me/${c.telefon}?text=${encodeURIComponent(`Merhaba ${name}, `)}`, '_blank');
+                openWhatsApp(c.telefon, `Merhaba ${displayName(c).split(' ')[0]}, `);
             } else if (row) {
                 openCustomerForm(row.dataset.cid);
             }
         });
 
-        // Ekle / düzenle
-        function openCustomerForm(id) {
-            editingCustomer = id ? customers.find(c => c.id === id) : null;
-            const c = editingCustomer || {};
-            $('cFormTitle').textContent = editingCustomer ? 'Müşteriyi düzenle' : 'Yeni müşteri';
-            $('cName').value = c.ad || '';
-            $('cFirm').value = c.firma || '';
-            $('cPhone').value = c.telefon ? prettyPhone(c.telefon) : '';
-            $('cCity').value = c.sehir || '';
-            $('cLast').value = c.sonSiparis ? toLocalInput(c.sonSiparis).slice(0, 10) : '';
-            $('cNote').value = c.not || '';
-            $('cOptOut').checked = !!c.ret;
-            $('cDeleteWrap').classList.toggle('hidden', !editingCustomer);
-            show('customerFormView');
-        }
-
-        $('cNewBtn').onclick = () => openCustomerForm(null);
-        $('cCancel').onclick = () => { renderCustomers(); show('customersView'); };
-
-        $('cSave').onclick = async () => {
-            const telefon = normalizePhone($('cPhone').value);
-            const ad = $('cName').value.trim(), firma = $('cFirm').value.trim();
-            if (!ad && !firma) return toast('Ad veya firma yazın.', true);
-            if (telefon.length < 11) return toast('Telefon numarasını kontrol edin.', true);
-            const dup = customers.find(c => c.telefon === telefon && c.id !== editingCustomer?.id);
-            if (dup) return toast(`Bu numara zaten kayıtlı: ${dup.ad || dup.firma}`, true);
-
-            const fields = {
-                ad, firma, telefon,
-                sehir: $('cCity').value.trim(),
-                sonSiparis: $('cLast').value ? new Date($('cLast').value + 'T12:00').toISOString() : null,
-                not: $('cNote').value.trim(),
-                ret: $('cOptOut').checked
-            };
-            busy('Kaydediliyor...');
-            try {
-                if (editingCustomer) {
-                    await saveCustomers(list => list.map(x => x.id === editingCustomer.id ? { ...x, ...fields } : x), `Müşteri güncellendi: ${ad || firma}`);
-                } else {
-                    const c = { id: Date.now().toString(36), ...fields, sonMesaj: null, eklenme: new Date().toISOString() };
-                    await saveCustomers(list => [...list, c], `Müşteri eklendi: ${ad || firma}`);
-                }
-                renderCustomers();
-                show('customersView');
-                toast('Kaydedildi ✓');
-            } catch (e) { toast(customerErrorText(e), true); }
-            finally { busy(); }
+        // ---------- Ekleme yolları: rehber, tek tek, yapıştır ----------
+        $('cFab').onclick = () => {
+            $('addChoiceList').innerHTML = document.querySelector('#cOnboard .add-options').innerHTML;
+            $('addChoiceList').querySelectorAll('[data-addmode="contacts"]').forEach(b => b.hidden = !canPickContacts);
+            show('addChoiceView');
         };
 
-        $('cDelete').onclick = async () => {
-            const c = editingCustomer;
-            if (!c || !confirm(`"${c.ad || c.firma}" silinsin mi?`)) return;
-            busy('Siliniyor...');
-            try {
-                await saveCustomers(list => list.filter(x => x.id !== c.id), `Müşteri silindi: ${c.ad || c.firma}`);
-                renderCustomers();
-                show('customersView');
-                toast('Silindi ✓');
-            } catch (e) { toast(customerErrorText(e), true); }
-            finally { busy(); }
-        };
-
-        // Toplu ekle: "Ad, Telefon, Şehir" satırları
-        function parseBulk(text) {
-            return text.split('\n').map(line => {
-                const parts = line.split(/[,;\t]/).map(s => s.trim()).filter(Boolean);
-                const phoneIdx = parts.findIndex(p => p.replace(/\D/g, '').length >= 10);
-                if (phoneIdx === -1) return null;
-                const telefon = normalizePhone(parts[phoneIdx]);
-                const rest = parts.filter((_, i) => i !== phoneIdx);
-                return { ad: rest[0] || '', sehir: rest[1] || '', telefon };
-            }).filter(c => c && c.telefon.length >= 11);
-        }
-
-        $('cBulkBtn').onclick = () => { $('bulkText').value = ''; $('bulkInfo').textContent = '0 müşteri bulundu'; show('bulkView'); };
-        $('bulkCancel').onclick = () => show('customersView');
-        $('bulkText').addEventListener('input', () => {
-            const found = parseBulk($('bulkText').value);
-            const fresh = found.filter(c => !customers.some(x => x.telefon === c.telefon));
-            $('bulkInfo').textContent = `${found.length} müşteri bulundu` + (found.length - fresh.length ? ` (${found.length - fresh.length} tanesi zaten kayıtlı, atlanacak)` : '');
+        document.addEventListener('click', e => {
+            const b = e.target.closest('[data-addmode]');
+            if (!b) return;
+            const mode = b.dataset.addmode;
+            if (mode === 'manual') openCustomerForm(null);
+            else if (mode === 'paste') openBulk();
+            else if (mode === 'contacts') pickContacts();
         });
-        $('bulkSave').onclick = async () => {
-            const found = parseBulk($('bulkText').value);
-            if (!found.length) return toast('Her satıra "Ad, Telefon, Şehir" yazın.', true);
+
+        // Android'de telefon rehberinden çoklu seçim
+        async function pickContacts() {
+            let picked;
+            try {
+                picked = await navigator.contacts.select(['name', 'tel'], { multiple: true });
+            } catch (e) { return; }                       // vazgeçildi
+            const found = (picked || []).map(p => ({
+                ad: (p.name && p.name[0]) || '',
+                telefon: normalizePhone((p.tel && p.tel[0]) || ''),
+                sehir: ''
+            })).filter(c => c.telefon.length >= 11);
+            if (!found.length) return toast('Seçilen kişilerde telefon numarası bulunamadı.', true);
+            await addMany(found);
+        }
+
+        async function addMany(found) {
             busy('Ekleniyor...');
             try {
                 const stamp = Date.now();
@@ -1749,16 +1864,159 @@
                     const fresh = found.filter(c => !seen.has(c.telefon) && seen.add(c.telefon));
                     added = fresh.length;
                     return [...list, ...fresh.map((c, i) => ({
-                        id: (stamp + i).toString(36), ad: c.ad, firma: '', telefon: c.telefon, sehir: c.sehir,
+                        id: (stamp + i).toString(36), ad: c.ad, firma: '', telefon: c.telefon, sehir: c.sehir || '',
                         sonSiparis: null, sonMesaj: null, not: '', ret: false, eklenme: new Date().toISOString()
                     }))];
-                }, 'Toplu müşteri eklendi');
+                }, `${found.length} müşteri eklendi`);
                 renderCustomers();
                 show('customersView');
-                toast(`${added} müşteri eklendi ✓`);
+                toast(added ? `${added} müşteri eklendi ✓` : 'Hepsi zaten kayıtlıydı');
+            } catch (e) { toast(customerErrorText(e), true); }
+            finally { busy(); }
+        }
+
+        // ---------- Kısa form ----------
+        let cWhen = '';                // '' bilmiyorum, sayı: kaç gün önce
+        let cWhenTouched = false;
+
+        function setWhen(v) {
+            cWhen = v;
+            document.querySelectorAll('#cWhen button').forEach(b => b.classList.toggle('active', b.dataset.when === String(v)));
+        }
+
+        function whenBucket(iso) {
+            const d = daysSince(iso);
+            if (d === null) return '';
+            if (d === 0) return '0';
+            if (d <= 30) return '15';
+            if (d <= 90) return '60';
+            return '120';
+        }
+
+        function openCustomerForm(id) {
+            editingCustomer = id ? customers.find(c => c.id === id) : null;
+            const c = editingCustomer || {};
+            $('cFormTitle').textContent = editingCustomer ? displayName(c) : 'Yeni müşteri';
+            $('cPhone').value = c.telefon ? prettyPhone(c.telefon) : '';
+            $('cPhoneHint').textContent = '';
+            $('cName').value = c.ad || c.firma || '';
+            $('cCity').value = c.sehir || '';
+            $('cityList').innerHTML = [...new Set(customers.map(x => x.sehir).filter(Boolean))].map(s => `<option value="${escapeHtml(s)}">`).join('');
+            setWhen(whenBucket(c.sonSiparis));
+            cWhenTouched = false;
+            $('cWhenHint').textContent = c.sonSiparis
+                ? `Kayıtlı: ${new Date(c.sonSiparis).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}` : '';
+            $('cNote').value = c.not || '';
+            $('cOptOut').checked = !!c.ret;
+            $('cMore').open = !!(c.not || c.ret);
+            $('cSaveNext').classList.toggle('hidden', !!editingCustomer);
+            $('cDeleteWrap').classList.toggle('hidden', !editingCustomer);
+            show('customerFormView');
+            if (!editingCustomer) setTimeout(() => $('cPhone').focus(), 50);
+        }
+
+        document.querySelectorAll('#cWhen button').forEach(b => b.onclick = () => { setWhen(b.dataset.when); cWhenTouched = true; });
+
+        // Yazarken numarayı kontrol et; kayıtlıysa hemen söyle
+        $('cPhone').addEventListener('input', () => {
+            const t = normalizePhone($('cPhone').value);
+            const dup = t.length >= 11 && customers.find(c => c.telefon === t && c.id !== editingCustomer?.id);
+            $('cPhoneHint').innerHTML = dup
+                ? `⚠️ Bu numara zaten kayıtlı: <b>${escapeHtml(displayName(dup))}</b>`
+                : t.length >= 12 ? `✓ ${prettyPhone(t)}` : '';
+        });
+
+        async function saveCustomerForm(next) {
+            const telefon = normalizePhone($('cPhone').value);
+            const ad = $('cName').value.trim();
+            if (telefon.length < 11) { $('cPhone').focus(); return toast('Telefon numarasını yazın.', true); }
+            if (!ad) { $('cName').focus(); return toast('Ad veya firma yazın.', true); }
+            const dup = customers.find(c => c.telefon === telefon && c.id !== editingCustomer?.id);
+            if (dup) return toast(`Bu numara zaten kayıtlı: ${displayName(dup)}`, true);
+
+            // Düzenlemede tarih seçimine dokunulmadıysa kayıtlı tarih aynen kalsın
+            let sonSiparis;
+            if (editingCustomer && !cWhenTouched) sonSiparis = editingCustomer.sonSiparis || null;
+            else sonSiparis = cWhen === '' ? null : new Date(Date.now() - Number(cWhen) * 86400000).toISOString();
+
+            const fields = { ad, firma: '', telefon, sehir: $('cCity').value.trim(), sonSiparis, not: $('cNote').value.trim(), ret: $('cOptOut').checked };
+            busy('Kaydediliyor...');
+            try {
+                if (editingCustomer) {
+                    await saveCustomers(list => list.map(x => x.id === editingCustomer.id ? { ...x, ...fields } : x), `Müşteri güncellendi: ${ad}`);
+                } else {
+                    const c = { id: Date.now().toString(36), ...fields, sonMesaj: null, eklenme: new Date().toISOString() };
+                    await saveCustomers(list => [...list, c], `Müşteri eklendi: ${ad}`);
+                }
+                toast(`${ad} kaydedildi ✓`);
+                if (next) {
+                    const city = $('cCity').value;
+                    openCustomerForm(null);
+                    $('cCity').value = city;             // çoğu zaman aynı şehirden art arda eklenir
+                } else {
+                    renderCustomers();
+                    show('customersView');
+                }
+            } catch (e) { toast(customerErrorText(e), true); }
+            finally { busy(); }
+        }
+
+        $('cSave').onclick = () => saveCustomerForm(false);
+        $('cSaveNext').onclick = () => saveCustomerForm(true);
+
+        $('cDelete').onclick = async () => {
+            const c = editingCustomer;
+            if (!c || !confirm(`"${displayName(c)}" silinsin mi?`)) return;
+            busy('Siliniyor...');
+            try {
+                await saveCustomers(list => list.filter(x => x.id !== c.id), `Müşteri silindi: ${displayName(c)}`);
+                renderCustomers();
+                show('customersView');
+                toast('Silindi ✓');
             } catch (e) { toast(customerErrorText(e), true); }
             finally { busy(); }
         };
+
+        // ---------- Listeden yapıştır: telefonları bul, kalan metin isim ----------
+        const PHONE_RE = /(\+?90[\s.-]?|0)?\(?5\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}/;
+
+        function parseBulk(text) {
+            return text.split(/\n/).map(line => {
+                const m = line.match(PHONE_RE);
+                if (!m) return null;
+                const telefon = normalizePhone(m[0]);
+                // Numaradan öncesi isim, sonrası şehir ("Ahmet Yılmaz 0532... Bursa")
+                const chunks = s => s.split(/[,;\t|]|\s-\s/).map(x => x.replace(/^[\s\-–:]+|[\s\-–:]+$/g, '').replace(/\s+/g, ' ')).filter(Boolean);
+                const before = chunks(line.slice(0, m.index));
+                const after = chunks(line.slice(m.index + m[0].length));
+                return before.length
+                    ? { ad: before[0], sehir: before[1] || after[0] || '', telefon }
+                    : { ad: after[0] || '', sehir: after[1] || '', telefon };
+            }).filter(c => c && c.telefon.length === 12);
+        }
+
+        function openBulk() {
+            $('bulkText').value = '';
+            renderBulkPreview();
+            show('bulkView');
+            setTimeout(() => $('bulkText').focus(), 50);
+        }
+
+        function renderBulkPreview() {
+            const found = parseBulk($('bulkText').value);
+            const seen = new Set(customers.map(c => c.telefon));
+            const rows = found.map(c => { const dup = seen.has(c.telefon); seen.add(c.telefon); return { ...c, dup }; });
+            const fresh = rows.filter(r => !r.dup).length;
+            $('bulkPreview').innerHTML = rows.length
+                ? `<div class="bp-head">${fresh} yeni müşteri eklenecek${rows.length - fresh ? ` · ${rows.length - fresh} zaten kayıtlı` : ''}</div>` +
+                  rows.map(r => `<div class="bp-row ${r.dup ? 'dup' : ''}"><span>${escapeHtml(r.ad || '(isimsiz)')}${r.sehir ? ' · ' + escapeHtml(r.sehir) : ''}</span><span>${prettyPhone(r.telefon)}</span></div>`).join('')
+                : '<p class="hint">Yapıştırınca bulunan kişiler burada listelenir.</p>';
+            $('bulkSave').disabled = fresh === 0;
+            $('bulkSave').textContent = fresh ? `${fresh} müşteriyi ekle` : 'Ekle';
+        }
+
+        $('bulkText').addEventListener('input', renderBulkPreview);
+        $('bulkSave').onclick = () => addMany(parseBulk($('bulkText').value));
 
         // ---------- Geri kazanma sihirbazı ----------
         let campSegs = new Set(['kayip', 'sessiz']);
@@ -1820,6 +2078,17 @@
             $('campStart').disabled = !targets.length;
         }
 
+        $('campApp').checked = useDesktopApp();
+        $('campApp').addEventListener('change', () => {
+            try { localStorage.setItem(APP_KEY, $('campApp').checked ? '1' : '0'); } catch (e) {}
+            if ($('campApp').checked) toast('Bilgisayarınızda WhatsApp masaüstü uygulaması kurulu olmalı.');
+        });
+        $('campaignLink').onclick = e => {
+            e.preventDefault();
+            campSegs = new Set(['aktif', 'sessiz', 'kayip', 'yok']);
+            $('campaignBtn').onclick();
+        };
+
         $('campaignBtn').onclick = () => {
             if (!customers.length) return toast('Önce müşteri ekleyin.', true);
             $('campText').value = TEMPLATES[campTpl].text();
@@ -1866,7 +2135,7 @@
 
         $('sendGo').onclick = () => {
             const c = queue[queueIndex];
-            window.open(`https://wa.me/${c.telefon}?text=${encodeURIComponent(personalize($('campText').value, c))}`, '_blank');
+            openWhatsApp(c.telefon, personalize($('campText').value, c));
             c._sent = true;
             sentCount++;
             queueIndex++;
