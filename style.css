@@ -2354,6 +2354,58 @@ main .section-head h2 small, .spotlight .section-head h2 small { font-size: 0.87
 #installBtn { background: none; border-bottom: 1.5px solid #e3c9a6; cursor: pointer; font: inherit; font-weight: 600; color: var(--paper); padding: 12px 0 2px; }
 #installBtn[hidden] { display: none; }
 
+/* ============================================
+   Bizi tanıyın / güven şeridi
+   ============================================ */
+.trust-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    margin-top: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink-2);
+}
+.trust-strip[hidden], .trust[hidden] { display: none; }
+
+.trust { padding: 8px 0 48px; }
+.trust-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+@media (min-width: 700px) { .trust-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .trust-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.trust-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px;
+    border-radius: var(--radius);
+    background: var(--card);
+    border: 1px solid var(--line);
+}
+.trust-icon { font-size: 1.8rem; line-height: 1; }
+.trust-card b { font-size: 1.05rem; }
+.trust-card p { color: var(--ink-2); margin-top: 2px; white-space: pre-line; }
+.trust-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 4px;
+    font-weight: 700;
+    color: var(--denim);
+}
+.trust-link.big {
+    padding: 0 18px;
+    border-radius: 999px;
+    background: var(--wa);
+    color: #fff;
+    text-decoration: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *:not(.ticker-track), *::before, *::after {
         animation: none !important;

@@ -255,6 +255,7 @@ async function loadPromo() {
         const ayar = await res.json();
         if (ayar.pdf && ayar.pdf.tarih) showPdfLinks(ayar.pdf);
         setGoals(ayar.hedefler);
+        renderTrust(ayar.firma);
         const a = ayar.duyuru;
         if (!a || !a.aktif || !a.metin) return;
         if (a.bitis && new Date(a.bitis) <= Date.now()) return;
@@ -317,6 +318,47 @@ function goalProgressHtml(total) {
             <div class="goal-bar"><span style="width:${pct.toFixed(1)}%"></span></div>`;
     }
     return html;
+}
+
+// ---------- Bizi tanıyın (firma bilgileri yönetimden girilir; boş olan gösterilmez) ----------
+function renderTrust(f) {
+    if (!f) return;
+    const t = v => String(v || '').trim();
+    const year = t(f.kurulus);
+    const since = /^\d{4}$/.test(year) ? `${year} yılından beri` : year;   // "2010'dan/1999'dan" ek derdi olmasın
+
+    // Üstte kısa şerit: en güven veren 3 bilgi
+    const strip = [
+        t(f.kargo) && `📦 ${t(f.kargoKisa) || t(f.kargo)}`,
+        t(f.degisim) && `🔄 ${t(f.degisimKisa) || 'Değişim imkânı'}`,
+        since && `🏪 ${since}`
+    ].filter(Boolean).slice(0, 3);
+    $('trustStrip').innerHTML = strip.map(s => `<span>${escapeHtml(s)}</span>`).join('');
+    $('trustStrip').hidden = !strip.length;
+
+    const tel = t(f.telefon).replace(/[^\d+]/g, '');
+    const mapUrl = t(f.harita) || (t(f.adres) ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t(f.adres))}` : '');
+    const ig = t(f.instagram).replace(/^@/, '');
+    const cards = [
+        since && { icon: '🏪', title: since, text: t(f.hakkinda) },
+        t(f.adres) && { icon: '📍', title: 'Mağazamız', text: t(f.adres), link: mapUrl, linkText: 'Yol tarifi al' },
+        t(f.saatler) && { icon: '🕘', title: 'Çalışma saatleri', text: t(f.saatler) },
+        t(f.kargo) && { icon: '📦', title: 'Kargo', text: t(f.kargo) },
+        t(f.odeme) && { icon: '💳', title: 'Ödeme', text: t(f.odeme) },
+        t(f.degisim) && { icon: '🔄', title: 'Değişim', text: t(f.degisim) },
+        tel && { icon: '📞', title: 'Telefon', text: t(f.telefon), link: `tel:${tel}`, linkText: 'Hemen ara', big: true },
+        ig && { icon: '📸', title: 'Instagram', text: `@${ig}`, link: `https://instagram.com/${encodeURIComponent(ig)}`, linkText: 'Takip et' }
+    ].filter(Boolean);
+    $('trustGrid').innerHTML = cards.map(c => `
+        <div class="trust-card">
+            <span class="trust-icon">${c.icon}</span>
+            <div>
+                <b>${escapeHtml(c.title)}</b>
+                ${c.text ? `<p>${escapeHtml(c.text)}</p>` : ''}
+                ${c.link ? `<a class="trust-link ${c.big ? 'big' : ''}" href="${escapeHtml(c.link)}" ${c.link.startsWith('tel:') ? '' : 'target="_blank" rel="noopener"'}>${escapeHtml(c.linkText)} →</a>` : ''}
+            </div>
+        </div>`).join('');
+    $('trust').hidden = !cards.length;
 }
 
 function countdownText(end) {
