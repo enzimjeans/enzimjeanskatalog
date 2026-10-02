@@ -56,7 +56,11 @@
                 <button class="section-link" data-goto="new">Tümünü gör →</button>
             </div>
         </div>
-        <div class="rail" id="newRail"></div>
+        <div class="rail-wrap">
+            <button class="rail-arrow prev" data-rail="-1" aria-label="Önceki ürünler">‹</button>
+            <div class="rail" id="newRail"></div>
+            <button class="rail-arrow next" data-rail="1" aria-label="Sonraki ürünler">›</button>
+        </div>
     </section>
 
     <section class="wrap cat-tiles-wrap" id="catTilesWrap" hidden>

@@ -132,6 +132,7 @@ function renderStats() {
 
     // Yeni gelenler vitrini
     $('newRail').innerHTML = fresh.map((p, i) => productCard(p, i)).join('');
+    requestAnimationFrame(updateRailArrows);
 
     // Kategori kutuları
     const cats = {};
@@ -146,6 +147,13 @@ function renderStats() {
             <span class="cat-tile-name">${escapeHtml(name)}</span>
             <span class="cat-tile-count">${c.count} model</span>
         </button>`).join('');
+}
+
+function updateRailArrows() {
+    const rail = $('newRail');
+    const max = rail.scrollWidth - rail.clientWidth - 2;
+    document.querySelector('.rail-arrow.prev').disabled = rail.scrollLeft <= 2;
+    document.querySelector('.rail-arrow.next').disabled = rail.scrollLeft >= max;
 }
 
 function newestInStock() {
@@ -538,4 +546,12 @@ function setupEvents() {
     });
 
     window.addEventListener('hashchange', openFromHash);
+
+    // Vitrin okları
+    const rail = $('newRail');
+    document.querySelectorAll('[data-rail]').forEach(btn => btn.addEventListener('click', () => {
+        rail.scrollBy({ left: Number(btn.dataset.rail) * rail.clientWidth * 0.8, behavior: 'smooth' });
+    }));
+    rail.addEventListener('scroll', updateRailArrows, { passive: true });
+    window.addEventListener('resize', updateRailArrows);
 }

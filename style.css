@@ -30,6 +30,7 @@
 html { scroll-behavior: smooth; }
 
 body {
+    overflow-x: clip;
     font-family: var(--body);
     background: var(--paper);
     color: var(--ink);
@@ -252,16 +253,22 @@ input, select { font: inherit; color: inherit; }
 }
 
 #sortSelect {
-    flex: 0 0 auto;
-    max-width: 44%;
+    flex: 0 1 auto;
+    width: 210px;
+    min-width: 0;
+    text-overflow: ellipsis;
     padding: 10px 34px 10px 14px;
     border: 1px solid var(--line);
     border-radius: 999px;
     background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2314130f' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
     appearance: none;
     -webkit-appearance: none;
-    font-size: 0.92rem;
+    font-size: 16px;          /* 16px altı iPhone'da yakınlaştırma yapar */
     cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    #sortSelect { width: 38%; }
 }
 
 .chips {
@@ -528,7 +535,7 @@ main { padding-top: 18px; padding-bottom: 64px; }
     font-weight: 600;
     text-decoration: none;
     border-bottom: 1.5px solid #e3c9a6;
-    padding-bottom: 2px;
+    padding: 12px 0 2px;
 }
 
 /* ---------- Alt sepet çubuğu (mobil) ---------- */
@@ -1059,6 +1066,7 @@ body.has-cart-bar .footer { padding-bottom: 110px; }
 }
 
 .section-link {
+    padding: 10px 0;
     font-size: 0.88rem;
     font-weight: 600;
     color: var(--denim);
@@ -1234,6 +1242,46 @@ body.has-cart-bar .footer { padding-bottom: 110px; }
     overflow-x: auto;
     padding-bottom: 6px;
     scrollbar-width: thin;
+}
+
+/* Fareli cihazlarda yana kaydırma yerine ızgara */
+@media (min-width: 820px) {
+    .similar-list {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        overflow: visible;
+        gap: 14px 10px;
+    }
+
+    .similar-item img { width: 100%; height: auto; aspect-ratio: 4 / 5; }
+}
+
+/* Vitrin okları (sadece masaüstü) */
+.rail-wrap { position: relative; }
+
+.rail-arrow {
+    position: absolute;
+    top: 38%;
+    z-index: 3;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--card);
+    box-shadow: 0 6px 20px rgba(20, 19, 15, 0.22);
+    font-size: 1.4rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.rail-arrow:hover { transform: scale(1.08); }
+.rail-arrow.prev { left: max(8px, calc((100vw - 1240px) / 2 + 8px)); }
+.rail-arrow.next { right: max(8px, calc((100vw - 1240px) / 2 + 8px)); }
+.rail-arrow[disabled] { opacity: 0; pointer-events: none; }
+
+@media (hover: hover) and (pointer: fine) {
+    .rail-arrow { display: flex; }
 }
 
 .similar-item {
