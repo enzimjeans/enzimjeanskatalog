@@ -1172,11 +1172,24 @@
   {
     "id": 131,
     "urun_adi": "STRAİGHT FİT 243/2",
-    "fiyat": "450 TL",
+    "fiyat": "420 TL",
     "kategori": "Jeans",
     "gorsel": "243-2.jpg",
     "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
-    "stok": "Var"
+    "stok": "Var",
+    "video": "",
+    "satis": "seri",
+    "bedenler": [
+      "32",
+      "33",
+      "34",
+      "36",
+      "38",
+      "40"
+    ],
+    "seriAdet": 6,
+    "rozet": "firsat",
+    "eskiFiyat": "450 TL"
   },
   {
     "id": 132,
