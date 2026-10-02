@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>SİVAL - Ürün Yönetimi</title>
+    <link rel="manifest" href="manifest-yonetim.webmanifest">
+    <link rel="apple-touch-icon" href="ikonlar/apple-touch-yonetim.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="SİVAL Yön.">
+    <meta name="theme-color" content="#0f172a">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Figtree:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -731,6 +736,7 @@
             <div class="count" id="count"></div>
             <div class="list" id="list"></div>
             <p class="hint" style="margin-top:24px;text-align:center">
+                <a href="#" id="adminInstall" hidden>📲 Yönetimi telefonuma ekle</a><br>
                 <a href="#" id="logoutBtn">Bu cihazdan çıkış yap</a>
             </p>
         </section>
@@ -3360,6 +3366,26 @@
             if (!confirm('Kargo bedava ve indirimler kapatılsın mı?')) return;
             saveGoals({ aktif: false, kargo: 0, kademeler: [] }, 'Sepet hedefleri kapatıldı');
         };
+
+        // ---------- Telefona ekle (personel için) ----------
+        let adminInstallPrompt = null;
+        const adminStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+        const adminIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        function updateAdminInstall() { $('adminInstall').hidden = adminStandalone() || !(adminInstallPrompt || adminIOS); }
+        window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); adminInstallPrompt = e; updateAdminInstall(); });
+        $('adminInstall').onclick = async e => {
+            e.preventDefault();
+            if (adminInstallPrompt) {
+                adminInstallPrompt.prompt();
+                await adminInstallPrompt.userChoice.catch(() => null);
+                adminInstallPrompt = null;
+                updateAdminInstall();
+            } else {
+                alert('Ekranın altındaki Paylaş düğmesine basın, sonra "Ana Ekrana Ekle"yi seçin.');
+            }
+        };
+        updateAdminInstall();
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 
         // ---------- Başlat ----------
         const saved = getSaved();

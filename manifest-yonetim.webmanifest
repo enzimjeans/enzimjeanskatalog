@@ -1,0 +1,16 @@
+{
+  "name": "SİVAL Yönetim",
+  "short_name": "SİVAL Yön.",
+  "description": "SİVAL katalog yönetimi: ürün, stok, müşteri ve kampanyalar.",
+  "lang": "tr",
+  "id": "./yonetim.html",
+  "start_url": "./yonetim.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f1f5f9",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "ikonlar/yonetim-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "ikonlar/yonetim-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

@@ -6,6 +6,10 @@
     <title>SİVAL - Toptan Satış Kataloğu</title>
     <meta name="description" content="SİVAL toptan giyim kataloğu: jean, gömlek, mont, yelek ve daha fazlası. Sepetinizi oluşturun, WhatsApp'tan sipariş verin.">
     <meta name="theme-color" content="#14130f">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="ikonlar/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="SİVAL">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314130f'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23f3efe8' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -164,6 +168,7 @@
                 <p class="footer-text">Toptan satış ve fiyat bilgisi için bize yazın.</p>
             </div>
             <div class="footer-links">
+                <button class="footer-wa" id="installBtn" hidden>📲 Kataloğu telefonuma ekle</button>
                 <a class="footer-wa" id="footerWhatsApp" href="#" target="_blank" rel="noopener">WhatsApp'tan yazın →</a>
                 <a class="footer-wa" id="footerPdf" href="katalog.pdf" download="SIVAL-katalog.pdf" hidden>📄 PDF katalog indir</a>
             </div>
@@ -238,6 +243,25 @@
                 WhatsApp'tan Sipariş Ver
             </button>
             <button class="link-btn danger" id="clearCart">Sepeti temizle</button>
+        </div>
+    </dialog>
+
+    <!-- Telefona ekle -->
+    <dialog class="sheet install-sheet" id="installModal" aria-labelledby="installTitle">
+        <button class="sheet-close" data-close aria-label="Kapat">&times;</button>
+        <div class="install-body">
+            <img src="ikonlar/ikon-192.png" alt="" class="install-icon">
+            <h2 id="installTitle">SİVAL'i telefonunuza ekleyin</h2>
+            <p>Bir dahaki sefere linki aramayın: ana ekrandaki <b>SİVAL</b> simgesine dokunun, katalog açılsın.</p>
+            <div id="installAndroid">
+                <button class="go-cart" id="installGo">📲 Telefonuma ekle</button>
+            </div>
+            <ol class="install-steps" id="installIos" hidden>
+                <li><span>1</span><p>Ekranın altındaki <b>Paylaş</b> düğmesine basın <i class="ios-share" aria-hidden="true"></i></p></li>
+                <li><span>2</span><p>Listeden <b>"Ana Ekrana Ekle"</b>yi seçin</p></li>
+                <li><span>3</span><p>Sağ üstteki <b>"Ekle"</b>ye basın</p></li>
+            </ol>
+            <button class="link-btn" id="installLater">Şimdi değil</button>
         </div>
     </dialog>
 

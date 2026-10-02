@@ -1077,6 +1077,52 @@ function sendWhatsAppOrder() {
     });
 
     window.open(whatsappUrl(message), '_blank');
+    setTimeout(() => offerInstall(true), 2500);     // sipariş gönderildi: tam zamanı
+}
+
+// ---------- Telefona uygulama gibi ekle ----------
+const INSTALL_KEY = 'sival_install_later';
+let installPrompt = null;
+const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const canInstall = () => !isStandalone() && (!!installPrompt || isIOS());
+
+function updateInstallButton() {
+    $('installBtn').hidden = !canInstall();
+}
+
+// Kendiliğinden sorma: reddettiyse 14 gün sorma
+function offerInstall(auto) {
+    if (!canInstall()) return;
+    if (auto) {
+        const later = readStore(INSTALL_KEY, 0);
+        if (later && Date.now() - later < 14 * 86400000) return;
+    }
+    $('installAndroid').hidden = !installPrompt;
+    $('installIos').hidden = !!installPrompt || !isIOS();
+    openDialog($('installModal'));
+    document.body.classList.add('no-scroll');
+}
+
+async function runInstall() {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    const choice = await installPrompt.userChoice.catch(() => null);
+    installPrompt = null;
+    $('installModal').close();
+    updateInstallButton();
+    if (choice && choice.outcome === 'accepted') toast('Eklendi ✓ Ana ekranınızda SİVAL simgesi var');
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();               // kendi sade düğmemizle soralım
+    installPrompt = e;
+    updateInstallButton();
+});
+window.addEventListener('appinstalled', () => { installPrompt = null; updateInstallButton(); });
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
 
 // ---------- Siparişi tekrarla ----------
@@ -1243,6 +1289,10 @@ function setupEvents() {
     });
 
     $('reorderBtn').addEventListener('click', reorder);
+    $('installBtn').addEventListener('click', () => offerInstall(false));
+    $('installGo').addEventListener('click', runInstall);
+    $('installLater').addEventListener('click', () => { writeStore(INSTALL_KEY, Date.now()); $('installModal').close(); });
+    updateInstallButton();
     $('backInClose').addEventListener('click', clearBackIn);
     $('reorderClose').addEventListener('click', () => {
         $('reorderBox').hidden = true;
