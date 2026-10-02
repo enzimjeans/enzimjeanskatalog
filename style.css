@@ -2227,6 +2227,54 @@ main .section-head h2 small, .spotlight .section-head h2 small { font-size: 0.87
     text-align: left;
 }
 
+/* ============================================
+   Sepet hedefleri: kargo bedava ve kademeli indirim
+   ============================================ */
+.cart-bar { flex-direction: column; align-items: stretch; gap: 6px; }
+.cart-bar-main { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.cart-bar-goal {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #f0c995;
+    text-align: left;
+}
+.cart-bar-goal[hidden] { display: none; }
+
+.goal-box {
+    text-align: left;
+    background: #fff7ec;
+    border: 1.5px dashed var(--thread);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+}
+.goal-box[hidden] { display: none; }
+.goal-won { color: #1a7a43; font-size: 0.95rem; margin-bottom: 6px; }
+.goal-next { font-size: 0.95rem; color: var(--ink); }
+.goal-bar {
+    height: 12px;
+    margin-top: 8px;
+    border-radius: 999px;
+    background: var(--paper-2);
+    overflow: hidden;
+}
+.goal-bar span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--thread), var(--rust));
+    transition: width 0.4s ease;
+}
+
+.cart-lines p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    margin-bottom: 4px;
+}
+.cart-lines p.disc { color: #1a7a43; font-weight: 700; }
+
 @media (prefers-reduced-motion: reduce) {
     *:not(.ticker-track), *::before, *::after {
         animation: none !important;

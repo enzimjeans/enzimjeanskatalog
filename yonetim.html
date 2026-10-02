@@ -393,6 +393,16 @@
         .wa-send:hover { background: #178a47; }
         #sendView .form-actions button { flex: 1; }
         #pdfView > h2 { display: none; }
+        #goalsView .form-actions { position: sticky; bottom: 0; z-index: 6; margin: 16px -20px -20px; padding: 12px 20px; background: var(--card); border-top: 1px solid var(--line); border-radius: 0 0 14px 14px; }
+        .tier { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .tier input { min-width: 0; }
+        .tier .t-min { flex: 1.4; }
+        .tier .t-pct { flex: 0 0 76px; text-align: center; }
+        .tier span { white-space: nowrap; font-weight: 600; color: var(--muted); }
+        .tier button { flex: 0 0 44px; min-height: 44px; padding: 0; background: var(--red-bg); color: var(--red); }
+        .goal-preview { border-radius: 12px; border: 1.5px dashed #c9853a; background: #fff7ec; padding: 12px 14px; font-size: 0.95rem; }
+        .goal-preview .bar { height: 12px; border-radius: 999px; background: #e9e3d8; overflow: hidden; margin-top: 8px; }
+        .goal-preview .bar span { display: block; height: 100%; width: 60%; background: linear-gradient(90deg, #c9853a, #a8502a); }
         #pdfCatChips button.active { background: var(--text); color: #fff; }
         .pdf-done { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 18px; }
         .pdf-file { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
@@ -688,6 +698,14 @@
                     </span>
                     <span class="hub-arrow">›</span>
                 </button>
+                <button class="hub-tile" id="goalsTile">
+                    <span class="hub-icon">🎯</span>
+                    <span class="hub-text">
+                        <strong>Sepet hedefleri</strong>
+                        <small id="goalsStatus">Kargo bedava ve toplu alım indirimi</small>
+                    </span>
+                    <span class="hub-arrow">›</span>
+                </button>
                 <button class="hub-tile" id="pdfTile">
                     <span class="hub-icon">📄</span>
                     <span class="hub-text">
@@ -715,6 +733,36 @@
             <p class="hint" style="margin-top:24px;text-align:center">
                 <a href="#" id="logoutBtn">Bu cihazdan çıkış yap</a>
             </p>
+        </section>
+
+        <!-- Sepet hedefleri -->
+        <section id="goalsView" class="panel hidden">
+            <p class="hint" style="margin:0 0 16px">Müşteri sepette <b>"1.250 TL daha ekleyin → kargo bedava"</b> gibi bir çubuk görür. Hedefe yaklaşan müşteri bir ürün daha ekler.</p>
+
+            <div class="field">
+                <label class="check" style="margin:0 0 10px"><input type="checkbox" id="gShipOn"> 🚚 Kargo bedava</label>
+                <div class="price-wrap" id="gShipWrap">
+                    <input type="text" inputmode="numeric" id="gShip" placeholder="Örn: 5000">
+                    <span>TL ve üzeri</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>💰 Toplu alım indirimi</label>
+                <div id="gTiers"></div>
+                <button type="button" class="btn-light" id="gAddTier" style="width:100%;margin-top:8px">+ İndirim basamağı ekle</button>
+                <p class="hint">Örn: 10.000 TL ve üzeri %3, 20.000 TL ve üzeri %5. Müşteri ulaştığı en yüksek basamağın indirimini alır.</p>
+            </div>
+
+            <div class="field">
+                <label>Önizleme (müşterinin sepetinde)</label>
+                <div class="goal-preview" id="gPreview"></div>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-light" id="gOff">Hepsini kapat</button>
+                <button class="btn-primary" id="gSave">Kaydet</button>
+            </div>
         </section>
 
         <!-- PDF katalog -->
@@ -1256,6 +1304,7 @@
             formView: 'Ürün',
             announceView: 'Duyuru bandı',
             pdfView: 'PDF katalog',
+            goalsView: 'Sepet hedefleri',
             customersView: 'Müşteriler',
             customerFormView: 'Müşteri',
             addChoiceView: 'Müşteri ekle',
@@ -1422,6 +1471,7 @@
                 products = list;
                 settings = ayar.data || {};
                 renderAnnounceStatus();
+                renderGoalsStatus();
                 loadCustomers().catch(() => {});     // arka planda; müşteri kutusundaki sayı için
                 setSaved(token);
                 $('toast').className = 'toast';
@@ -3174,6 +3224,103 @@
             } finally {
                 busy();
             }
+        };
+
+        // ---------- Sepet hedefleri ----------
+        const tl = n => Number(n).toLocaleString('tr-TR') + ' TL';
+        const numIn = v => Number(String(v || '').replace(/[^\d]/g, '')) || 0;
+
+        function goalsFromSettings() {
+            const h = settings.hedefler || {};
+            return { kargo: Number(h.kargo) || 0, kademeler: Array.isArray(h.kademeler) ? h.kademeler : [] };
+        }
+
+        function renderGoalsStatus() {
+            const h = settings.hedefler;
+            const parts = [];
+            if (h && h.aktif !== false) {
+                if (h.kargo) parts.push(`${tl(h.kargo)} üzeri kargo bedava`);
+                (h.kademeler || []).forEach(k => parts.push(`${tl(k.min)} → %${k.indirim}`));
+            }
+            $('goalsStatus').textContent = parts.length ? 'Açık: ' + parts.join(' · ') : 'Kapalı · Kargo bedava ve toplu alım indirimi';
+            $('goalsStatus').className = parts.length ? 'on' : '';
+        }
+
+        function tierRow(k = {}) {
+            return `
+                <div class="tier">
+                    <input type="text" inputmode="numeric" class="t-min" placeholder="10000" value="${k.min ? Number(k.min).toLocaleString('tr-TR') : ''}">
+                    <span>TL üzeri %</span>
+                    <input type="text" inputmode="numeric" class="t-pct" placeholder="5" value="${k.indirim || ''}">
+                    <button type="button" class="t-del" aria-label="Bu basamağı sil">✕</button>
+                </div>`;
+        }
+
+        function readGoalsForm() {
+            const kademeler = [...document.querySelectorAll('#gTiers .tier')].map(r => ({
+                min: numIn(r.querySelector('.t-min').value),
+                indirim: Math.min(50, numIn(r.querySelector('.t-pct').value))
+            })).filter(k => k.min > 0 && k.indirim > 0).sort((a, b) => a.min - b.min);
+            return { aktif: true, kargo: $('gShipOn').checked ? numIn($('gShip').value) : 0, kademeler };
+        }
+
+        function renderGoalsPreview() {
+            $('gShipWrap').classList.toggle('hidden', !$('gShipOn').checked);
+            const h = readGoalsForm();
+            const goals = [];
+            if (h.kargo) goals.push({ min: h.kargo, label: 'kargo bedava' });
+            h.kademeler.forEach(k => goals.push({ min: k.min, label: `%${k.indirim} indirim` }));
+            goals.sort((a, b) => a.min - b.min);
+            if (!goals.length) { $('gPreview').innerHTML = '<span style="color:var(--muted)">Hedef eklenmedi; müşteriye çubuk gösterilmez.</span>'; return; }
+            const g = goals[0], example = Math.round(g.min * 0.6);
+            $('gPreview').innerHTML = `Sepette ${tl(example)} varken:<br><b>${tl(g.min - example)}</b> daha ekleyin → <b>${g.label}</b><div class="bar"><span></span></div>`;
+        }
+
+        function openGoals() {
+            const h = goalsFromSettings();
+            $('gShipOn').checked = h.kargo > 0;
+            $('gShip').value = h.kargo ? h.kargo.toLocaleString('tr-TR') : '';
+            $('gTiers').innerHTML = (h.kademeler.length ? h.kademeler : [{}]).map(tierRow).join('');
+            renderGoalsPreview();
+            show('goalsView');
+        }
+
+        $('goalsTile').onclick = openGoals;
+        $('gAddTier').onclick = () => {
+            if (document.querySelectorAll('#gTiers .tier').length >= 3) return toast('En fazla 3 basamak eklenebilir.', true);
+            $('gTiers').insertAdjacentHTML('beforeend', tierRow());
+            renderGoalsPreview();
+        };
+        $('gTiers').addEventListener('click', e => {
+            if (!e.target.closest('.t-del')) return;
+            e.target.closest('.tier').remove();
+            renderGoalsPreview();
+        });
+        ['gTiers', 'gShip'].forEach(id => $(id).addEventListener('input', renderGoalsPreview));
+        $('gShipOn').addEventListener('change', renderGoalsPreview);
+
+        async function saveGoals(hedefler, message) {
+            busy('Kaydediliyor...');
+            try {
+                settings = await updateJson('ayarlar.json', s => ({ ...s, hedefler }), message, {});
+                renderGoalsStatus();
+                show('listView');
+                toast('Kaydedildi ✓ Site 1-2 dakika içinde güncellenir.');
+            } catch (e) {
+                toast(errorText(e), true);
+            } finally {
+                busy();
+            }
+        }
+
+        $('gSave').onclick = () => {
+            const h = readGoalsForm();
+            if ($('gShipOn').checked && !h.kargo) return toast('Kargo bedava için tutar yazın.', true);
+            saveGoals(h, 'Sepet hedefleri güncellendi');
+        };
+        $('gOff').onclick = () => {
+            if (!confirm('Kargo bedava ve indirimler kapatılsın mı?')) return;
+            saveGoals({ aktif: false, kargo: 0, kademeler: [] }, 'Sepet hedefleri kapatıldı');
         };
 
         // ---------- Başlat ----------

@@ -162,8 +162,11 @@
 
     <!-- Sepet özeti (mobilde altta) -->
     <button class="cart-bar" id="cartBar" hidden>
-        <span><strong id="cartBarCount">0</strong> adet · <span id="cartBarTotal">0 TL</span></span>
-        <span class="cart-bar-cta">Sepeti gör →</span>
+        <span class="cart-bar-main">
+            <span><strong id="cartBarCount">0</strong> adet · <span id="cartBarTotal">0 TL</span></span>
+            <span class="cart-bar-cta">Sepeti gör →</span>
+        </span>
+        <span class="cart-bar-goal" id="cartBarGoal" hidden></span>
     </button>
 
     <!-- Ürün detayı -->
@@ -211,6 +214,8 @@
                 <input type="text" id="buyerName" placeholder="Firma / Ad Soyad" autocomplete="organization">
                 <input type="text" id="buyerCity" placeholder="Şehir" autocomplete="address-level2">
             </div>
+            <div class="goal-box" id="goalBox" hidden></div>
+            <div class="cart-lines" id="cartLines"></div>
             <div class="cart-sum">
                 <span>Toplam <strong id="cartTotalItems">0</strong> adet</span>
                 <strong class="cart-total" id="cartTotalPrice">0 TL</strong>

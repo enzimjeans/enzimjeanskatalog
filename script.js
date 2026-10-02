@@ -253,6 +253,7 @@ async function loadPromo() {
         if (!res.ok) return;
         const ayar = await res.json();
         if (ayar.pdf && ayar.pdf.tarih) showPdfLinks(ayar.pdf);
+        setGoals(ayar.hedefler);
         const a = ayar.duyuru;
         if (!a || !a.aktif || !a.metin) return;
         if (a.bitis && new Date(a.bitis) <= Date.now()) return;
@@ -267,6 +268,54 @@ function showPdfLinks(pdf) {
     const href = `katalog.pdf?v=${new Date(pdf.tarih).getTime()}`;     // yeni PDF'te eskisi önbellekten gelmesin
     ['heroPdf', 'footerPdf'].forEach(id => { $(id).href = href; $(id).hidden = false; });
     $('footerPdf').textContent = `📄 PDF katalog indir (${date})`;
+}
+
+// ---------- Sepet hedefleri: kargo bedava ve kademeli indirim ----------
+let goals = { kargo: 0, kademeler: [] };     // kargo: TL eşiği (0 = yok), kademeler: [{ min, indirim }]
+
+function setGoals(h) {
+    if (!h || h.aktif === false) return;
+    goals = {
+        kargo: Number(h.kargo) || 0,
+        kademeler: (Array.isArray(h.kademeler) ? h.kademeler : [])
+            .map(k => ({ min: Number(k.min) || 0, indirim: Number(k.indirim) || 0 }))
+            .filter(k => k.min > 0 && k.indirim > 0 && k.indirim < 100)
+            .sort((a, b) => a.min - b.min)
+    };
+    updateCartUI();
+    if ($('cartModal').open) renderCart();
+}
+
+// Sepet tutarına göre: kazanılan indirim, kargo durumu ve bir sonraki hedef
+function goalState(total) {
+    const won = goals.kademeler.filter(k => total >= k.min).pop() || null;
+    const discount = won ? Math.round(total * won.indirim) / 100 : 0;
+    const freeShip = goals.kargo > 0 && total >= goals.kargo;
+    // Sıradaki hedef: en yakın ulaşılmamış eşik
+    const targets = [];
+    if (goals.kargo > 0 && !freeShip) targets.push({ min: goals.kargo, label: 'kargo bedava' });
+    goals.kademeler.filter(k => total < k.min).forEach(k => targets.push({ min: k.min, label: `%${k.indirim} indirim` }));
+    targets.sort((a, b) => a.min - b.min);
+    const next = targets[0] ? { ...targets[0], remaining: targets[0].min - total } : null;
+    return { won, discount, final: total - discount, freeShip, next, any: goals.kargo > 0 || goals.kademeler.length > 0 };
+}
+
+function goalProgressHtml(total) {
+    const g = goalState(total);
+    if (!g.any || !total) return '';
+    const wins = [];
+    if (g.won) wins.push(`%${g.won.indirim} indirim`);
+    if (g.freeShip) wins.push('kargo bedava');
+    let html = '';
+    if (wins.length) html += `<p class="goal-won">🎉 Kazandınız: <b>${wins.join(' + ')}</b></p>`;
+    if (g.next) {
+        const prev = [0, goals.kargo, ...goals.kademeler.map(k => k.min)].filter(m => m <= total).sort((a, b) => b - a)[0] || 0;
+        const pct = Math.max(4, Math.min(100, ((total - prev) / (g.next.min - prev)) * 100));
+        html += `
+            <p class="goal-next"><b>${formatPrice(g.next.remaining)}</b> daha ekleyin → <b>${g.next.label}</b></p>
+            <div class="goal-bar"><span style="width:${pct.toFixed(1)}%"></span></div>`;
+    }
+    return html;
 }
 
 function countdownText(end) {
@@ -888,7 +937,13 @@ function updateCartUI() {
     $('cartBar').hidden = items === 0;
     document.body.classList.toggle('has-cart-bar', items > 0);
     $('cartBarCount').textContent = items;
-    $('cartBarTotal').textContent = formatPrice(total);
+    const g = goalState(total);
+    $('cartBarTotal').textContent = formatPrice(g.final);
+    const goalText = !g.any || !items ? ''
+        : g.next ? `${formatPrice(g.next.remaining)} daha → ${g.next.label}`
+        : '🎉 Tüm hedeflere ulaştınız';
+    $('cartBarGoal').textContent = goalText;
+    $('cartBarGoal').hidden = !goalText;
 }
 
 // Sepette ürün başına tek kart; tekli üründe bedenler alt alta
@@ -942,7 +997,14 @@ function renderCart() {
     $('cartFooter').hidden = false;
     $('whatsappOrder').disabled = items === 0;
     $('cartTotalItems').textContent = items;
-    $('cartTotalPrice').textContent = formatPrice(total);
+    const g = goalState(total);
+    $('goalBox').innerHTML = goalProgressHtml(total);
+    $('goalBox').hidden = !$('goalBox').innerHTML.trim();
+    $('cartLines').innerHTML = g.discount
+        ? `<p><span>Ara toplam</span><span>${formatPrice(total)}</span></p>
+           <p class="disc"><span>İndirim (%${g.won.indirim})</span><span>−${formatPrice(g.discount)}</span></p>`
+        : '';
+    $('cartTotalPrice').textContent = formatPrice(g.final);
 }
 
 function openCart() {
@@ -999,7 +1061,13 @@ function sendWhatsAppOrder() {
     const { items, total } = cartTotals();
     message += `─────────────────────\n`;
     message += `Toplam: ${items} adet\n`;
-    message += `Toplam tutar: ${formatPrice(total)}`;
+    const g = goalState(total);
+    if (g.discount) {
+        message += `Ara toplam: ${formatPrice(total)}\n`;
+        message += `İndirim (%${g.won.indirim}): -${formatPrice(g.discount)}\n`;
+    }
+    message += `Toplam tutar: ${formatPrice(g.final)}`;
+    if (g.freeShip) message += `\nKargo: Bedava`;
 
     // Bir dahaki ziyarette "Siparişi tekrarla" için sakla
     writeStore(LAST_ORDER_KEY, {
