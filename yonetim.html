@@ -406,16 +406,110 @@
         #sendView .form-actions button { flex: 1; }
         #pdfView > h2 { display: none; }
         #statsPeriods button.active { background: var(--text); color: #fff; }
-        .kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .kpi { background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 14px 12px; }
-        .kpi b { display: block; font-size: 1.5rem; line-height: 1.1; }
-        .kpi span { color: var(--muted); font-size: 0.9rem; }
-        .stats-h { font-size: 1.05rem; margin: 22px 0 10px; }
-        .bar-row { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) 4.6em; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.95rem; }
-        .bar-row b { text-align: right; white-space: nowrap; }
-        .bar-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .bar-track { height: 12px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
-        .bar-track span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #c9853a, #a8502a); }
+        /* ---------- İstatistikler: kot etiketi teması ---------- */
+        #statsView { --indigo: #1c2f4f; --indigo-2: #2b4470; --copper: #c9853a; --copper-2: #a8502a; --cream: #fbf9f5; }
+        #statsView .num { font-family: 'Fraunces', Georgia, serif; font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; }
+        #statsPeriods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px; margin: 0 0 14px !important; background: #fff; border-radius: 14px; box-shadow: 0 1px 2px rgba(15,23,42,.06); }
+        #statsPeriods button { padding: 11px 6px; border-radius: 10px; background: transparent; font-weight: 600; font-size: 0.95rem; color: var(--muted); }
+        #statsPeriods button.active { background: var(--indigo); color: #fff; box-shadow: 0 2px 6px rgba(28,47,79,.35); }
+        #statsBody.panel { background: transparent; box-shadow: none; padding: 0; }
+
+        .st-hero {
+            position: relative; overflow: hidden; color: #fff; border-radius: 18px; padding: 20px 18px 14px;
+            background:
+                repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 2px, transparent 2px 6px),
+                radial-gradient(120% 90% at 100% 0%, #3a5a8c 0%, transparent 60%),
+                linear-gradient(160deg, var(--indigo-2), var(--indigo) 70%);
+            box-shadow: 0 10px 24px -12px rgba(28,47,79,.7);
+        }
+        .st-hero::before { content: ''; position: absolute; inset: 7px; border: 1.5px dashed rgba(201,133,58,.75); border-radius: 13px; pointer-events: none; }
+        .st-live { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; background: rgba(255,255,255,.1); padding: 5px 11px 5px 9px; border-radius: 999px; }
+        .st-live i { width: 9px; height: 9px; border-radius: 50%; background: #8a9bb5; }
+        .st-live.on i { background: #f0a85a; box-shadow: 0 0 0 0 rgba(240,168,90,.7); animation: stPulse 1.8s infinite; }
+        @keyframes stPulse { 70% { box-shadow: 0 0 0 9px rgba(240,168,90,0); } 100% { box-shadow: 0 0 0 0 rgba(240,168,90,0); } }
+        .st-big { display: flex; align-items: baseline; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+        .st-big .num { font-size: 3.1rem; font-weight: 700; line-height: 1; }
+        .st-big span { font-size: 1.05rem; opacity: .9; }
+        .st-sub { margin-top: 6px; font-size: 0.95rem; opacity: .85; }
+        .delta { display: inline-flex; align-items: center; gap: 3px; font-size: 0.8rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+        .delta.up { background: #dcfce7; color: #166534; }
+        .delta.down { background: #fee2e2; color: #991b1b; }
+        .delta.flat { background: #e2e8f0; color: #475569; }
+        .st-hero .delta { margin-top: 10px; }
+        .st-spark { display: block; width: 100%; height: 74px; margin-top: 12px; }
+        .st-axis { display: flex; justify-content: space-between; font-size: 0.75rem; opacity: .7; margin-top: 2px; }
+
+        .st-tags { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+        .st-tag { position: relative; background: #fff; border-radius: 12px; padding: 12px 8px 10px 14px; box-shadow: 0 1px 2px rgba(15,23,42,.06); min-width: 0; }
+        .st-tag::before { content: ''; position: absolute; left: 6px; top: 10px; bottom: 10px; border-left: 2px dashed var(--copper); }
+        .st-tag .ic { width: 22px; height: 22px; }
+        .st-tag .num { display: block; font-size: 1.35rem; font-weight: 700; margin-top: 6px; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .st-tag .num.long { font-size: 1.05rem; padding-top: .3rem; overflow: visible; }
+        .st-tag small { display: block; color: var(--muted); font-size: 0.82rem; line-height: 1.25; }
+        .st-tag .delta { margin-top: 6px; font-size: 0.72rem; padding: 2px 6px; }
+
+        .st-card { background: #fff; border-radius: 16px; padding: 16px; margin-top: 12px; box-shadow: 0 1px 2px rgba(15,23,42,.06); }
+        .st-h { display: flex; align-items: center; gap: 10px; font-size: 1.08rem; margin-bottom: 4px; }
+        .st-h .ic { width: 26px; height: 26px; }
+        .st-note { color: var(--muted); font-size: 0.88rem; margin: 0 0 12px; line-height: 1.4; }
+
+        .fn-step { margin-top: 10px; }
+        .fn-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 0.95rem; }
+        .fn-top b { font-family: 'Fraunces', Georgia, serif; font-size: 1.15rem; white-space: nowrap; }
+        .fn-top b small { font-family: inherit; font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+        .fn-bar { height: 14px; margin-top: 6px; border-radius: 4px; background: repeating-linear-gradient(90deg, #eef1f6 0 8px, #e6eaf1 8px 9px); overflow: hidden; }
+        .fn-bar span { display: block; height: 100%; border-radius: 4px; transform-origin: left; animation: stGrow .7s cubic-bezier(.2,.8,.2,1) both; }
+        .fn-step:nth-child(1) .fn-bar span { background: linear-gradient(90deg, var(--indigo), var(--indigo-2)); }
+        .fn-step:nth-child(2) .fn-bar span { background: linear-gradient(90deg, var(--indigo-2), #5b6f8f); animation-delay: .08s; }
+        .fn-step:nth-child(3) .fn-bar span { background: linear-gradient(90deg, #8a6a4a, var(--copper)); animation-delay: .16s; }
+        .fn-step:nth-child(4) .fn-bar span { background: linear-gradient(90deg, var(--copper), var(--copper-2)); animation-delay: .24s; }
+        .fn-keep { font-size: 0.8rem; color: var(--copper-2); font-weight: 600; margin-top: 4px; }
+        @keyframes stGrow { from { transform: scaleX(0); } }
+        .st-tip { display: flex; gap: 10px; margin-top: 14px; padding: 12px; border-radius: 12px; background: var(--cream); border: 1.5px dashed var(--copper); font-size: 0.92rem; line-height: 1.4; }
+        .st-tip .ic { width: 24px; height: 24px; margin-top: 1px; }
+
+        .src-row { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid #eef1f6; }
+        .src-row:first-of-type { border-top: 0; }
+        .src-row .ic { width: 28px; height: 28px; }
+        .src-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .src-line { height: 6px; margin-top: 5px; border-radius: 99px; background: #eef1f6; overflow: hidden; }
+        .src-line span { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--copper), var(--copper-2)); animation: stGrow .7s cubic-bezier(.2,.8,.2,1) both; transform-origin: left; }
+        .src-row b { font-family: 'Fraunces', Georgia, serif; font-size: 1.05rem; text-align: right; }
+        .src-row b small { display: block; font-family: system-ui, sans-serif; font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+
+        .top-row { display: grid; grid-template-columns: 26px 48px minmax(0, 1fr) auto; align-items: center; gap: 10px; width: 100%; padding: 8px 0; border-top: 1px solid #eef1f6; text-align: left; background: none; border-radius: 0; color: inherit; font: inherit; }
+        .top-row:first-of-type { border-top: 0; }
+        .top-rank { font-family: 'Fraunces', Georgia, serif; font-size: 1.3rem; font-weight: 700; color: var(--copper); text-align: center; }
+        .top-row:nth-of-type(1) .top-rank { color: var(--copper-2); font-size: 1.55rem; }
+        .top-row img, .top-row .noimg { width: 48px; height: 60px; border-radius: 8px; object-fit: cover; background: #eef1f6; }
+        .top-name { min-width: 0; }
+        .top-name strong { display: block; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .top-name small { color: var(--muted); font-size: 0.82rem; }
+        .top-row b { font-family: 'Fraunces', Georgia, serif; font-size: 1.1rem; text-align: right; white-space: nowrap; }
+        .top-row b small { display: block; font-family: system-ui, sans-serif; font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+
+        .nf-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .nf-tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px 8px 10px; background: var(--cream); border: 1.5px solid var(--indigo); border-radius: 6px 14px 14px 6px; font-weight: 600; position: relative; }
+        .nf-tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--indigo); background: #fff; }
+        .nf-tag em { font-style: normal; font-size: 0.8rem; color: #fff; background: var(--copper-2); padding: 1px 7px; border-radius: 99px; }
+
+        .ot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+        .ot { display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8fafc; border-radius: 12px; min-width: 0; }
+        .ot .ic { width: 26px; height: 26px; }
+        .ot div { min-width: 0; }
+        .ot b { display: block; font-family: 'Fraunces', Georgia, serif; font-size: 1.15rem; line-height: 1.1; }
+        .ot small { display: block; color: var(--muted); font-size: 0.8rem; line-height: 1.2; }
+
+        .st-empty { text-align: center; padding: 22px 16px; }
+        .st-empty .ic { width: 52px; height: 52px; }
+        .st-empty h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 1.25rem; margin: 10px 0 6px; }
+        .st-empty p { color: var(--muted); line-height: 1.45; margin-bottom: 14px; }
+        .st-foot { color: var(--muted); font-size: 0.85rem; line-height: 1.45; margin: 16px 4px 4px; }
+        .st-foot a { color: var(--indigo-2); font-weight: 600; }
+
+        .sk { border-radius: 14px; background: linear-gradient(90deg, #e9edf3 0%, #f5f7fa 50%, #e9edf3 100%); background-size: 200% 100%; animation: stShine 1.2s linear infinite; }
+        @keyframes stShine { to { background-position: -200% 0; } }
+        @media (prefers-reduced-motion: reduce) { #statsView * { animation: none !important; } }
         .stats-setup ol { padding-left: 20px; line-height: 1.8; margin: 8px 0 12px; }
         #firmView .form-actions { position: sticky; bottom: 0; z-index: 6; margin: 16px -20px -20px; padding: 12px 20px; background: var(--card); border-top: 1px solid var(--line); border-radius: 0 0 14px 14px; }
         #goalsView .form-actions { position: sticky; bottom: 0; z-index: 6; margin: 16px -20px -20px; padding: 12px 20px; background: var(--card); border-top: 1px solid var(--line); border-radius: 0 0 14px 14px; }
@@ -611,10 +705,11 @@
             border-radius: 12px;
             max-width: calc(100% - 32px);
             text-align: center;
-            transition: transform 0.25s;
+            transition: transform 0.25s, opacity 0.25s;
+            opacity: 0;
             z-index: 50;
         }
-        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         .toast:has(.toast-undo) { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 12px; }
         .toast-undo {
             flex-shrink: 0;
@@ -3571,7 +3666,7 @@
 
         function renderStatsSetup(msg) {
             $('statsBody').innerHTML = `
-                <div class="stats-setup">
+                <div class="stats-setup st-card" style="margin-top:0">
                     <p><b>Bir kereliğine Umami'den paylaşım linki alınmalı.</b> Ücretsizdir, sonra hiç sorulmaz.</p>
                     <ol>
                         <li><a href="https://cloud.umami.is/websites/${UMAMI_SITE}/settings" target="_blank" rel="noopener">Umami'de sitenin ayarlarını açın</a> (giriş yapın).</li>
@@ -3605,77 +3700,244 @@
             try { await updateJson(STATS_FILE, d => { const n = { ...(d || {}) }; delete n.paylasim; return n; }, 'İstatistik linki silindi', {}, CUSTOMER_REPO); } catch (e) {}
         }
 
+        const PERIOD_TEXT = {
+            bugun: { in: 'bugün', prev: 'düne göre' },
+            gun7: { in: 'son 7 günde', prev: 'önceki 7 güne göre' },
+            gun30: { in: 'son 30 günde', prev: 'önceki 30 güne göre' }
+        };
+        const OTHER_EVENTS = [
+            ['whatsapp-yaz', 'WhatsApp\'tan yazan', 'message'], ['urun-sor', 'Ürünü soran', 'message'],
+            ['hemen-ara', 'Arayan', 'phone'], ['haber-ver', 'Gelince haber ver', 'bell'],
+            ['pdf-indir', 'PDF indiren', 'file'], ['beden-tamamla', 'Eksik beden arayan', 'tape'],
+            ['siparisi-tekrarla', 'Siparişi tekrarlayan', 'refresh'], ['telefona-ekle', 'Telefonuna ekleyen', 'mobile'],
+            ['duyuru-tik', 'Duyuruya tıklayan', 'megaphone'], ['instagram', 'Instagram\'a geçen', 'instagram'],
+            ['yol-tarifi', 'Yol tarifi alan', 'pin'], ['bulunamadi-sor', 'Bulamayıp soran', 'message']
+        ];
+
+        const icon = name => `<i class="ic duo ic-${name}" aria-hidden="true"></i>`;
+
+        function deltaHtml(cur, prev, label) {
+            cur = Number(cur) || 0; prev = Number(prev) || 0;
+            if (!prev && !cur) return '';
+            if (!prev) return `<span class="delta up" title="${label}">Yeni</span>`;
+            const pct = Math.round((cur - prev) / prev * 100);
+            const tail = label ? ` · ${label}` : '';
+            if (pct === 0) return `<span class="delta flat">Aynı${tail}</span>`;
+            return `<span class="delta ${pct > 0 ? 'up' : 'down'}">${pct > 0 ? '▲' : '▼'} %${Math.abs(pct)}${tail}</span>`;
+        }
+
+        function sourceIcon(label) {
+            if (label.startsWith('Reklam')) return 'target';
+            return { Instagram: 'instagram', Facebook: 'share', WhatsApp: 'message', Google: 'globe', TikTok: 'play', 'Doğrudan / kayıtlı link': 'share' }[label] || 'globe';
+        }
+
+        // Günlük (bugün için saatlik) ziyaretçi grafiği: dikiş çizgili alan
+        function sparkHtml(series, unit) {
+            const pts = series.length ? series : [{ x: '', y: 0 }];
+            const W = 300, H = 70, max = Math.max(...pts.map(p => p.y), 1);
+            const xy = pts.map((p, i) => [pts.length === 1 ? W / 2 : i / (pts.length - 1) * W, H - 6 - p.y / max * (H - 14)]);
+            const line = xy.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+            const last = xy[xy.length - 1];
+            const fmt = x => {
+                if (!x) return '';
+                const d = new Date(x);
+                return unit === 'hour' ? `${String(d.getHours()).padStart(2, '0')}:00` : d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
+            };
+            return `
+                <svg class="st-spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+                    <defs><linearGradient id="spFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0a85a" stop-opacity=".45"/><stop offset="1" stop-color="#f0a85a" stop-opacity="0"/></linearGradient></defs>
+                    <polygon points="0,${H} ${line} ${W},${H}" fill="url(#spFill)"/>
+                    <polyline points="${line}" fill="none" stroke="#f0a85a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+                    <polyline points="${line}" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1" stroke-dasharray="3 4" transform="translate(0 5)" vector-effect="non-scaling-stroke"/>
+                    <circle cx="${last[0]}" cy="${last[1]}" r="3.5" fill="#fff" stroke="#f0a85a" stroke-width="2" vector-effect="non-scaling-stroke"/>
+                </svg>
+                <div class="st-axis"><span>${fmt(pts[0].x)}</span><span>${unit === 'hour' ? 'şimdi' : 'bugün'}</span></div>`;
+        }
+
+        // Umami boş günleri atlar: her günü/saati sıfırla doldur
+        function fillSeries(rows, unit) {
+            const { startAt, endAt } = periodRange(statsPeriod);
+            const step = unit === 'hour' ? 3600000 : 86400000;
+            const key = t => { const d = new Date(t); if (unit === 'hour') d.setMinutes(0, 0, 0); else d.setHours(0, 0, 0, 0); return d.getTime(); };
+            const map = {};
+            (rows || []).forEach(r => { const k = key(String(r.x).replace(' ', 'T')); map[k] = (map[k] || 0) + (Number(r.y) || 0); });
+            const out = [];
+            for (let t = key(startAt); t <= endAt; t += step) out.push({ x: t, y: map[key(t)] || 0 });
+            return out;
+        }
+
+        function statsSkeleton() {
+            $('statsBody').innerHTML = `
+                <div class="sk" style="height:220px"></div>
+                <div class="st-tags">${'<div class="sk" style="height:96px"></div>'.repeat(3)}</div>
+                <div class="sk" style="height:260px;margin-top:12px"></div>`;
+        }
+
         async function loadStats(retried = false) {
             document.querySelectorAll('#statsPeriods button').forEach(b => b.classList.toggle('active', b.dataset.period === statsPeriod));
-            $('statsBody').innerHTML = '<p class="hint" style="text-align:center;padding:30px">Yükleniyor...</p>';
+            statsSkeleton();
             const slug = await getShareSlug();
             if (!slug) { $('statsPeriods').classList.add('hidden'); return renderStatsSetup(); }
             $('statsPeriods').classList.remove('hidden');
+            const unit = statsPeriod === 'bugun' ? 'hour' : 'day';
             try {
                 if (!shareToken) shareToken = await fetchShareToken(slug);
-                const [st, events, refs, utm, topProducts, notFound, orders] = await Promise.all([
+                const [st, events, refs, utm, topById, topByName, notFound, orders, series, active] = await Promise.all([
                     umami('/stats'),
                     umami('/metrics', { type: 'event', limit: 50 }),
                     umami('/metrics', { type: 'referrer', limit: 20 }),
                     umami('/metrics', { type: 'utmSource', limit: 10 }).catch(() => []),
+                    umami('/event-data/values', { eventName: 'urun', propertyName: 'no' }).catch(() => []),
                     umami('/event-data/values', { eventName: 'urun', propertyName: 'ad' }).catch(() => []),
                     umami('/event-data/values', { eventName: 'bulunamadi', propertyName: 'kelime' }).catch(() => []),
-                    umami('/event-data/values', { eventName: 'siparis', propertyName: 'tutar' }).catch(() => [])
+                    umami('/event-data/values', { eventName: 'siparis', propertyName: 'tutar' }).catch(() => []),
+                    umami('/pageviews', { unit, timezone: 'Europe/Istanbul' }).catch(() => ({})),
+                    umami('/active').catch(() => ({}))
                 ]);
+                const T = PERIOD_TEXT[statsPeriod];
                 const ev = Object.fromEntries((events || []).map(e => [e.x, Number(e.y) || 0]));
                 const visitors = Number(st.visitors) || 0;
+                const prev = st.comparison || {};
                 const orderCount = ev['siparis'] || 0;
-                const orderSum = (orders || []).reduce((s, o) => s + (Number(o.value) || 0) * (Number(o.total) || 0), 0);
+                const orderSum = (orders || []).reduce((sum, o) => sum + (Number(o.value) || 0) * (Number(o.total) || 0), 0);
+                const live = Number(active.visitors ?? active.x ?? 0) || 0;
+                const daily = fillSeries(series.sessions || series.pageviews, unit);
 
-                // Nereden geldi: reklam etiketi (utm) varsa ayrı göster
+                const hero = `
+                    <section class="st-hero">
+                        <span class="st-live ${live ? 'on' : ''}"><i></i>${live ? `Şu an sitede ${nf(live)} kişi` : 'Şu an sitede kimse yok'}</span>
+                        <div class="st-big"><span class="num">${nf(visitors)}</span><span>kişi ${T.in} kataloğa baktı</span></div>
+                        ${deltaHtml(visitors, prev.visitors, T.prev)}
+                        ${sparkHtml(daily, unit)}
+                    </section>`;
+
+                if (!visitors) {
+                    $('statsBody').innerHTML = hero + `
+                        <section class="st-card st-empty">
+                            ${icon('megaphone')}
+                            <h3>Henüz ziyaret yok</h3>
+                            <p>Kataloğu Instagram hikâyesinde ya da WhatsApp durumunda paylaşın. Gelen her kişi birkaç dakika içinde burada görünür.</p>
+                            <button class="btn-primary" id="statsCopyLink" style="width:100%">Katalog linkini kopyala</button>
+                        </section>
+                        ${footHtml(slug)}`;
+                    $('statsCopyLink').onclick = async () => {
+                        try { await navigator.clipboard.writeText(CATALOG_URL); toast('Link kopyalandı. Instagram\'a ya da WhatsApp\'a yapıştırın.'); }
+                        catch (e) { toast(CATALOG_URL); }
+                    };
+                    bindFoot();
+                    return;
+                }
+
+                // Huni: her adımda kaç kişi devam etti, en çok nerede kaybediliyor?
+                const steps = [
+                    { label: 'Siteye geldi', n: visitors, unit: 'kişi' },
+                    { label: 'Ürün açtı', n: ev['urun'] || 0, unit: 'kez' },
+                    { label: 'Sepete ekledi', n: ev['sepete-ekle'] || 0, unit: 'kez' },
+                    { label: 'Sipariş gönderdi', n: orderCount, unit: 'sipariş' }
+                ];
+                const rate = (a, b) => (a ? Math.min(100, Math.round(b / a * 100)) : 0);
+                const funnel = steps.map((st2, i) => `
+                    <div class="fn-step">
+                        <div class="fn-top"><span>${st2.label}</span><b>${nf(st2.n)} <small>${st2.unit}</small></b></div>
+                        <div class="fn-bar"><span style="width:${st2.n ? Math.max(3, rate(visitors, st2.n)) : 0}%"></span></div>
+                        ${i && st2.n ? `<div class="fn-keep">↳ öncekilerin %${rate(steps[i - 1].n, st2.n)}'i</div>` : ''}
+                    </div>`).join('');
+                const TIPS = [
+                    'Gelenlerin çoğu ürün açmadan çıkıyor. Vitrine (öne çıkanlar) en güçlü ürünleri koyun, kapak fotoğraflarını yenileyin.',
+                    'Ürüne bakıp sepete ekleyen az. Fiyatı net yazın, "Fırsat" rozeti ya da video eklemeyi deneyin.',
+                    'Sepete ekleyip göndermeyen çok. "Sepet hedefleri"nden kargo bedava sınırı koymak itici olur.'
+                ];
+                const drops = [1, 2, 3].map(i => ({ i, r: steps[i - 1].n ? steps[i].n / steps[i - 1].n : 1 }));
+                const worst = drops.sort((a, b) => a.r - b.r)[0];
+                const tip = visitors >= 10 && worst.r < 1 ? `<div class="st-tip">${icon('alert')}<span><b>Öneri:</b> ${TIPS[worst.i - 1]}</span></div>` : '';
+
+                // Kaynaklar
                 const src = {};
                 (refs || []).forEach(r => { const k = sourceName(r.x); src[k] = (src[k] || 0) + (Number(r.y) || 0); });
                 (utm || []).forEach(u => { if (u.x) { const k = `Reklam: ${u.x}`; src[k] = (src[k] || 0) + (Number(u.y) || 0); } });
                 const sources = Object.entries(src).map(([label, n]) => ({ label, n })).sort((a, b) => b.n - a.n).slice(0, 6);
+                const srcTotal = sources.reduce((a, r) => a + r.n, 0) || 1;
+                const srcMax = Math.max(...sources.map(r => r.n), 1);
+                const sourcesHtml = sources.length ? sources.map(r => `
+                    <div class="src-row">
+                        ${icon(sourceIcon(r.label))}
+                        <div style="min-width:0"><div class="src-name">${escapeHtml(r.label)}</div><div class="src-line"><span style="width:${Math.max(4, r.n / srcMax * 100).toFixed(1)}%"></span></div></div>
+                        <b>%${Math.round(r.n / srcTotal * 100)}<small>${nf(r.n)} ziyaret</small></b>
+                    </div>`).join('') : '<p class="st-note" style="margin:0">Henüz veri yok.</p>';
 
-                const funnel = [
-                    { label: 'Siteye gelen', n: visitors },
-                    { label: 'Ürüne bakan', n: ev['urun'] || 0 },
-                    { label: 'Sepete ekleyen', n: ev['sepete-ekle'] || 0 },
-                    { label: 'Sipariş gönderen', n: orderCount }
-                ];
-                const others = [
-                    ['WhatsApp\'tan ürün soran', ev['urun-sor']], ['Gelince haber ver', ev['haber-ver']],
-                    ['Hemen ara', ev['hemen-ara']], ['PDF indiren', ev['pdf-indir']],
-                    ['Eksik beden arayan', ev['beden-tamamla']], ['Siparişi tekrarlayan', ev['siparisi-tekrarla']],
-                    ['Telefonuna ekleyen', ev['telefona-ekle']], ['Duyuruya tıklayan', ev['duyuru-tik']]
-                ].filter(([, n]) => n).map(([label, n]) => ({ label, n }));
+                // En çok bakılan ürünler: numarasından fotoğrafıyla bul
+                let top = (topById || []).map(r => ({ p: products.find(x => String(x.id) === String(r.value)), name: '', n: Number(r.total) || 0 })).filter(r => r.p);
+                if (!top.length) top = (topByName || []).map(r => ({ p: products.find(x => (x.urun_adi || '').toLocaleLowerCase('tr') === String(r.value).toLocaleLowerCase('tr')), name: r.value, n: Number(r.total) || 0 }));
+                const topHtml = top.slice(0, 8).map((r, i) => {
+                    const name = r.p ? r.p.urun_adi : (r.name || 'Silinmiş ürün');
+                    return `
+                    <button type="button" class="top-row" ${r.p ? `data-open="${r.p.id}"` : 'disabled'}>
+                        <span class="top-rank">${i + 1}</span>
+                        ${r.p && r.p.gorsel ? `<img src="${escapeHtml(imageSrc(r.p))}" alt="" loading="lazy">` : '<span class="noimg"></span>'}
+                        <span class="top-name"><strong>${escapeHtml(name)}</strong><small>${r.p ? `No ${r.p.id}${r.p.stok === 'Yok' ? ' · Stokta yok' : ''}` : ''}</small></span>
+                        <b>${nf(r.n)}<small>kez açıldı</small></b>
+                    </button>`;
+                }).join('') || '<p class="st-note" style="margin:0">Henüz veri yok.</p>';
 
-                $('statsBody').innerHTML = `
-                    <div class="kpis">
-                        <div class="kpi"><b>${nf(visitors)}</b><span>Ziyaretçi</span></div>
-                        <div class="kpi"><b>${nf(st.pageviews)}</b><span>Sayfa gezildi</span></div>
-                        <div class="kpi"><b>${nf(orderCount)}</b><span>Sipariş gönderildi</span></div>
-                        <div class="kpi"><b>${nf(Math.round(orderSum))} TL</b><span>Sipariş tutarı</span></div>
+                const nfHtml = (notFound || []).slice(0, 12).map(r => `<span class="nf-tag">${escapeHtml(r.value)}<em>${nf(r.total)}</em></span>`).join('');
+                const others = OTHER_EVENTS.filter(([k]) => ev[k]).map(([k, label, ic]) => `
+                    <div class="ot">${icon(ic)}<div><b>${nf(ev[k])}</b><small>${label}</small></div></div>`).join('');
+
+                $('statsBody').innerHTML = hero + `
+                    <div class="st-tags">
+                        <div class="st-tag">${icon('file')}<span class="num">${nf(st.pageviews)}</span><small>Sayfa gezildi</small>${deltaHtml(st.pageviews, prev.pageviews, '')}</div>
+                        <div class="st-tag">${icon('message')}<span class="num">${nf(orderCount)}</span><small>Sipariş gönderildi</small></div>
+                        <div class="st-tag">${icon('card')}<span class="num${nf(Math.round(orderSum)).length > 5 ? ' long' : ''}">${nf(Math.round(orderSum))}<span style="font-size:.7em"> TL</span></span><small>Sipariş tutarı</small></div>
                     </div>
-                    <h3 class="stats-h">Müşteri nerede kalıyor?</h3>
-                    ${barList(funnel, 'kişi')}
-                    <p class="hint">Siteye gelenlerin %${visitors ? Math.round(orderCount / visitors * 100) : 0}'i sipariş gönderdi.</p>
-                    <h3 class="stats-h">Nereden geldiler?</h3>
-                    ${barList(sources, '')}
-                    <h3 class="stats-h">En çok bakılan ürünler</h3>
-                    ${barList((topProducts || []).slice(0, 10).map(r => ({ label: r.value, n: Number(r.total) || 0 })), '')}
-                    <h3 class="stats-h">Aranıp bulunamayanlar</h3>
-                    <p class="hint" style="margin-top:-6px">Müşterinin aradığı ama katalogda olmayanlar: getirilecek ürün fikri.</p>
-                    ${barList((notFound || []).slice(0, 10).map(r => ({ label: r.value, n: Number(r.total) || 0 })), 'kez')}
-                    ${others.length ? `<h3 class="stats-h">Diğer hareketler</h3>${barList(others, '')}` : ''}
-                    <p class="hint" style="margin-top:16px">Sipariş sayısı WhatsApp'a gönderilen siparişlerdir; ödemenin tamamlanıp tamamlanmadığını sistem bilemez.
-                    Ayrıntılı rapor: <a href="https://cloud.umami.is/share/${escapeHtml(slug)}" target="_blank" rel="noopener">cloud.umami.is</a> ·
-                    <a href="#" id="umamiKeyReset">Linki değiştir</a></p>`;
-                $('umamiKeyReset').onclick = async e => { e.preventDefault(); busy('Siliniyor...'); await forgetShare(); busy(); loadStats(); };
+
+                    <section class="st-card">
+                        <h3 class="st-h">${icon('users')}Müşteri nerede kalıyor?</h3>
+                        ${funnel}
+                        ${tip}
+                    </section>
+
+                    <section class="st-card">
+                        <h3 class="st-h">${icon('share')}Nereden geldiler?</h3>
+                        ${sourcesHtml}
+                    </section>
+
+                    <section class="st-card">
+                        <h3 class="st-h">${icon('chart')}En çok bakılan ürünler</h3>
+                        <p class="st-note">Ürüne dokunursanız düzenleme açılır.</p>
+                        ${topHtml}
+                    </section>
+
+                    ${nfHtml ? `<section class="st-card">
+                        <h3 class="st-h">${icon('alert')}Aranıp bulunamayanlar</h3>
+                        <p class="st-note">Müşteri bunları aradı ama katalogda bulamadı. Getirilecek ürün fikri.</p>
+                        <div class="nf-tags">${nfHtml}</div>
+                    </section>` : ''}
+
+                    ${others ? `<section class="st-card">
+                        <h3 class="st-h">${icon('list')}Diğer hareketler</h3>
+                        <div class="ot-grid">${others}</div>
+                    </section>` : ''}
+                    ${footHtml(slug)}`;
+                $('statsBody').querySelectorAll('[data-open]').forEach(b => { b.onclick = () => openForm(Number(b.dataset.open)); });
+                bindFoot();
             } catch (e) {
                 if (e.status === 401 || e.status === 403) {
                     if (!retried) { shareToken = null; return loadStats(true); }
                     await forgetShare();
                     return renderStatsSetup('Paylaşım linki kapatılmış ya da değişmiş. Yeni linki girin.');
                 }
-                $('statsBody').innerHTML = `<p class="hint" style="text-align:center;padding:30px">İstatistikler yüklenemedi. İnterneti kontrol edip tekrar deneyin.</p>`;
+                $('statsBody').innerHTML = `<section class="st-card st-empty">${icon('alert')}<h3>İstatistikler yüklenemedi</h3><p>İnterneti kontrol edip tekrar deneyin.</p><button class="btn-primary" id="statsRetry" style="width:100%">Tekrar dene</button></section>`;
+                $('statsRetry').onclick = () => loadStats();
             }
+        }
+
+        function footHtml(slug) {
+            return `<p class="st-foot">Sipariş sayısı WhatsApp'a gönderilen siparişlerdir; ödemenin yapılıp yapılmadığını sistem bilemez.<br>
+                <a href="https://cloud.umami.is/share/${escapeHtml(slug)}" target="_blank" rel="noopener">Ayrıntılı rapor</a> ·
+                <a href="#" id="umamiKeyReset">Linki değiştir</a></p>`;
+        }
+        function bindFoot() {
+            $('umamiKeyReset').onclick = async e => { e.preventDefault(); busy('Siliniyor...'); await forgetShare(); busy(); loadStats(); };
         }
 
         $('statsTile').onclick = () => { show('statsView'); loadStats(); };
