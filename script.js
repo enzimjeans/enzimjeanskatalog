@@ -229,6 +229,7 @@ async function loadProducts() {
 
         renderStats();
         renderReorder();
+        $('sizeCta').hidden = sizeOptions().length === 0;
         renderBackIn();
         renderChips();
         renderProducts();
@@ -519,6 +520,7 @@ function renderChips() {
         (favs.size ? chip('fav', 'Favorilerim', favs.size) : '') +
         (allProducts.some(badgeOf) ? chip('featured', 'Öne çıkanlar', allProducts.filter(badgeOf).length) : '') +
         chip('new', 'Yeni gelenler', newIds.size) +
+        (sizeOptions().length ? chip('beden', 'Eksik beden tamamla', allProducts.filter(p => needsSize(p) && inStock(p)).length) : '') +
         Object.keys(counts).map(c => chip(c, c, counts[c])).join('');
 }
 
@@ -535,7 +537,8 @@ function getVisibleProducts() {
         if (activeCategory === 'new' && !newIds.has(p.id)) return false;
         if (activeCategory === 'fav' && !favs.has(p.id)) return false;
         if (activeCategory === 'featured' && !badgeOf(p)) return false;
-        if (!['all', 'new', 'fav', 'featured'].includes(activeCategory) && p.kategori !== activeCategory) return false;
+        if (activeCategory === 'beden' && !matchesWantedSize(p)) return false;
+        if (!['all', 'new', 'fav', 'featured', 'beden'].includes(activeCategory) && p.kategori !== activeCategory) return false;
         if (!q) return true;
         return trLower(`${p.urun_adi} ${p.kategori} ${p.aciklama}`).includes(q);
     });
@@ -557,6 +560,8 @@ function getVisibleProducts() {
 }
 
 function renderProducts() {
+    if (activeCategory === 'beden' && !wantedSizes.size) activeCategory = 'all';
+    renderSizeBanner();
     const list = getVisibleProducts();
     const grid = $('productsGrid');
 
@@ -618,6 +623,7 @@ function productCard(p, index) {
                 <div class="card-sub">
                     <span class="sale-tag ${isSeri(p) ? 'seri' : ''}">${isSeri(p) ? `Seri · ${saleOf(p).seriAdet}'li` : 'Tekli'}</span>
                     ${colorsOf(p).length > 1 ? `<span class="card-colors">${colorsOf(p).length} renk</span>` : ''}
+                    ${activeCategory === 'beden' && matchesWantedSize(p) ? `<span class="size-hit">${escapeHtml(wantedIn(p).join(' · '))} var</span>` : ''}
                 </div>
                 <div class="card-meta">
                     <span class="card-price">${priceHtml(p)}</span>
@@ -663,7 +669,7 @@ function actionHtml(p, compact = false) {
                 ${s.bedenler.map(b => {
                     const q = cartQty(p.id, b);
                     return `
-                    <div class="size-cell ${q ? 'on' : ''}">
+                    <div class="size-cell ${q ? 'on' : ''} ${sizeWanted(b) ? 'wanted' : ''}">
                         <span class="size-name">${escapeHtml(b)}</span>
                         ${stepperHtml(p.id, b, q)}
                     </div>`;
@@ -848,6 +854,54 @@ function stopMedia(keepProduct) {
     v.pause();
     if (!keepProduct) { v.removeAttribute('src'); v.dataset.src = ''; v.load(); }
     f.src = 'about:blank';
+}
+
+// ---------- Eksik beden tamamla ----------
+// Esnaf rafında biten bedenleri seçer; o bedenlerde tekli alınabilen ürünler listelenir.
+const wantedSizes = new Set();
+const LETTER_ORDER = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL', '6XL'];
+const sizeParts = b => String(b).split('-').map(x => x.trim()).filter(Boolean);   // "M-L" -> M, L
+const sizeWanted = b => sizeParts(b).some(x => wantedSizes.has(x));
+const matchesWantedSize = p => needsSize(p) && inStock(p) && saleOf(p).bedenler.some(sizeWanted);
+const wantedIn = p => [...new Set(saleOf(p).bedenler.flatMap(sizeParts).filter(x => wantedSizes.has(x)))];
+
+// Katalogdaki tekli ürünlerden çıkan bedenler, iki grupta
+function sizeOptions() {
+    const all = new Set();
+    allProducts.filter(p => needsSize(p) && inStock(p)).forEach(p => saleOf(p).bedenler.flatMap(sizeParts).forEach(x => all.add(x)));
+    return [...all];
+}
+
+function renderSizeGroups() {
+    const opts = sizeOptions();
+    const letters = opts.filter(x => /[A-Z]/.test(x)).sort((a, b) => (LETTER_ORDER.indexOf(a) + 99) % 99 - (LETTER_ORDER.indexOf(b) + 99) % 99);
+    const numbers = opts.filter(x => /^\d+$/.test(x)).sort((a, b) => a - b);
+    const group = (title, list) => list.length ? `
+        <p class="size-group-title">${title}</p>
+        <div class="size-pick">${list.map(x => `<button type="button" class="${wantedSizes.has(x) ? 'on' : ''}" data-want="${escapeHtml(x)}">${escapeHtml(x)}</button>`).join('')}</div>` : '';
+    $('sizeGroups').innerHTML = group('Üst giyim (gömlek, tişört, mont...)', letters) + group('Pantolon (bel ölçüsü)', numbers);
+    const n = allProducts.filter(matchesWantedSize).length;
+    $('sizeShow').disabled = !wantedSizes.size || !n;
+    $('sizeShow').textContent = !wantedSizes.size ? 'Beden seçin' : n ? `${n} ürünü göster` : 'Bu bedenlerde ürün yok';
+}
+
+function openSizeFinder() {
+    renderSizeGroups();
+    openDialog($('sizeModal'));
+    document.body.classList.add('no-scroll');
+}
+
+function showSizeResults() {
+    $('sizeModal').close();
+    selectCategory('beden');
+}
+
+function renderSizeBanner() {
+    const on = activeCategory === 'beden' && wantedSizes.size > 0;
+    $('sizeBanner').hidden = !on;
+    if (!on) return;
+    $('sizeBannerSizes').textContent = [...wantedSizes].join(', ');
+    $('sizeBannerCount').textContent = allProducts.filter(matchesWantedSize).length;
 }
 
 function renderSimilar(p) {
@@ -1273,6 +1327,7 @@ function setupEvents() {
     $('categoryChips').addEventListener('click', e => {
         const chip = e.target.closest('.chip');
         if (!chip) return;
+        if (chip.dataset.cat === 'beden') return openSizeFinder();
         selectCategory(chip.dataset.cat);
     });
 
@@ -1331,6 +1386,17 @@ function setupEvents() {
     });
 
     $('reorderBtn').addEventListener('click', reorder);
+    $('sizeCta').addEventListener('click', openSizeFinder);
+    $('sizeChange').addEventListener('click', openSizeFinder);
+    $('sizeClear').addEventListener('click', () => { wantedSizes.clear(); selectCategory('all'); });
+    $('sizeShow').addEventListener('click', showSizeResults);
+    $('sizeGroups').addEventListener('click', e => {
+        const b = e.target.closest('[data-want]');
+        if (!b) return;
+        const v = b.dataset.want;
+        wantedSizes.has(v) ? wantedSizes.delete(v) : wantedSizes.add(v);
+        renderSizeGroups();
+    });
     $('installBtn').addEventListener('click', () => offerInstall(false));
     $('installGo').addEventListener('click', runInstall);
     $('installLater').addEventListener('click', () => { writeStore(INSTALL_KEY, Date.now()); $('installModal').close(); });
