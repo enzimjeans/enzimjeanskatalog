@@ -3,7 +3,8 @@
 // ============================================
 
 const NEW_COUNT = 12;          // en son eklenen kaç ürün "Yeni" rozeti alsın
-const SIMILAR_COUNT = 8;       // ürün detayında kaç benzer ürün gösterilsin
+const SIMILAR_COUNT = 8;
+const GROUP_PREVIEW = 8;       // ana sayfada her kategoriden kaç ürün gösterilsin       // ürün detayında kaç benzer ürün gösterilsin
 
 let allProducts = [];
 let newIds = new Set();
@@ -21,6 +22,10 @@ function escapeHtml(s) {
 const tidyText = s => String(s || '').replace(/([^\d\s])\.(?=\S)/g, '$1. ').replace(/\s{2,}/g, ' ').trim();
 
 const trLower = s => String(s || '').toLocaleLowerCase('tr');
+// "BAGGY KAR YIKAMA" / "baggy ince" -> "Baggy Kar Yıkama" / "Baggy İnce" (Türkçe i/İ doğru)
+const titleCase = s => trLower(s).split(' ')
+    .map(w => w.replace(/^([("'\-\/]*)(\S)/, (m, pre, ch) => pre + ch.toLocaleUpperCase('tr')))
+    .join(' ');
 
 // "350TL", "350 Tl", "1.250 TL", "1.250,50 TL" -> sayı
 function extractPrice(text) {
@@ -122,7 +127,7 @@ function renderStats() {
     $('heroFan').innerHTML = fresh.slice(0, 3).map((p, i) => `
         <figure class="fan-card fan-${i}">
             <img src="${imagePath(p)}" alt="" decoding="async">
-            <figcaption class="tag"><span>${escapeHtml(trLower(p.urun_adi))}</span><strong>${escapeHtml(displayPrice(p))}</strong></figcaption>
+            <figcaption class="tag"><span>${escapeHtml(titleCase(p.urun_adi))}</span><strong>${escapeHtml(displayPrice(p))}</strong></figcaption>
         </figure>`).join('');
 
     // Kayan kategori şeridi
@@ -232,7 +237,10 @@ function renderProducts() {
                     <h2>${escapeHtml(cat)} <small>${items.length} model</small></h2>
                     <button class="section-link" data-goto="${escapeHtml(cat)}">Sadece ${escapeHtml(cat)} →</button>
                 </div>
-                <div class="grid">${items.map((p, i) => productCard(p, i)).join('')}</div>
+                <div class="grid">${items.slice(0, GROUP_PREVIEW).map((p, i) => productCard(p, i)).join('')}</div>
+                ${items.length > GROUP_PREVIEW
+                    ? `<button class="more-btn" data-goto="${escapeHtml(cat)}">${items.length} modelin tümünü gör →</button>`
+                    : ''}
             </section>`).join('');
     } else {
         grid.innerHTML = `<div class="grid">${list.map((p, i) => productCard(p, i)).join('')}</div>`;
@@ -246,24 +254,38 @@ function productCard(p, index) {
 
     return `
         <article class="card ${inStock(p) ? '' : 'soldout'}" data-id="${p.id}" style="--i:${index}">
-            <button class="card-media" data-open aria-label="${escapeHtml(p.urun_adi)} detayını aç">
-                <img src="${imagePath(p)}" alt="${escapeHtml(p.urun_adi)}" loading="lazy" decoding="async"
-                     onerror="this.parentNode.classList.add('noimg')">
+            <div class="card-media">
+                <button class="media-open" data-open aria-label="${escapeHtml(p.urun_adi)} detayını aç">
+                    <img src="${imagePath(p)}" alt="${escapeHtml(p.urun_adi)}" loading="lazy" decoding="async"
+                         onerror="this.parentNode.classList.add('noimg')">
+                </button>
                 ${badge}
-            </button>
+                <div class="card-action quick" data-compact>${actionHtml(p, true)}</div>
+            </div>
             <div class="card-body">
-                <span class="card-cat">${escapeHtml(p.kategori)}</span>
-                <h3 class="card-name" data-open>${escapeHtml(trLower(p.urun_adi))}</h3>
-                <p class="card-price">${escapeHtml(displayPrice(p))}</p>
-                <div class="card-action">${actionHtml(p)}</div>
+                <h3 class="card-name" data-open>${escapeHtml(titleCase(p.urun_adi))}</h3>
+                <div class="card-meta">
+                    <span class="card-price">${escapeHtml(displayPrice(p))}</span>
+                    <span class="card-cat">${escapeHtml(p.kategori)}</span>
+                </div>
             </div>
         </article>`;
 }
 
 // Sepette yoksa "Sepete ekle", varsa adet kontrolü
-function actionHtml(p) {
-    if (!inStock(p)) return '<button class="add-btn" disabled>Stokta yok</button>';
+function actionHtml(p, compact = false) {
     const item = cart.find(i => i.id === p.id);
+    if (compact) {
+        if (!inStock(p)) return '';
+        if (!item) return `<button class="plus" data-add="${p.id}" aria-label="Sepete ekle">+</button>`;
+        return `
+            <div class="pill">
+                <button data-dec="${p.id}" aria-label="Azalt">−</button>
+                <span>${item.quantity}</span>
+                <button data-inc="${p.id}" aria-label="Arttır">+</button>
+            </div>`;
+    }
+    if (!inStock(p)) return '<button class="add-btn" disabled>Stokta yok</button>';
     if (!item) return `<button class="add-btn" data-add="${p.id}">Sepete ekle</button>`;
     return `
         <div class="stepper">
@@ -277,7 +299,7 @@ function actionHtml(p) {
 function refreshActions(id) {
     const p = findProduct(id);
     document.querySelectorAll(`[data-id="${id}"] .card-action, #modalActions[data-id="${id}"]`)
-        .forEach(el => { el.innerHTML = actionHtml(p); });
+        .forEach(el => { el.innerHTML = actionHtml(p, 'compact' in el.dataset); });
 }
 
 // ---------- Ürün detayı ----------
@@ -287,7 +309,7 @@ function openModal(id, { updateHash = true } = {}) {
 
     $('modalImage').src = imagePath(p);
     $('modalImage').alt = p.urun_adi;
-    $('modalTitle').textContent = trLower(p.urun_adi);
+    $('modalTitle').textContent = titleCase(p.urun_adi);
     $('modalCategory').textContent = p.kategori + (newIds.has(p.id) ? ' · Yeni' : '');
     $('modalPrice').textContent = displayPrice(p);
     $('modalDescription').textContent = tidyText(p.aciklama);
@@ -325,7 +347,7 @@ function renderSimilar(p) {
     $('similarList').innerHTML = similar.map(x => `
         <button class="similar-item" data-similar="${x.id}">
             <img src="${imagePath(x)}" alt="" loading="lazy" decoding="async">
-            <span>${escapeHtml(trLower(x.urun_adi))}</span>
+            <span>${escapeHtml(titleCase(x.urun_adi))}</span>
             <strong>${escapeHtml(displayPrice(x))}</strong>
         </button>`).join('');
 }
@@ -377,7 +399,7 @@ function addToCart(id) {
         cart.push({ id, quantity: 1 });
     }
     afterCartChange(id);
-    toast(`Sepete eklendi: ${trLower(p.urun_adi)}`);
+    toast(`Sepete eklendi: ${titleCase(p.urun_adi)}`);
     const count = $('cartCount');
     count.classList.remove('bump');
     void count.offsetWidth;
@@ -438,7 +460,7 @@ function renderCart() {
             <div class="cart-item">
                 <img src="${imagePath(p)}" alt="">
                 <div>
-                    <h4>${escapeHtml(trLower(p.urun_adi))}</h4>
+                    <h4>${escapeHtml(titleCase(p.urun_adi))}</h4>
                     <p class="cart-item-meta">${escapeHtml(p.kategori)} · ${escapeHtml(displayPrice(p))}</p>
                     <p class="cart-item-total">${formatPrice(price * i.quantity)}</p>
                 </div>

@@ -422,7 +422,7 @@
 
         function errorText(e) {
             if (e.status === 401) return 'Giriş anahtarı geçersiz veya süresi dolmuş. Yöneticiden yenisini isteyin.';
-            if (e.status === 403 || e.status === 404) return 'Bu anahtarın kataloğa yazma izni yok.';
+            if (e.status === 403 || e.status === 404) return 'Bu anahtarın kataloğa yazma izni yok. Çıkış yapıp tekrar giriş yapın; sebebi giriş ekranında yazacak.';
             if (e instanceof TypeError) return 'İnternet bağlantısını kontrol edin.';
             return e.message;
         }
@@ -450,11 +450,34 @@
             });
         }
 
+        // Anahtarın hangi hesaba ait olduğunu ve kataloğa yazabildiğini kontrol et
+        async function checkAccess() {
+            const headers = { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' };
+            const userRes = await fetch('https://api.github.com/user', { headers, cache: 'no-store' });
+            if (userRes.status === 401) { const e = new Error(); e.status = 401; throw e; }
+            const user = userRes.ok ? (await userRes.json()).login : '?';
+
+            const repoRes = await fetch(`https://api.github.com/repos/${REPO}`, { headers, cache: 'no-store' });
+            const repo = repoRes.ok ? await repoRes.json() : null;
+            const canWrite = repo && repo.permissions && repo.permissions.push;
+            const scopes = userRes.headers.get('x-oauth-scopes');  // klasik anahtarlarda dolu gelir
+
+            if (!canWrite) {
+                throw new Error(`Bu anahtar "${user}" hesabına ait ve bu hesabın kataloğa yazma izni yok. ` +
+                    `Anahtarı "${REPO.split('/')[0]}" hesabıyla oluşturun ya da "${user}" hesabını kataloğa ortak olarak ekleyin.`);
+            }
+            if (scopes !== null && !/(^|[ ,])(repo|public_repo)([ ,]|$)/.test(scopes)) {
+                throw new Error('Anahtar oluşturulurken "repo" kutusu işaretlenmemiş. Yeni anahtar oluşturup "repo" kutusunu işaretleyin.');
+            }
+            return user;
+        }
+
         // ---------- Giriş ----------
         async function login(candidate) {
             token = candidate;
             busy('Bağlanılıyor...');
             try {
+                await checkAccess();
                 const { list } = await readProducts();
                 products = list;
                 setSaved(token);
