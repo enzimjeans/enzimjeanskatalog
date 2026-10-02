@@ -43,7 +43,21 @@
             justify-content: space-between;
             gap: 12px;
         }
-        header h1 { font-size: 1.15rem; }
+        header h1 { font-size: 1.15rem; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .nav-back {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            margin-left: -6px;
+            border-radius: 50%;
+            padding: 0;
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+            font-size: 1.8rem;
+            line-height: 1;
+            font-weight: 400;
+        }
+        .nav-back:hover { background: rgba(255, 255, 255, 0.25); }
         header a { color: #bfdbfe; font-size: 0.9rem; }
         main { max-width: 900px; margin: 0 auto; padding: 16px; }
 
@@ -200,6 +214,134 @@
             white-space: nowrap;
         }
 
+        /* ---------- Müşteriler ---------- */
+        .view-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+        .view-head h2 { font-size: 1.25rem; }
+        .view-head .btn-light { padding: 9px 14px; }
+
+        .winback-cta {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+            border-radius: 14px;
+            color: #fff;
+            background:
+                repeating-linear-gradient(60deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 4px),
+                linear-gradient(135deg, #1f8a4c, #146c3a);
+            box-shadow: 0 8px 22px rgba(22, 108, 58, 0.3);
+        }
+        .winback-big { font-size: 2.4rem; font-weight: 800; line-height: 1; min-width: 1.4em; text-align: center; }
+        .winback-text { display: flex; flex-direction: column; gap: 2px; }
+        .winback-text small { opacity: 0.85; font-weight: 500; }
+
+        .seg-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; scrollbar-width: none; }
+        .seg-row button {
+            flex: 0 0 auto;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--card);
+            border: 1.5px solid var(--line);
+            color: var(--text);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .seg-row button small { color: var(--muted); font-weight: 500; margin-left: 4px; }
+        .seg-row button.active { background: var(--text); border-color: var(--text); color: #fff; }
+        .seg-row button.active small { color: #cbd5e1; }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+            background: #94a3b8;
+        }
+        .avatar.aktif { background: #16a34a; }
+        .avatar.sessiz { background: #d97706; }
+        .avatar.kayip { background: #dc2626; }
+        .avatar.big { width: 64px; height: 64px; font-size: 1.4rem; margin: 0 auto 10px; }
+
+        .c-item { cursor: pointer; }
+        .c-item .item-meta b { font-weight: 600; }
+        .c-item .tag-ret { color: var(--red); font-weight: 600; }
+        .order-btn { background: var(--green-bg); color: var(--green); }
+        .msg-btn { background: #dcfce7; color: #166534; font-size: 1.05rem; }
+
+        .check { display: flex; align-items: center; gap: 8px; font-weight: 500; margin: 8px 0 16px; cursor: pointer; }
+        .check input { width: 20px; height: 20px; }
+
+        .step { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 14px; }
+        .step-title { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 10px; }
+        .step-title span {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: var(--text); color: #fff;
+            display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;
+        }
+        .tpl-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 10px; }
+        .tpl-row button {
+            text-align: left;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1.5px solid var(--line);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+        .tpl-row button small { display: block; color: var(--muted); font-weight: 400; font-size: 0.75rem; margin-top: 2px; }
+        .tpl-row button.active { border-color: var(--green); background: var(--green-bg); }
+
+        /* WhatsApp benzeri önizleme */
+        .wa-preview {
+            margin-top: 6px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #efeae2 repeating-linear-gradient(45deg, rgba(0,0,0,0.015) 0 6px, transparent 6px 12px);
+        }
+        .wa-head { background: #075e54; color: #fff; padding: 10px 14px; font-weight: 600; font-size: 0.9rem; }
+        .wa-bubble {
+            position: relative;
+            margin: 12px 14px 14px auto;
+            max-width: 88%;
+            background: #d9fdd3;
+            padding: 9px 12px;
+            border-radius: 10px 0 10px 10px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            font-size: 0.92rem;
+            line-height: 1.4;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.08);
+            text-align: left;
+        }
+
+        .send-progress { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+        .send-progress div { height: 100%; width: 0; background: var(--green); transition: width 0.3s; }
+        .send-step { text-align: center; color: var(--muted); font-weight: 600; margin: 10px 0 14px; }
+        .send-card { text-align: center; }
+        .send-card h2 { font-size: 1.3rem; }
+        .send-card .wa-bubble { margin: 14px auto; max-width: 100%; }
+        .wa-send {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            background: #1faa59;
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .wa-send:hover { background: #178a47; }
+        #sendView .form-actions button { flex: 1; }
+
         .variants { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .variant {
             display: flex;
@@ -267,7 +409,8 @@
 <body>
     <header>
         <div class="header-row">
-            <h1>SİVAL · Ürün Yönetimi</h1>
+            <button class="nav-back hidden" id="navBack" aria-label="Geri">‹</button>
+            <h1 id="navTitle">SİVAL · Yönetim</h1>
             <a href="index.html" target="_blank">Kataloğu gör ↗</a>
         </div>
     </header>
@@ -295,6 +438,14 @@
                     <span class="hub-text">
                         <strong>Duyuru bandı</strong>
                         <small id="announceStatus">Kapalı</small>
+                    </span>
+                    <span class="hub-arrow">›</span>
+                </button>
+                <button class="hub-tile" id="customersTile">
+                    <span class="hub-icon">👥</span>
+                    <span class="hub-text">
+                        <strong>Müşteriler</strong>
+                        <small id="customersStatus">Geri kazanma kampanyaları</small>
                     </span>
                     <span class="hub-arrow">›</span>
                 </button>
@@ -352,6 +503,113 @@
             <div class="form-delete">
                 <button class="btn-danger" id="aRemove">Duyuruyu kaldır</button>
             </div>
+        </section>
+
+        <!-- Müşteriler -->
+        <section id="customersView" class="hidden">
+            <div class="view-head">
+                <button class="btn-light" data-back>‹ Ürünler</button>
+                <h2>👥 Müşteriler</h2>
+            </div>
+
+            <button class="winback-cta" id="campaignBtn">
+                <span class="winback-big" id="winbackCount">0</span>
+                <span class="winback-text">
+                    <strong>müşteri geri kazanılmayı bekliyor</strong>
+                    <small>Kişiye özel WhatsApp mesajı hazırla →</small>
+                </span>
+            </button>
+
+            <div class="seg-row" id="segChips"></div>
+            <div class="toolbar">
+                <input type="search" id="cSearch" placeholder="İsim, firma, şehir veya telefon ara...">
+            </div>
+            <div class="toolbar">
+                <button class="btn-primary" id="cNewBtn" style="flex:1">+ Müşteri ekle</button>
+                <button class="btn-light" id="cBulkBtn" style="flex:1">📋 Toplu ekle</button>
+            </div>
+            <div class="list" id="cList"></div>
+            <p class="hint" style="margin-top:18px;text-align:center">🔒 Müşteri listesi gizli bir depoda tutulur, katalogda görünmez.</p>
+        </section>
+
+        <!-- Müşteri ekle / düzenle -->
+        <section id="customerFormView" class="panel hidden">
+            <h2 id="cFormTitle">Yeni müşteri</h2>
+            <div class="field"><label for="cName">Ad Soyad</label><input type="text" id="cName" placeholder="Örn: Ahmet Yılmaz"></div>
+            <div class="field"><label for="cFirm">Firma</label><input type="text" id="cFirm" placeholder="Örn: Yılmaz Tekstil (isteğe bağlı)"></div>
+            <div class="field"><label for="cPhone">Telefon</label><input type="tel" id="cPhone" placeholder="05xx xxx xx xx"></div>
+            <div class="field"><label for="cCity">Şehir</label><input type="text" id="cCity" placeholder="Örn: Bursa"></div>
+            <div class="field">
+                <label for="cLast">Son sipariş tarihi</label>
+                <input type="date" id="cLast">
+                <p class="hint">Listede "✓ Sipariş" düğmesine basınca bugünün tarihi otomatik yazılır.</p>
+            </div>
+            <div class="field"><label for="cNote">Not</label><textarea id="cNote" rows="2" placeholder="Örn: Hep jean alır, 30-36 beden"></textarea></div>
+            <label class="check"><input type="checkbox" id="cOptOut"> Mesaj istemiyor (kampanyalara dahil edilmez)</label>
+            <div class="form-actions">
+                <button class="btn-light" id="cCancel">Vazgeç</button>
+                <button class="btn-primary" id="cSave">Kaydet</button>
+            </div>
+            <div class="form-delete" id="cDeleteWrap"><button class="btn-danger" id="cDelete">Müşteriyi sil</button></div>
+        </section>
+
+        <!-- Toplu ekle -->
+        <section id="bulkView" class="panel hidden">
+            <h2>📋 Toplu müşteri ekle</h2>
+            <p class="hint" style="margin:-6px 0 14px">Her satıra bir müşteri: <b>Ad, Telefon, Şehir</b>. Excel'den veya rehberden kopyalayıp yapıştırabilirsiniz.</p>
+            <textarea id="bulkText" rows="8" placeholder="Ahmet Yılmaz, 0532 111 22 33, Bursa&#10;Demir Tekstil, 05441234567, İstanbul"></textarea>
+            <p class="hint" id="bulkInfo">0 müşteri bulundu</p>
+            <div class="form-actions">
+                <button class="btn-light" id="bulkCancel">Vazgeç</button>
+                <button class="btn-primary" id="bulkSave">Ekle</button>
+            </div>
+        </section>
+
+        <!-- Geri kazanma sihirbazı -->
+        <section id="campaignView" class="panel hidden">
+            <h2>💬 Geri kazanma kampanyası</h2>
+
+            <div class="step">
+                <div class="step-title"><span>1</span> Kime gönderilsin?</div>
+                <div class="seg-row" id="campSegs"></div>
+                <label class="check"><input type="checkbox" id="campSkipRecent" checked> Son 7 günde mesaj atılanları atla</label>
+                <p class="hint" id="campCount"></p>
+            </div>
+
+            <div class="step">
+                <div class="step-title"><span>2</span> Mesaj</div>
+                <div class="tpl-row" id="campTpls"></div>
+                <textarea id="campText" rows="6"></textarea>
+                <p class="hint"><b>{ad}</b> müşterinin adı, <b>{link}</b> katalog linki olur.</p>
+                <label class="check"><input type="checkbox" id="campOptOut" checked> Sona "istemiyorsanız RET yazın" notu ekle (ticari ileti kuralı)</label>
+                <div class="wa-preview">
+                    <div class="wa-head" id="campPreviewTo">Önizleme</div>
+                    <div class="wa-bubble" id="campPreview"></div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-light" data-back-customers>Geri</button>
+                <button class="btn-primary" id="campStart">Gönderime başla →</button>
+            </div>
+        </section>
+
+        <!-- Sırayla gönderim -->
+        <section id="sendView" class="panel hidden">
+            <div class="send-progress"><div id="sendBar"></div></div>
+            <p class="send-step" id="sendStep">1 / 10</p>
+            <div class="send-card">
+                <div class="avatar big" id="sendAvatar"></div>
+                <h2 id="sendName"></h2>
+                <p class="hint" id="sendMeta"></p>
+                <div class="wa-bubble" id="sendText"></div>
+            </div>
+            <button class="wa-send" id="sendGo">WhatsApp'ta aç ve gönder</button>
+            <div class="form-actions">
+                <button class="btn-light" id="sendSkip">Atla</button>
+                <button class="btn-light" id="sendStop">Bitir</button>
+            </div>
+            <p class="hint" style="text-align:center;margin-top:12px">WhatsApp açılınca mesaj hazır gelir; sadece gönder tuşuna basın, sonra buraya dönün.</p>
         </section>
 
         <!-- 3) Ürün ekle / düzenle -->
@@ -422,6 +680,7 @@
         const REPO = 'enzimjeans/enzimjeanskatalog';
         const BRANCH = 'main';
         const API = `https://api.github.com/repos/${REPO}/contents/`;
+        const CUSTOMER_REPO = 'waveyla/sival-musteriler';   // gizli depo: müşteri telefonları herkese açık olamaz
         const TOKEN_KEY = 'sival_admin_token';
         const MAX_IMAGE_SIZE = 1200; // px, uzun kenar
 
@@ -454,8 +713,8 @@
         );
 
         // ---------- GitHub API ----------
-        async function gh(path, options = {}) {
-            const res = await fetch(API + path, {
+        async function gh(path, options = {}, repo = REPO) {
+            const res = await fetch(`https://api.github.com/repos/${repo}/contents/` + path, {
                 ...options,
                 cache: 'no-store',
                 headers: {
@@ -473,9 +732,9 @@
         }
 
         // Depodaki bir JSON dosyasını oku (yoksa fallback döner)
-        async function readJson(path, fallback) {
+        async function readJson(path, fallback, repo = REPO) {
             try {
-                const file = await gh(`${path}?ref=${BRANCH}`);
+                const file = await gh(`${path}?ref=${BRANCH}`, {}, repo);
                 return { sha: file.sha, data: JSON.parse(base64ToText(file.content)) };
             } catch (e) {
                 if (e.status === 404 && fallback !== undefined) return { sha: null, data: fallback };
@@ -485,9 +744,9 @@
 
         // JSON dosyasını en güncel halinden okuyup değiştirir ve kaydeder.
         // Aynı anda başka biri kaydettiyse (409) tekrar dener.
-        async function updateJson(path, change, message, fallback) {
+        async function updateJson(path, change, message, fallback, repo = REPO) {
             for (let attempt = 0; attempt < 3; attempt++) {
-                const { sha, data } = await readJson(path, fallback);
+                const { sha, data } = await readJson(path, fallback, repo);
                 const updated = change(data);
                 try {
                     await gh(path, {
@@ -498,7 +757,7 @@
                             ...(sha ? { sha } : {}),
                             content: textToBase64(JSON.stringify(updated, null, 2) + '\n')
                         })
-                    });
+                    }, repo);
                     return updated;
                 } catch (e) {
                     if (e.status !== 409 && e.status !== 422) throw e;
@@ -590,10 +849,61 @@
             $('overlay').classList.toggle('show', !!text);
         }
 
-        function show(view) {
-            ['loginView', 'listView', 'formView', 'announceView'].forEach(v => $(v).classList.toggle('hidden', v !== view));
+        // ---------- Ekranlar arası gezinme ----------
+        // Üstteki ‹ düğmesi ve telefonun geri tuşu bir önceki ekrana döner.
+        const VIEW_TITLES = {
+            loginView: 'SİVAL · Yönetim',
+            listView: 'SİVAL · Yönetim',
+            formView: 'Ürün',
+            announceView: 'Duyuru bandı',
+            customersView: 'Müşteriler',
+            customerFormView: 'Müşteri',
+            bulkView: 'Toplu ekle',
+            campaignView: 'Geri kazanma',
+            sendView: 'Mesaj gönderimi'
+        };
+        let navStack = [];
+        let ignorePops = 0;
+
+        function render(view) {
+            Object.keys(VIEW_TITLES).forEach(v => $(v).classList.toggle('hidden', v !== view));
+            $('navTitle').textContent = view === 'formView' ? ($('formTitle').textContent || 'Ürün')
+                : view === 'customerFormView' ? $('cFormTitle').textContent : VIEW_TITLES[view];
+            $('navBack').classList.toggle('hidden', navStack.length < 2);
             window.scrollTo(0, 0);
         }
+
+        function show(view) {
+            const i = navStack.indexOf(view);
+            const top = navStack.length - 1;
+            if (view === 'loginView' || (view === 'listView' && navStack[top] === 'loginView')) {
+                navStack = [view];                       // giriş/çıkış: geçmişi sıfırla
+            } else if (i !== -1 && i < top) {
+                ignorePops++;
+                history.go(i - top);                     // geri dönüş: tarayıcı geçmişini de geri sar
+                navStack.length = i + 1;
+            } else if (i === -1) {
+                navStack.push(view);
+                history.pushState({ adminView: view }, '');
+            }
+            render(view);
+        }
+
+        // Ekrandaki ‹ düğmesi
+        $('navBack').onclick = () => {
+            if (navStack.length < 2) return;
+            if (navStack[navStack.length - 1] === 'sendView' && queue.length) return finishCampaign();
+            show(navStack[navStack.length - 2]);
+        };
+
+        // Telefonun / tarayıcının geri tuşu
+        window.addEventListener('popstate', () => {
+            if (ignorePops > 0) { ignorePops--; return; }
+            if (navStack.length < 2) return;
+            const leaving = navStack.pop();
+            render(navStack[navStack.length - 1]);
+            if (leaving === 'sendView' && queue.length) finishCampaign();   // gönderilenler kaydedilsin
+        });
 
         function errorText(e) {
             if (e.status === 401) return 'Giriş anahtarı geçersiz veya süresi dolmuş. Yöneticiden yenisini isteyin.';
@@ -704,10 +1014,14 @@
             busy('Bağlanılıyor...');
             try {
                 await checkAccess();
-                const [{ list }, ayar] = await Promise.all([readProducts(), readJson('ayarlar.json', {})]);
+                const [{ list }, ayar] = await Promise.all([
+                    readProducts(),
+                    readJson('ayarlar.json', {}).catch(() => ({ data: {} }))   // ayar okunamasa da giriş yapılabilsin
+                ]);
                 products = list;
                 settings = ayar.data || {};
                 renderAnnounceStatus();
+                loadCustomers().catch(() => {});     // arka planda; müşteri kutusundaki sayı için
                 setSaved(token);
                 $('toast').className = 'toast';
                 renderList();
@@ -1187,6 +1501,398 @@
             if (!confirm('Duyuru katalogdan kaldırılsın mı?')) return;
             saveAnnounce({ ...(settings.duyuru || {}), aktif: false }, 'Duyuru kaldırıldı');
         };
+
+        // ---------- Müşteriler ----------
+        const CATALOG_URL = 'https://enzimjeans.github.io/enzimjeanskatalog/';
+        const SEGMENTS = [
+            { key: 'all', label: 'Tümü' },
+            { key: 'kayip', label: '🔴 Kayıp (90+ gün)' },
+            { key: 'sessiz', label: '🟡 Sessiz (30-90 gün)' },
+            { key: 'aktif', label: '🟢 Aktif' },
+            { key: 'yok', label: '⚪ Sipariş kaydı yok' }
+        ];
+
+        let customers = null;         // yüklenene kadar null
+        let cSegment = 'all';
+        let editingCustomer = null;
+
+        const daysSince = iso => iso ? Math.floor((Date.now() - new Date(iso)) / 86400000) : null;
+
+        function segmentOf(c) {
+            const d = daysSince(c.sonSiparis);
+            if (d === null) return 'yok';
+            if (d > 90) return 'kayip';
+            if (d > 30) return 'sessiz';
+            return 'aktif';
+        }
+
+        // 0532 111 22 33 / +90 532... / 532... -> 905321112233
+        function normalizePhone(raw) {
+            let d = String(raw || '').replace(/\D/g, '');
+            if (d.startsWith('00')) d = d.slice(2);
+            if (d.startsWith('0')) d = '9' + d;            // 05xx -> 905xx
+            else if (d.length === 10 && d.startsWith('5')) d = '90' + d;
+            return d;
+        }
+
+        const prettyPhone = d => d.startsWith('90') && d.length === 12
+            ? `0${d.slice(2, 5)} ${d.slice(5, 8)} ${d.slice(8, 10)} ${d.slice(10)}` : '+' + d;
+
+        const initials = c => (c.ad || c.firma || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toLocaleUpperCase('tr');
+
+        function agoText(iso) {
+            const d = daysSince(iso);
+            if (d === null) return '';
+            if (d === 0) return 'bugün';
+            if (d === 1) return 'dün';
+            if (d < 30) return `${d} gün önce`;
+            if (d < 365) return `${Math.floor(d / 30)} ay önce`;
+            return `${Math.floor(d / 365)} yıl önce`;
+        }
+
+        async function loadCustomers() {
+            const { data } = await readJson('musteriler.json', [], CUSTOMER_REPO);
+            customers = Array.isArray(data) ? data : [];
+            renderCustomersStatus();
+        }
+
+        async function saveCustomers(change, message) {
+            customers = await updateJson('musteriler.json', change, message, [], CUSTOMER_REPO);
+            renderCustomersStatus();
+        }
+
+        // Geri kazanılmayı bekleyen: sessiz veya kayıp, mesaj istemiyor değil
+        const waitingWinback = () => (customers || []).filter(c => !c.ret && ['sessiz', 'kayip'].includes(segmentOf(c)));
+
+        function renderCustomersStatus() {
+            if (!customers) return;
+            const w = waitingWinback().length;
+            $('customersStatus').textContent = customers.length
+                ? `${customers.length} müşteri` + (w ? ` · ${w} kişi geri kazanılmayı bekliyor` : '')
+                : 'Müşteri ekleyin, geri kazanma kampanyası yapın';
+            $('customersStatus').className = w ? 'on' : '';
+        }
+
+        function customerErrorText(e) {
+            if (e.status === 404) return 'Müşteri listesine erişilemedi: bu anahtarın gizli müşteri deposuna izni yok.';
+            return errorText(e);
+        }
+
+        async function openCustomers() {
+            if (!customers) {
+                busy('Müşteriler yükleniyor...');
+                try { await loadCustomers(); }
+                catch (e) { busy(); return toast(customerErrorText(e), true); }
+                busy();
+            }
+            renderCustomers();
+            show('customersView');
+        }
+
+        function renderCustomers() {
+            const counts = { all: customers.length };
+            customers.forEach(c => { const s = segmentOf(c); counts[s] = (counts[s] || 0) + 1; });
+            $('segChips').innerHTML = SEGMENTS.map(s => `
+                <button class="${cSegment === s.key ? 'active' : ''}" data-seg="${s.key}">${s.label}<small>${counts[s.key] || 0}</small></button>`).join('');
+            $('winbackCount').textContent = waitingWinback().length;
+
+            const q = $('cSearch').value.trim().toLocaleLowerCase('tr');
+            const qDigits = q.replace(/\D/g, '');
+            const list = customers
+                .filter(c => cSegment === 'all' || segmentOf(c) === cSegment)
+                .filter(c => !q || `${c.ad} ${c.firma} ${c.sehir}`.toLocaleLowerCase('tr').includes(q) || (qDigits.length > 2 && c.telefon.includes(qDigits)))
+                .sort((a, b) => (daysSince(b.sonSiparis) ?? 9999) - (daysSince(a.sonSiparis) ?? 9999));
+
+            $('cList').innerHTML = list.map(c => {
+                const seg = segmentOf(c);
+                const last = c.sonSiparis ? `son sipariş <b>${agoText(c.sonSiparis)}</b>` : 'sipariş kaydı yok';
+                const msg = c.sonMesaj ? ` · mesaj ${agoText(c.sonMesaj)}` : '';
+                return `
+                <div class="item c-item" data-cid="${c.id}">
+                    <div class="avatar ${seg}">${escapeHtml(initials(c))}</div>
+                    <div class="item-info">
+                        <div class="item-name">${escapeHtml(c.ad || c.firma)}${c.firma && c.ad ? ` <small style="color:var(--muted);font-weight:500">· ${escapeHtml(c.firma)}</small>` : ''}</div>
+                        <div class="item-meta">${c.sehir ? escapeHtml(c.sehir) + ' · ' : ''}${last}${msg}${c.ret ? ' · <span class="tag-ret">mesaj istemiyor</span>' : ''}</div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="order-btn" data-corder="${c.id}" title="Bugün sipariş verdi">✓ Sipariş</button>
+                        <button class="msg-btn" data-cmsg="${c.id}" title="WhatsApp'tan yaz" aria-label="WhatsApp'tan yaz">💬</button>
+                    </div>
+                </div>`;
+            }).join('') || `<p class="hint" style="text-align:center;padding:24px">${customers.length ? 'Bu grupta müşteri yok.' : 'Henüz müşteri yok. "+ Müşteri ekle" veya "Toplu ekle" ile başlayın.'}</p>`;
+        }
+
+        $('customersTile').onclick = openCustomers;
+        document.querySelectorAll('[data-back]').forEach(b => b.onclick = () => show('listView'));
+        document.querySelectorAll('[data-back-customers]').forEach(b => b.onclick = () => { renderCustomers(); show('customersView'); });
+        $('cSearch').addEventListener('input', renderCustomers);
+        $('segChips').addEventListener('click', e => {
+            const b = e.target.closest('[data-seg]');
+            if (!b) return;
+            cSegment = b.dataset.seg;
+            renderCustomers();
+        });
+
+        $('cList').addEventListener('click', async e => {
+            const order = e.target.closest('[data-corder]');
+            const msg = e.target.closest('[data-cmsg]');
+            const row = e.target.closest('[data-cid]');
+            if (order) {
+                const c = customers.find(x => x.id === order.dataset.corder);
+                busy('Kaydediliyor...');
+                try {
+                    await saveCustomers(list => list.map(x => x.id === c.id ? { ...x, sonSiparis: new Date().toISOString() } : x),
+                        `Sipariş: ${c.ad || c.firma}`);
+                    renderCustomers();
+                    toast(`${c.ad || c.firma}: bugün sipariş verdi ✓`);
+                } catch (err) { toast(customerErrorText(err), true); }
+                finally { busy(); }
+            } else if (msg) {
+                const c = customers.find(x => x.id === msg.dataset.cmsg);
+                const name = (c.ad || c.firma).split(' ')[0];
+                window.open(`https://wa.me/${c.telefon}?text=${encodeURIComponent(`Merhaba ${name}, `)}`, '_blank');
+            } else if (row) {
+                openCustomerForm(row.dataset.cid);
+            }
+        });
+
+        // Ekle / düzenle
+        function openCustomerForm(id) {
+            editingCustomer = id ? customers.find(c => c.id === id) : null;
+            const c = editingCustomer || {};
+            $('cFormTitle').textContent = editingCustomer ? 'Müşteriyi düzenle' : 'Yeni müşteri';
+            $('cName').value = c.ad || '';
+            $('cFirm').value = c.firma || '';
+            $('cPhone').value = c.telefon ? prettyPhone(c.telefon) : '';
+            $('cCity').value = c.sehir || '';
+            $('cLast').value = c.sonSiparis ? toLocalInput(c.sonSiparis).slice(0, 10) : '';
+            $('cNote').value = c.not || '';
+            $('cOptOut').checked = !!c.ret;
+            $('cDeleteWrap').classList.toggle('hidden', !editingCustomer);
+            show('customerFormView');
+        }
+
+        $('cNewBtn').onclick = () => openCustomerForm(null);
+        $('cCancel').onclick = () => { renderCustomers(); show('customersView'); };
+
+        $('cSave').onclick = async () => {
+            const telefon = normalizePhone($('cPhone').value);
+            const ad = $('cName').value.trim(), firma = $('cFirm').value.trim();
+            if (!ad && !firma) return toast('Ad veya firma yazın.', true);
+            if (telefon.length < 11) return toast('Telefon numarasını kontrol edin.', true);
+            const dup = customers.find(c => c.telefon === telefon && c.id !== editingCustomer?.id);
+            if (dup) return toast(`Bu numara zaten kayıtlı: ${dup.ad || dup.firma}`, true);
+
+            const fields = {
+                ad, firma, telefon,
+                sehir: $('cCity').value.trim(),
+                sonSiparis: $('cLast').value ? new Date($('cLast').value + 'T12:00').toISOString() : null,
+                not: $('cNote').value.trim(),
+                ret: $('cOptOut').checked
+            };
+            busy('Kaydediliyor...');
+            try {
+                if (editingCustomer) {
+                    await saveCustomers(list => list.map(x => x.id === editingCustomer.id ? { ...x, ...fields } : x), `Müşteri güncellendi: ${ad || firma}`);
+                } else {
+                    const c = { id: Date.now().toString(36), ...fields, sonMesaj: null, eklenme: new Date().toISOString() };
+                    await saveCustomers(list => [...list, c], `Müşteri eklendi: ${ad || firma}`);
+                }
+                renderCustomers();
+                show('customersView');
+                toast('Kaydedildi ✓');
+            } catch (e) { toast(customerErrorText(e), true); }
+            finally { busy(); }
+        };
+
+        $('cDelete').onclick = async () => {
+            const c = editingCustomer;
+            if (!c || !confirm(`"${c.ad || c.firma}" silinsin mi?`)) return;
+            busy('Siliniyor...');
+            try {
+                await saveCustomers(list => list.filter(x => x.id !== c.id), `Müşteri silindi: ${c.ad || c.firma}`);
+                renderCustomers();
+                show('customersView');
+                toast('Silindi ✓');
+            } catch (e) { toast(customerErrorText(e), true); }
+            finally { busy(); }
+        };
+
+        // Toplu ekle: "Ad, Telefon, Şehir" satırları
+        function parseBulk(text) {
+            return text.split('\n').map(line => {
+                const parts = line.split(/[,;\t]/).map(s => s.trim()).filter(Boolean);
+                const phoneIdx = parts.findIndex(p => p.replace(/\D/g, '').length >= 10);
+                if (phoneIdx === -1) return null;
+                const telefon = normalizePhone(parts[phoneIdx]);
+                const rest = parts.filter((_, i) => i !== phoneIdx);
+                return { ad: rest[0] || '', sehir: rest[1] || '', telefon };
+            }).filter(c => c && c.telefon.length >= 11);
+        }
+
+        $('cBulkBtn').onclick = () => { $('bulkText').value = ''; $('bulkInfo').textContent = '0 müşteri bulundu'; show('bulkView'); };
+        $('bulkCancel').onclick = () => show('customersView');
+        $('bulkText').addEventListener('input', () => {
+            const found = parseBulk($('bulkText').value);
+            const fresh = found.filter(c => !customers.some(x => x.telefon === c.telefon));
+            $('bulkInfo').textContent = `${found.length} müşteri bulundu` + (found.length - fresh.length ? ` (${found.length - fresh.length} tanesi zaten kayıtlı, atlanacak)` : '');
+        });
+        $('bulkSave').onclick = async () => {
+            const found = parseBulk($('bulkText').value);
+            if (!found.length) return toast('Her satıra "Ad, Telefon, Şehir" yazın.', true);
+            busy('Ekleniyor...');
+            try {
+                const stamp = Date.now();
+                let added = 0;
+                await saveCustomers(list => {
+                    const seen = new Set(list.map(c => c.telefon));
+                    const fresh = found.filter(c => !seen.has(c.telefon) && seen.add(c.telefon));
+                    added = fresh.length;
+                    return [...list, ...fresh.map((c, i) => ({
+                        id: (stamp + i).toString(36), ad: c.ad, firma: '', telefon: c.telefon, sehir: c.sehir,
+                        sonSiparis: null, sonMesaj: null, not: '', ret: false, eklenme: new Date().toISOString()
+                    }))];
+                }, 'Toplu müşteri eklendi');
+                renderCustomers();
+                show('customersView');
+                toast(`${added} müşteri eklendi ✓`);
+            } catch (e) { toast(customerErrorText(e), true); }
+            finally { busy(); }
+        };
+
+        // ---------- Geri kazanma sihirbazı ----------
+        let campSegs = new Set(['kayip', 'sessiz']);
+        let campTpl = 'ozledik';
+        let queue = [], queueIndex = 0, sentCount = 0;
+
+        function newestProductsText() {
+            return [...products].filter(p => p.stok !== 'Yok').sort((a, b) => b.id - a.id).slice(0, 3)
+                .map(p => `• ${p.urun_adi} - ${p.fiyat}`).join('\n');
+        }
+
+        const TEMPLATES = {
+            ozledik: {
+                title: '💙 Sizi özledik', sub: 'Samimi hatırlatma',
+                text: () => 'Merhaba {ad}, sizi özledik! 🙌\nYeni sezon ürünlerimiz katalogda, göz atmak ister misiniz?\n{link}'
+            },
+            yeni: {
+                title: '✦ Yeni gelenler', sub: 'Son 3 ürün otomatik',
+                text: () => `Merhaba {ad}, yeni ürünlerimiz geldi:\n${newestProductsText()}\n\nTüm katalog: {link}`
+            },
+            kampanya: {
+                title: '📣 Kampanya', sub: 'Duyuru bandındaki metin',
+                text: () => {
+                    const a = settings.duyuru;
+                    if (!announceLive(a)) return 'Merhaba {ad}, bu haftaya özel fırsatlarımız var!\n{link}';
+                    const end = a.bitis ? `\n⏳ Son gün: ${new Date(a.bitis).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' })}` : '';
+                    return `Merhaba {ad}, ${a.metin}${end}\n{link}`;
+                }
+            },
+            ozel: { title: '✍️ Kendi mesajım', sub: 'Serbest yazın', text: () => 'Merhaba {ad}, ' }
+        };
+
+        function campaignTargets() {
+            const skipRecent = $('campSkipRecent').checked;
+            return customers.filter(c => !c.ret && campSegs.has(segmentOf(c)) && !(skipRecent && c.sonMesaj && daysSince(c.sonMesaj) < 7));
+        }
+
+        function personalize(text, c) {
+            const name = (c.ad || c.firma || '').trim().split(/\s+/)[0] || '';
+            let out = text.replace(/\{ad\}/g, name).replace(/\{link\}/g, CATALOG_URL);
+            if ($('campOptOut').checked) out += '\n\nMesaj almak istemiyorsanız RET yazmanız yeterli.';
+            return out;
+        }
+
+        function renderCampaign() {
+            const counts = {};
+            customers.filter(c => !c.ret).forEach(c => { const s = segmentOf(c); counts[s] = (counts[s] || 0) + 1; });
+            $('campSegs').innerHTML = SEGMENTS.filter(s => s.key !== 'all').map(s => `
+                <button class="${campSegs.has(s.key) ? 'active' : ''}" data-cseg="${s.key}">${s.label}<small>${counts[s.key] || 0}</small></button>`).join('');
+            const targets = campaignTargets();
+            $('campCount').textContent = targets.length
+                ? `${targets.length} kişiye mesaj hazırlanacak.`
+                : 'Seçili grupta mesaj atılacak kimse yok.';
+            $('campTpls').innerHTML = Object.entries(TEMPLATES).map(([k, t]) => `
+                <button class="${campTpl === k ? 'active' : ''}" data-tpl="${k}">${t.title}<small>${t.sub}</small></button>`).join('');
+            const sample = targets[0] || { ad: 'Ahmet' };
+            $('campPreviewTo').textContent = targets[0] ? `Önizleme: ${targets[0].ad || targets[0].firma}` : 'Önizleme';
+            $('campPreview').textContent = personalize($('campText').value, sample);
+            $('campStart').disabled = !targets.length;
+        }
+
+        $('campaignBtn').onclick = () => {
+            if (!customers.length) return toast('Önce müşteri ekleyin.', true);
+            $('campText').value = TEMPLATES[campTpl].text();
+            renderCampaign();
+            show('campaignView');
+        };
+        $('campSegs').addEventListener('click', e => {
+            const b = e.target.closest('[data-cseg]');
+            if (!b) return;
+            campSegs.has(b.dataset.cseg) ? campSegs.delete(b.dataset.cseg) : campSegs.add(b.dataset.cseg);
+            renderCampaign();
+        });
+        $('campTpls').addEventListener('click', e => {
+            const b = e.target.closest('[data-tpl]');
+            if (!b) return;
+            campTpl = b.dataset.tpl;
+            $('campText').value = TEMPLATES[campTpl].text();
+            renderCampaign();
+            if (campTpl === 'ozel') $('campText').focus();
+        });
+        ['campText', 'campSkipRecent', 'campOptOut'].forEach(id => $(id).addEventListener('input', renderCampaign));
+
+        $('campStart').onclick = () => {
+            queue = campaignTargets();
+            queueIndex = 0;
+            sentCount = 0;
+            renderSendStep();
+            show('sendView');
+        };
+
+        function renderSendStep() {
+            if (queueIndex >= queue.length) return finishCampaign();
+            const c = queue[queueIndex];
+            $('sendBar').style.width = `${(queueIndex / queue.length) * 100}%`;
+            $('sendStep').textContent = `${queueIndex + 1} / ${queue.length}`;
+            $('sendAvatar').textContent = initials(c);
+            $('sendAvatar').className = `avatar big ${segmentOf(c)}`;
+            $('sendName').textContent = c.ad || c.firma;
+            $('sendMeta').textContent = [prettyPhone(c.telefon), c.sehir, c.sonSiparis ? `son sipariş ${agoText(c.sonSiparis)}` : 'sipariş kaydı yok'].filter(Boolean).join(' · ');
+            $('sendText').textContent = personalize($('campText').value, c);
+            $('sendGo').hidden = false;
+            $('sendSkip').textContent = 'Atla';
+        }
+
+        $('sendGo').onclick = () => {
+            const c = queue[queueIndex];
+            window.open(`https://wa.me/${c.telefon}?text=${encodeURIComponent(personalize($('campText').value, c))}`, '_blank');
+            c._sent = true;
+            sentCount++;
+            queueIndex++;
+            renderSendStep();
+        };
+        $('sendSkip').onclick = () => { queueIndex++; renderSendStep(); };
+        $('sendStop').onclick = () => finishCampaign();
+
+        // Mesaj atılanların "son mesaj" tarihini tek seferde kaydet
+        async function finishCampaign() {
+            const sentIds = new Set(queue.filter(c => c._sent).map(c => c.id));
+            $('sendBar').style.width = '100%';
+            if (sentIds.size) {
+                busy('Kaydediliyor...');
+                try {
+                    const now = new Date().toISOString();
+                    await saveCustomers(list => list.map(x => sentIds.has(x.id) ? { ...x, sonMesaj: now } : x),
+                        `Kampanya: ${sentIds.size} kişiye mesaj`);
+                } catch (e) { toast(customerErrorText(e), true); }
+                finally { busy(); }
+            }
+            queue = [];
+            renderCustomers();
+            show('customersView');
+            toast(sentIds.size ? `🎉 ${sentIds.size} kişiye mesaj hazırlandı` : 'Kampanya bitti');
+        }
 
         // ---------- Başlat ----------
         const saved = getSaved();
