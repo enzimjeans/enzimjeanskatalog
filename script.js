@@ -514,6 +514,7 @@ function productCard(p, index) {
                 </button>
                 ${badge}
                 ${favButton(p)}
+                ${p.video ? '<span class="video-chip" aria-hidden="true">▶ Video</span>' : ''}
             </div>
             <div class="card-body">
                 <h3 class="card-name" data-open>${escapeHtml(titleCase(p.urun_adi))}</h3>
@@ -652,6 +653,7 @@ function openModal(id, { updateHash = true } = {}) {
 
     $('modalImage').src = imagePath(p);
     $('modalImage').alt = p.urun_adi;
+    setupMedia(p);
     $('modalTitle').textContent = titleCase(p.urun_adi);
     $('modalPrice').innerHTML = `${priceHtml(p)} <small>/ adet</small>`;
     const mb = badgeOf(p);
@@ -690,6 +692,61 @@ function openModal(id, { updateHash = true } = {}) {
     modal.querySelector('.detail-info').scrollTop = 0;
     document.body.classList.add('no-scroll');
     if (updateHash) history.replaceState(null, '', `#urun-${p.id}`);
+}
+
+// ---------- Ürün videosu ----------
+let mediaProduct = null;
+
+function youtubeId(url) {
+    const m = String(url).match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([\w-]{6,})/i);
+    return m ? m[1] : null;
+}
+
+const isInstagram = url => /instagram\.com\//i.test(url || '');
+
+function setupMedia(p) {
+    stopMedia();
+    mediaProduct = p;
+    const has = !!p.video;
+    $('mediaSwitch').hidden = !has;
+    showMedia('photo');
+}
+
+function showMedia(which) {
+    const p = mediaProduct;
+    if (!p) return;
+    const v = $('modalVideo'), f = $('modalEmbed'), img = $('modalImage');
+    document.querySelectorAll('#mediaSwitch button').forEach(b => b.classList.toggle('active', b.dataset.media === which));
+
+    if (which === 'video' && isInstagram(p.video)) {
+        window.open(p.video, '_blank', 'noopener');        // Instagram gömülemiyor: uygulamada açılır
+        which = 'photo';
+        document.querySelectorAll('#mediaSwitch button').forEach(b => b.classList.toggle('active', b.dataset.media === 'photo'));
+    }
+
+    const yt = which === 'video' ? youtubeId(p.video) : null;
+    img.hidden = which === 'video';
+    v.hidden = !(which === 'video' && !yt);
+    f.hidden = !yt;
+
+    if (which !== 'video') { stopMedia(true); return; }
+    if (yt) {
+        f.src = `https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&mute=1&playsinline=1&rel=0`;
+    } else {
+        if (v.dataset.src !== p.video) {
+            v.src = p.video;
+            v.dataset.src = p.video;
+            v.poster = imagePath(p);
+        }
+        v.play().catch(() => {});
+    }
+}
+
+function stopMedia(keepProduct) {
+    const v = $('modalVideo'), f = $('modalEmbed');
+    v.pause();
+    if (!keepProduct) { v.removeAttribute('src'); v.dataset.src = ''; v.load(); }
+    f.src = 'about:blank';
 }
 
 function renderSimilar(p) {
@@ -1046,6 +1103,11 @@ function setupEvents() {
         hidePromo();
     });
 
+    $('mediaSwitch').addEventListener('click', e => {
+        const b = e.target.closest('[data-media]');
+        if (b) showMedia(b.dataset.media);
+    });
+
     $('reorderBtn').addEventListener('click', reorder);
     $('reorderClose').addEventListener('click', () => {
         $('reorderBox').hidden = true;
@@ -1057,6 +1119,7 @@ function setupEvents() {
         dialog.addEventListener('click', e => { if (e.target === dialog) closeDialog(dialog); });
         dialog.addEventListener('close', () => {
             if (!document.querySelector('dialog[open]')) document.body.classList.remove('no-scroll');
+            if (dialog.id === 'productModal') stopMedia();
             if (dialog.id === 'productModal' && location.hash.startsWith('#urun-')) {
                 history.replaceState(null, '', location.pathname + location.search);
             }

@@ -535,6 +535,12 @@
         .row-badge.star { background: #233a5e; }
         .row-badge.deal { background: #b91c1c; }
 
+        /* Video */
+        .video-box { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 12px; background: #f8fafc; }
+        .video-box video { width: 100%; max-height: 320px; border-radius: 8px; background: #000; margin-bottom: 8px; }
+        .video-box .btn-danger { margin-top: 8px; padding: 9px 14px; }
+        .text-btn { display: block; margin: 10px auto 0; background: none; color: var(--primary); font-weight: 600; font-size: 0.88rem; padding: 4px; }
+
         .variants { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .variant {
             display: flex;
@@ -902,6 +908,21 @@
                 <button type="button" class="btn-light hidden" id="addColorBtn" style="width:100%;margin-top:10px">+ Başka renk ekle</button>
             </div>
 
+            <div class="field" id="videoField">
+                <label>Video <small style="color:var(--muted);font-weight:400">(isteğe bağlı)</small></label>
+                <div class="video-box">
+                    <video id="videoPreview" class="hidden" controls playsinline muted preload="metadata"></video>
+                    <div id="videoEmpty">
+                        <button type="button" class="btn-light" id="videoPick" style="width:100%">🎬 Video seç veya çek</button>
+                        <button type="button" class="text-btn" id="videoLinkToggle">veya YouTube / Instagram linki yapıştır</button>
+                    </div>
+                    <input type="url" id="videoLink" class="hidden" placeholder="https://www.youtube.com/shorts/... veya https://www.instagram.com/reel/...">
+                    <p class="hint" id="videoInfo"></p>
+                    <button type="button" class="btn-danger hidden" id="videoRemove">Videoyu kaldır</button>
+                </div>
+                <input type="file" id="videoInput" accept="video/*" class="hidden">
+            </div>
+
             <div class="field">
                 <label for="fName" id="fNameLabel">Ürün adı</label>
                 <input type="text" id="fName" placeholder="Örn: Baggy Mavi">
@@ -1095,6 +1116,17 @@
                         method: 'PUT',
                         body: JSON.stringify({ message: `Görsel eklendi: ${fileName}`, branch: BRANCH, content: base64 })
                     });
+                } catch (e) {
+                    if (e.status !== 409 || attempt >= 3) throw e;
+                    await new Promise(r => setTimeout(r, 800 * (attempt + 1)));
+                }
+            }
+        }
+
+        async function uploadFile(path, base64, message) {
+            for (let attempt = 0; ; attempt++) {
+                try {
+                    return await gh(path, { method: 'PUT', body: JSON.stringify({ message, branch: BRANCH, content: base64 }) });
                 } catch (e) {
                     if (e.status !== 409 || attempt >= 3) throw e;
                     await new Promise(r => setTimeout(r, 800 * (attempt + 1)));
@@ -1394,7 +1426,7 @@
                     <img src="${escapeHtml(imageSrc(p))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
                     <div class="item-info">
                         <div class="item-name">${escapeHtml(p.urun_adi)}</div>
-                        <div class="item-meta">${escapeHtml(p.fiyat)} · ${escapeHtml(p.kategori)}${BADGE_LABELS[p.rozet] ? ` <span class="row-badge ${BADGE_LABELS[p.rozet].cls}">${BADGE_LABELS[p.rozet].label}</span>` : ''}</div>
+                        <div class="item-meta">${escapeHtml(p.fiyat)} · ${escapeHtml(p.kategori)}${BADGE_LABELS[p.rozet] ? ` <span class="row-badge ${BADGE_LABELS[p.rozet].cls}">${BADGE_LABELS[p.rozet].label}</span>` : ''}${p.video ? ' · 🎬' : ''}</div>
                     </div>
                     <div class="item-actions">
                         <button class="stock-btn ${p.stok === 'Yok' ? 'yok' : 'var'}" data-action="stock">
@@ -1479,8 +1511,179 @@
             setPhotoPreview(p ? imageSrc(p) : '');
             fillSale(p ? saleOf(p) : { satis: 'seri', bedenler: [], seriAdet: 0 });
             setBadge(p ? (p.rozet || '') : '');
+            setVideoFromProduct(p);
             $('fOldPrice').value = p && p.eskiFiyat ? priceNumber(p.eskiFiyat) : '';
             show('formView');
+        }
+
+        // ---------- Ürün videosu ----------
+        // Telefon videosu yüklenir (gerekirse küçültülür) ya da YouTube/Instagram linki yapıştırılır.
+        const VIDEO_MAX_SECONDS = 60;
+        const VIDEO_KEEP_BYTES = 12 * 1048576;     // bundan küçükse olduğu gibi yüklenir
+        const VIDEO_MAX_BYTES = 25 * 1048576;      // site alanı sınırlı: video başına üst sınır
+        let videoState = { kind: 'none' };         // none | existing | file | link
+
+        const isVideoLink = v => /^https?:\/\/(www\.|m\.)?(youtube\.com\/(watch|shorts\/)|youtu\.be\/|instagram\.com\/(reel|p)\/)/i.test(v);
+        const mb = n => (n / 1048576).toFixed(1).replace('.', ',') + ' MB';
+
+        function renderVideoBox() {
+            const s = videoState;
+            const prev = $('videoPreview');
+            const hasFile = s.kind === 'existing' || s.kind === 'file';
+            prev.classList.toggle('hidden', !hasFile);
+            if (hasFile) {
+                const src = s.kind === 'file' ? s.url : `${s.value}?v=1`;
+                if (prev.dataset.src !== src) { prev.src = src; prev.dataset.src = src; }
+            } else {
+                prev.removeAttribute('src'); prev.dataset.src = ''; prev.load();
+            }
+            $('videoEmpty').classList.toggle('hidden', s.kind !== 'none');
+            $('videoLink').classList.toggle('hidden', s.kind !== 'link');
+            $('videoRemove').classList.toggle('hidden', s.kind === 'none');
+            $('videoInfo').textContent =
+                s.kind === 'file' ? `✓ ${Math.round(s.duration)} sn · ${mb(s.blob.size)}${s.compressed ? ' (küçültüldü)' : ''} · Kaydet'e basınca yüklenir` :
+                s.kind === 'existing' ? '✓ Bu ürünün videosu var' :
+                s.kind === 'link' ? 'YouTube veya Instagram linkini yapıştırın' :
+                `En fazla ${VIDEO_MAX_SECONDS} saniye. Büyük videolar otomatik küçültülür.`;
+        }
+
+        function setVideoFromProduct(p) {
+            const v = p && p.video ? String(p.video) : '';
+            if (!v) videoState = { kind: 'none' };
+            else if (/^https?:/i.test(v)) { videoState = { kind: 'link', value: v }; $('videoLink').value = v; }
+            else videoState = { kind: 'existing', value: v };
+            if (videoState.kind !== 'link') $('videoLink').value = '';
+            videoState.original = v;
+            renderVideoBox();
+        }
+
+        function videoMeta(file) {
+            return new Promise((resolve, reject) => {
+                const v = document.createElement('video');
+                v.preload = 'metadata';
+                v.muted = true;
+                v.onloadedmetadata = () => resolve({ duration: v.duration, width: v.videoWidth, height: v.videoHeight, url: v.src });
+                v.onerror = () => reject(new Error('Video açılamadı. Telefonun kamerasıyla çekilmiş bir video deneyin.'));
+                v.src = URL.createObjectURL(file);
+            });
+        }
+
+        // Videoyu tuvalde yeniden kaydederek küçült (en uzun kenar 960 px, ~1,8 Mbps)
+        async function compressVideo(url, meta) {
+            if (!window.MediaRecorder || !HTMLCanvasElement.prototype.captureStream) return null;
+            const mime = ['video/mp4;codecs=avc1.42E01E', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm']
+                .find(t => MediaRecorder.isTypeSupported(t));
+            if (!mime) return null;
+
+            const scale = Math.min(1, 960 / Math.max(meta.width, meta.height));
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(meta.width * scale / 2) * 2;
+            canvas.height = Math.round(meta.height * scale / 2) * 2;
+            const ctx = canvas.getContext('2d');
+
+            const v = document.createElement('video');
+            v.src = url;
+            v.muted = true;            // küçültülen videoda ses olmaz; katalogda zaten sessiz başlar
+            v.playsInline = true;
+            await new Promise((res, rej) => { v.oncanplay = res; v.onerror = rej; v.load(); });
+
+            const stream = canvas.captureStream(30);
+            const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 1800000 });
+            const chunks = [];
+            rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+            const done = new Promise(res => { rec.onstop = res; });
+
+            let raf;
+            const draw = () => {
+                ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+                busy(`Video küçültülüyor... %${Math.min(99, Math.round(v.currentTime / meta.duration * 100))}`);
+                if (!v.ended) raf = requestAnimationFrame(draw);
+            };
+            v.onended = () => { cancelAnimationFrame(raf); setTimeout(() => rec.stop(), 150); };
+            rec.start(1000);
+            await v.play();
+            draw();
+            await done;
+            return { blob: new Blob(chunks, { type: mime.split(';')[0] }), ext: mime.includes('mp4') ? 'mp4' : 'webm' };
+        }
+
+        $('videoPick').onclick = () => $('videoInput').click();
+        $('videoLinkToggle').onclick = () => { videoState = { ...videoState, kind: 'link', value: '' }; renderVideoBox(); $('videoLink').focus(); };
+        $('videoLink').addEventListener('input', () => { videoState.value = $('videoLink').value.trim(); });
+        $('videoRemove').onclick = () => {
+            if (videoState.url) URL.revokeObjectURL(videoState.url);
+            videoState = { kind: 'none', original: videoState.original };
+            $('videoLink').value = '';
+            renderVideoBox();
+        };
+
+        $('videoInput').addEventListener('change', async () => {
+            const file = $('videoInput').files[0];
+            $('videoInput').value = '';
+            if (!file) return;
+            busy('Video hazırlanıyor...');
+            try {
+                const meta = await videoMeta(file);
+                if (meta.duration > VIDEO_MAX_SECONDS + 1) {
+                    throw new Error(`Video ${Math.round(meta.duration)} saniye. En fazla ${VIDEO_MAX_SECONDS} saniye olmalı; telefonda kırpıp tekrar seçin.`);
+                }
+                let blob = file, ext = (file.name.split('.').pop() || 'mp4').toLowerCase(), compressed = false;
+                if (file.size > VIDEO_KEEP_BYTES) {
+                    const small = await compressVideo(meta.url, meta);
+                    if (small && small.blob.size < file.size) { blob = small.blob; ext = small.ext; compressed = true; }
+                }
+                if (blob.size > VIDEO_MAX_BYTES) {
+                    throw new Error(`Video çok büyük (${mb(blob.size)}). Daha kısa bir video seçin.`);
+                }
+                if (!/^(mp4|mov|m4v|webm)$/.test(ext)) ext = 'mp4';
+                videoState = { kind: 'file', blob, ext, compressed, duration: meta.duration, url: URL.createObjectURL(blob), original: videoState.original };
+                renderVideoBox();
+            } catch (e) {
+                toast(e.message || 'Video hazırlanamadı.', true);
+            } finally {
+                busy();
+            }
+        });
+
+        // Kaydederken: yeni videoyu yükle, ürünün "video" alanını döndür
+        async function resolveVideo(name) {
+            const s = videoState;
+            if (s.kind === 'existing') return s.value;
+            if (s.kind === 'link') {
+                const link = (s.value || '').trim();
+                if (!link) return '';
+                if (!isVideoLink(link)) throw new Error('Video linki YouTube veya Instagram linki olmalı.');
+                return link;
+            }
+            if (s.kind === 'file') {
+                busy(`Video yükleniyor (${mb(s.blob.size)})...`);
+                const base64 = await new Promise((resolve, reject) => {
+                    const r = new FileReader();
+                    r.onload = () => resolve(String(r.result).split(',')[1]);
+                    r.onerror = reject;
+                    r.readAsDataURL(s.blob);
+                });
+                const path = `videolar/${slugify(name)}-${Date.now().toString(36)}.${s.ext}`;
+                await uploadFile(path, base64, `Video eklendi: ${name}`);
+                videoState = { kind: 'existing', value: path, original: s.original };
+                return path;
+            }
+            return '';
+        }
+
+        // Hiçbir ürün kullanmıyorsa eski videoyu sil
+        async function deleteVideoIfUnused(path) {
+            if (!path || /^https?:/i.test(path) || products.some(p => p.video === path)) return;
+            try {
+                const file = await gh(`${path}?ref=${BRANCH}`);
+                await gh(path, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: `Kullanılmayan video silindi: ${path}`, branch: BRANCH, sha: file.sha })
+                });
+            } catch (e) {
+                console.warn('Video silinemedi', path, e);
+            }
         }
 
         // ---------- Satış şekli ve bedenler ----------
@@ -1616,6 +1819,7 @@
         // Birden fazla renk: her fotoğraf bir satır, altına renk adı yazılır
         function renderVariants() {
             const multi = variants.length > 1;
+            $('videoField').classList.toggle('hidden', multi);
             $('variantList').classList.toggle('hidden', !multi);
             $('fNameLabel').textContent = multi ? 'Model adı' : 'Ürün adı';
             $('fName').placeholder = multi ? 'Örn: Baggy' : 'Örn: Baggy Mavi';
@@ -1701,9 +1905,14 @@
 
             if (!existing && variants.length > 1) return saveVariants(name, price, cat, desc);
 
+            if (videoState.kind === 'link' && videoState.value && !isVideoLink(videoState.value)) {
+                return toast('Video linki YouTube veya Instagram linki olmalı.', true);
+            }
+
             busy('Kaydediliyor...');
             try {
                 let gorsel = existing ? existing.gorsel : '';
+                const video = await resolveVideo(name);
                 if (pendingPhoto) {
                     gorsel = `${slugify(name)}-${Date.now().toString(36)}.jpg`;
                     busy('Fotoğraf yükleniyor...');
@@ -1712,7 +1921,7 @@
                 }
 
                 busy('Ürün kaydediliyor...');
-                const fields = { urun_adi: name, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock, ...saleFields(), ...badgeFields() };
+                const fields = { urun_adi: name, fiyat: `${price} TL`, kategori: cat, gorsel, video, aciklama: desc, stok: formStock, ...saleFields(), ...badgeFields() };
 
                 if (existing) {
                     const oldImage = existing.gorsel;
@@ -1721,6 +1930,7 @@
                         `Ürün güncellendi: ${name}`
                     );
                     if (oldImage !== gorsel) deleteImageIfUnused(oldImage);
+                    if (existing.video && existing.video !== video) deleteVideoIfUnused(existing.video);
                 } else {
                     await updateProducts(list => {
                         const id = list.reduce((m, x) => Math.max(m, Number(x.id) || 0), 0) + 1;
@@ -1783,6 +1993,7 @@
             try {
                 await updateProducts(list => list.filter(x => x.id !== p.id), `Ürün silindi: ${p.urun_adi}`);
                 deleteImageIfUnused(p.gorsel);
+                deleteVideoIfUnused(p.video);
                 renderList();
                 show('listView');
                 toast('Ürün silindi ✓');

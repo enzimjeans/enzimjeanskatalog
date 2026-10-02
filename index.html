@@ -167,6 +167,12 @@
         <div class="product-detail">
             <div class="detail-media">
                 <img id="modalImage" src="" alt="">
+                <video id="modalVideo" playsinline muted loop controls preload="none" hidden></video>
+                <iframe id="modalEmbed" title="Ürün videosu" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen hidden></iframe>
+                <div class="media-switch" id="mediaSwitch" hidden>
+                    <button type="button" data-media="photo">📷 Fotoğraf</button>
+                    <button type="button" data-media="video">▶ Video</button>
+                </div>
             </div>
             <div class="detail-info">
                 <p class="detail-cat" id="modalCategory"></p>
