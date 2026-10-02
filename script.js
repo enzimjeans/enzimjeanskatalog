@@ -6,13 +6,13 @@ const NEW_COUNT = 12;          // en son eklenen kaç ürün "Yeni" rozeti alsı
 const SIMILAR_COUNT = 8;       // ürün detayında kaç benzer ürün gösterilsin
 const GROUP_PREVIEW = 8;       // ana sayfada her kategoriden kaç ürün gösterilsin
 const FAV_KEY = 'sival_favs';
-const LAST_ORDER_KEY = 'sival_last_order';
+const LAST_ORDER_KEY = 'sival_last_order_v2';
 const BUYER_KEY = 'sival_buyer';
 
 let allProducts = [];
 let newIds = new Set();
 let activeCategory = 'all';
-let cart = [];                 // [{ id, quantity }]
+let cart = [];                 // [{ id, size, quantity }]
 let favs = new Set();
 let colorGroups = {};          // model anahtarı -> aynı modelin renkleri
 
@@ -69,6 +69,41 @@ function imagePath(product) {
 
 const inStock = p => p.stok !== 'Yok';
 const findProduct = id => allProducts.find(p => p.id === id);
+
+// ---------- Satış şekli: tekli (beden seçilir) / seri (paket) ----------
+// Yönetimden kaydedilen satis/bedenler/seriAdet alanları; yoksa açıklamadan okunur.
+const SZ = '(?:\\d{2}|\\d?X{0,3}[SL]|M)';
+const SIZE_RANGE_RE = new RegExp(`(?:^|[^\\w%])(${SZ}(?:\\s*-\\s*${SZ})+)(?![\\w%])`, 'i');
+const SIZE_PAIR_RE = new RegExp(`(${SZ}-${SZ}(?:\\s*\\/\\s*${SZ}-${SZ})+)`, 'i');
+const JEAN_SIZES = [28, 29, 30, 31, 32, 33, 34, 36, 38, 40, 42, 44, 46];
+
+function parseSizes(text) {
+    const t = String(text || '');
+    const pair = t.match(SIZE_PAIR_RE);                 // "XS-S / M-L / XL-2XL"
+    if (pair) return pair[1].split('/').map(s => s.replace(/\s+/g, '').toUpperCase());
+    const m = t.match(SIZE_RANGE_RE);
+    if (!m) return [];
+    let parts = m[1].split('-').map(s => s.trim().toUpperCase());
+    if (parts.length === 2 && parts.every(x => /^\d{2}$/.test(x))) {   // "31-38" aralığı
+        const [a, b] = parts.map(Number);
+        parts = JEAN_SIZES.filter(n => n >= a && n <= b).map(String);
+    }
+    return parts;
+}
+
+const saleCache = new Map();
+function saleOf(p) {
+    if (saleCache.has(p.id)) return saleCache.get(p.id);
+    const desc = trLower(p.aciklama);
+    const bedenler = Array.isArray(p.bedenler) && p.bedenler.length ? p.bedenler.map(String) : parseSizes(p.aciklama);
+    const satis = p.satis === 'seri' || p.satis === 'tekli' ? p.satis : (desc.includes('seri') ? 'seri' : 'tekli');
+    const s = { satis, bedenler, seriAdet: Math.max(1, Number(p.seriAdet) || bedenler.length || 1) };
+    saleCache.set(p.id, s);
+    return s;
+}
+
+const isSeri = p => saleOf(p).satis === 'seri';
+const needsSize = p => !isSeri(p) && saleOf(p).bedenler.length > 0;
 
 // Renk seçenekleri: aynı kategoride, adı sadece son kelime(ler)de ayrışan ürünler.
 // "Baggy Mavi", "Baggy Gri", "Baggy Kar Yıkama" -> model "Baggy"
@@ -395,48 +430,90 @@ function productCard(p, index) {
                 </button>
                 ${badge}
                 ${favButton(p)}
-                <div class="card-action quick" data-compact>${actionHtml(p, true)}</div>
             </div>
             <div class="card-body">
                 <h3 class="card-name" data-open>${escapeHtml(titleCase(p.urun_adi))}</h3>
-                ${colorsOf(p).length > 1 ? `<span class="card-colors" data-open>${colorsOf(p).length} renk seçeneği</span>` : ''}
+                <div class="card-sub">
+                    <span class="sale-tag ${isSeri(p) ? 'seri' : ''}">${isSeri(p) ? `Seri · ${saleOf(p).seriAdet}'li` : 'Tekli'}</span>
+                    ${colorsOf(p).length > 1 ? `<span class="card-colors" data-open>${colorsOf(p).length} renk</span>` : ''}
+                </div>
                 <div class="card-meta">
                     <span class="card-price">${escapeHtml(displayPrice(p))}</span>
                     <span class="card-cat">${escapeHtml(p.kategori)}</span>
                 </div>
+                <div class="card-action" data-compact>${actionHtml(p, true)}</div>
             </div>
         </article>`;
 }
 
-// Sepette yoksa "Sepete ekle", varsa adet kontrolü
+// Kart: seri -> "+" bir seri ekler; tekli -> "+" beden seçimi için detayı açar
 function actionHtml(p, compact = false) {
-    const item = cart.find(i => i.id === p.id);
+    const unit = isSeri(p) ? 'seri' : 'adet';
+    // Kartta yazılı, büyük düğmeler: herkesin anlayacağı dil
     if (compact) {
-        if (!inStock(p)) return '';
-        if (!item) return `<button class="plus" data-add="${p.id}" aria-label="Sepete ekle">+</button>`;
+        if (!inStock(p)) return '<button class="card-btn" disabled>Stokta yok</button>';
+        if (needsSize(p)) {
+            const pieces = productPieces(p.id);
+            return pieces
+                ? `<button class="card-btn done" data-open>✓ ${pieces} adet · Değiştir</button>`
+                : `<button class="card-btn" data-open>Beden seç</button>`;
+        }
+        const q = cartQty(p.id, '');
+        if (!q) return `<button class="card-btn" data-add="${p.id}">Sepete ekle</button>`;
         return `
-            <div class="pill">
-                <button data-dec="${p.id}" aria-label="Azalt">−</button>
-                <span>${item.quantity}</span>
-                <button data-inc="${p.id}" aria-label="Arttır">+</button>
+            <div class="card-step">
+                <button data-dec="${p.id}" data-size="" aria-label="Azalt">−</button>
+                <span>${q} ${unit}</span>
+                <button data-inc="${p.id}" data-size="" aria-label="Arttır">+</button>
             </div>`;
     }
+
     if (!inStock(p)) return '<button class="add-btn" disabled>Stokta yok</button>';
-    if (!item) return `<button class="add-btn" data-add="${p.id}">Sepete ekle</button>`;
-    return stepperHtml(p.id, item.quantity, 'adet');
+    const price = extractPrice(p.fiyat);
+    const s = saleOf(p);
+
+    // Tekli: her beden için ayrı adet
+    if (needsSize(p)) {
+        const pieces = productPieces(p.id);
+        return `
+            <p class="pick-title">Beden ve adet seçin</p>
+            <div class="size-grid">
+                ${s.bedenler.map(b => {
+                    const q = cartQty(p.id, b);
+                    return `
+                    <div class="size-cell ${q ? 'on' : ''}">
+                        <span class="size-name">${escapeHtml(b)}</span>
+                        ${stepperHtml(p.id, b, q)}
+                    </div>`;
+                }).join('')}
+            </div>
+            <p class="pick-sum">${pieces
+                ? `Sepette <b>${pieces} adet</b> · ${formatPrice(pieces * price)}`
+                : 'Bedenin yanındaki <b>+</b> ile ekleyin'}</p>`;
+    }
+
+    // Seri: seri sayısı
+    const q = cartQty(p.id, '');
+    const info = isSeri(p)
+        ? `<p class="seri-info">1 seri = ${s.bedenler.length ? escapeHtml(s.bedenler.join(', ')) + ' · ' : ''}<b>${s.seriAdet} adet</b> · ${formatPrice(s.seriAdet * price)}</p>`
+        : '';
+    if (!q) return info + `<button class="add-btn" data-add="${p.id}">${isSeri(p) ? '1 seri sepete ekle' : 'Sepete ekle'}</button>`;
+    return info + stepperHtml(p.id, '', q, unit) +
+        (isSeri(p) ? `<p class="pick-sum">${q} seri · <b>${q * s.seriAdet} adet</b> · ${formatPrice(q * s.seriAdet * price)}</p>` : '');
 }
 
 // Toptan alımda adet elle yazılabilsin (50 kez + basmak yerine)
-function stepperHtml(id, quantity, unit = '') {
+function stepperHtml(id, size, quantity, unit = '') {
+    const sz = escapeHtml(size);
     return `
         <div class="stepper">
-            <button data-dec="${id}" aria-label="Azalt">−</button>
+            <button data-dec="${id}" data-size="${sz}" aria-label="Azalt">−</button>
             <label class="qty-wrap">
                 <input class="qty" type="number" inputmode="numeric" min="0" step="1" value="${quantity}"
-                       data-qty="${id}" aria-label="Adet">
+                       data-qty="${id}" data-size="${sz}" aria-label="${unit === 'seri' ? 'Seri sayısı' : 'Adet'}">
                 ${unit ? `<small>${unit}</small>` : ''}
             </label>
-            <button data-inc="${id}" aria-label="Arttır">+</button>
+            <button data-inc="${id}" data-size="${sz}" aria-label="Arttır">+</button>
         </div>`;
 }
 
@@ -470,8 +547,18 @@ function toggleFav(id) {
 // Sepet değişince sadece ilgili kartların butonlarını güncelle (resimler yeniden yüklenmesin)
 function refreshActions(id) {
     const p = findProduct(id);
+    if (!p) return;
     document.querySelectorAll(`[data-id="${id}"] .card-action, #modalActions[data-id="${id}"]`)
-        .forEach(el => { el.innerHTML = actionHtml(p, 'compact' in el.dataset); });
+        .forEach(el => {
+            // Elle adet yazılırken o kutuyu yeniden çizip imleci kaçırma
+            const focused = el.contains(document.activeElement) && document.activeElement.matches('.qty')
+                ? { size: document.activeElement.dataset.size } : null;
+            el.innerHTML = actionHtml(p, 'compact' in el.dataset);
+            if (focused) {
+                const again = el.querySelector(`.qty[data-size="${CSS.escape(focused.size)}"]`);
+                if (again) { again.focus(); again.select(); }
+            }
+        });
 }
 
 // ---------- Ürün detayı ----------
@@ -483,7 +570,7 @@ function openModal(id, { updateHash = true } = {}) {
     $('modalImage').alt = p.urun_adi;
     $('modalTitle').textContent = titleCase(p.urun_adi);
     $('modalCategory').textContent = p.kategori + (newIds.has(p.id) ? ' · Yeni' : '');
-    $('modalPrice').textContent = displayPrice(p);
+    $('modalPrice').textContent = `${displayPrice(p)} / adet`;
     $('modalDescription').textContent = tidyText(p.aciklama);
 
     const stock = $('modalStock');
@@ -557,59 +644,78 @@ async function shareProduct(id) {
 }
 
 // ---------- Sepet ----------
+// Her satır: { id, size, quantity }. Seri üründe size boş ve quantity = seri sayısı;
+// tekli üründe her beden ayrı satır ve quantity = adet.
+const CART_KEY = () => `${CONFIG.cart.storageKey}_v2`;
+
+const cartQty = (id, size) => (cart.find(i => i.id === id && i.size === size) || {}).quantity || 0;
+
+function piecesOf(item) {
+    const p = findProduct(item.id);
+    if (!p) return 0;
+    return isSeri(p) ? item.quantity * saleOf(p).seriAdet : item.quantity;
+}
+
+const productPieces = id => cart.filter(i => i.id === id).reduce((s, i) => s + piecesOf(i), 0);
+
 function loadCart() {
-    try {
-        const saved = JSON.parse(localStorage.getItem(CONFIG.cart.storageKey) || '[]');
-        cart = Array.isArray(saved)
-            ? saved.filter(i => i && Number.isFinite(i.id) && i.quantity > 0).map(i => ({ id: i.id, quantity: i.quantity }))
-            : [];
-    } catch (e) {
-        cart = [];
-    }
+    const saved = readStore(CART_KEY(), []);
+    cart = Array.isArray(saved)
+        ? saved.filter(i => i && Number.isFinite(i.id) && i.quantity > 0)
+            .map(i => ({ id: i.id, size: String(i.size || ''), quantity: Math.floor(i.quantity) }))
+        : [];
 }
 
 function saveCart() {
-    try { localStorage.setItem(CONFIG.cart.storageKey, JSON.stringify(cart)); } catch (e) {}
+    writeStore(CART_KEY(), cart);
 }
 
-function addToCart(id) {
-    const p = findProduct(id);
-    if (!p || !inStock(p)) return;
-    const item = cart.find(i => i.id === id);
-    if (item) {
-        item.quantity++;
-    } else {
-        if (cart.length >= CONFIG.cart.maxItems) return toast(`Sepete en fazla ${CONFIG.cart.maxItems} farklı ürün eklenebilir`);
-        cart.push({ id, quantity: 1 });
-    }
-    afterCartChange(id);
-    toast(`Sepete eklendi: ${titleCase(p.urun_adi)}`);
+function bumpCartCount() {
     const count = $('cartCount');
     count.classList.remove('bump');
     void count.offsetWidth;
     count.classList.add('bump');
 }
 
-function changeQuantity(id, delta) {
-    const item = cart.find(i => i.id === id);
-    if (!item) return;
-    setQuantity(id, item.quantity + delta);
+// Seri üründe 1 seri, bedensiz tekli üründe 1 adet ekler
+function addToCart(id) {
+    const p = findProduct(id);
+    if (!p || !inStock(p)) return;
+    if (needsSize(p)) return openModal(id);              // beden seçmeden eklenmesin
+    changeQuantity(id, '', 1);
 }
 
-function setQuantity(id, quantity) {
-    const item = cart.find(i => i.id === id);
-    if (!item) return;
+function changeQuantity(id, size, delta) {
+    setQuantity(id, size, cartQty(id, size) + delta);
+}
+
+function setQuantity(id, size, quantity) {
+    const p = findProduct(id);
+    if (!p || !inStock(p)) return;
     quantity = Math.max(0, Math.min(9999, Math.floor(Number(quantity) || 0)));
-    if (quantity === 0) cart = cart.filter(i => i.id !== id);
-    else item.quantity = quantity;
-    afterCartChange(id);
-}
+    const item = cart.find(i => i.id === id && i.size === size);
+    const before = productPieces(id);
 
-function afterCartChange(id) {
+    if (quantity === 0) {
+        cart = cart.filter(i => !(i.id === id && i.size === size));
+    } else if (item) {
+        item.quantity = quantity;
+    } else {
+        const distinct = new Set(cart.map(i => i.id));
+        if (!distinct.has(id) && distinct.size >= CONFIG.cart.maxItems) {
+            return toast(`Sepete en fazla ${CONFIG.cart.maxItems} farklı ürün eklenebilir`);
+        }
+        cart.push({ id, size, quantity });
+    }
+
     saveCart();
     updateCartUI();
     refreshActions(id);
     if ($('cartModal').open) renderCart();
+    if (productPieces(id) > before) {
+        bumpCartCount();
+        if (before === 0) toast(`Sepete eklendi ✓ ${titleCase(p.urun_adi)}`);
+    }
 }
 
 function cartTotals() {
@@ -617,8 +723,9 @@ function cartTotals() {
     cart.forEach(i => {
         const p = findProduct(i.id);
         if (!p || !inStock(p)) return;
-        items += i.quantity;
-        total += extractPrice(p.fiyat) * i.quantity;
+        const pieces = piecesOf(i);
+        items += pieces;
+        total += extractPrice(p.fiyat) * pieces;
     });
     return { items, total };
 }
@@ -633,6 +740,7 @@ function updateCartUI() {
     $('cartBarTotal').textContent = formatPrice(total);
 }
 
+// Sepette ürün başına tek kart; tekli üründe bedenler alt alta
 function renderCart() {
     const body = $('cartBody');
     const { items, total } = cartTotals();
@@ -643,20 +751,39 @@ function renderCart() {
         return;
     }
 
-    body.innerHTML = cart.map(i => {
-        const p = findProduct(i.id);
+    const ids = [...new Set(cart.map(i => i.id))];
+    body.innerHTML = ids.map(id => {
+        const p = findProduct(id);
         if (!p) return '';
         const price = extractPrice(p.fiyat);
+        const lines = cart.filter(i => i.id === id);
+        const pieces = productPieces(id);
+        const s = saleOf(p);
+
+        let detail;
+        if (isSeri(p)) {
+            detail = `
+                <p class="cart-item-meta">Seri: ${escapeHtml(s.bedenler.join('-'))} · 1 seri ${s.seriAdet} adet</p>
+                <div class="cart-line">${stepperHtml(id, '', lines[0].quantity, 'seri')}</div>`;
+        } else {
+            detail = lines.map(i => `
+                <div class="cart-line">
+                    <span class="cart-size">${i.size ? `Beden <b>${escapeHtml(i.size)}</b>` : 'Adet'}</span>
+                    ${stepperHtml(id, i.size, i.quantity)}
+                </div>`).join('') +
+                (needsSize(p) ? `<button class="link-btn small" data-open-id="${id}">+ Başka beden ekle</button>` : '');
+        }
+
         return `
             <div class="cart-item">
                 <img src="${imagePath(p)}" alt="">
-                <div>
+                <div class="cart-item-body">
                     <h4>${escapeHtml(titleCase(p.urun_adi))}</h4>
-                    <p class="cart-item-meta">${escapeHtml(p.kategori)} · ${escapeHtml(displayPrice(p))}</p>
-                    <p class="cart-item-total">${formatPrice(price * i.quantity)}</p>
+                    <p class="cart-item-meta">${escapeHtml(displayPrice(p))} / adet</p>
+                    ${detail}
+                    <p class="cart-item-total">${pieces} adet · ${formatPrice(price * pieces)}</p>
+                    ${inStock(p) ? '' : '<p class="cart-item-warning">Bu ürün stokta kalmadı, siparişe eklenmeyecek.</p>'}
                 </div>
-                ${stepperHtml(p.id, i.quantity)}
-                ${inStock(p) ? '' : '<p class="cart-item-warning">Bu ürün stokta kalmadı, siparişe eklenmeyecek.</p>'}
             </div>`;
     }).join('');
 
@@ -675,7 +802,7 @@ function openCart() {
 
 function clearCart() {
     if (!cart.length || !confirm('Sepeti tamamen temizlemek istiyor musunuz?')) return;
-    const ids = cart.map(i => i.id);
+    const ids = [...new Set(cart.map(i => i.id))];
     cart = [];
     saveCart();
     updateCartUI();
@@ -684,10 +811,8 @@ function clearCart() {
 }
 
 function sendWhatsAppOrder() {
-    const lines = cart
-        .map(i => ({ ...i, p: findProduct(i.id) }))
-        .filter(i => i.p && inStock(i.p));
-    if (!lines.length) return toast('Sepetiniz boş');
+    const ids = [...new Set(cart.map(i => i.id))].filter(id => { const p = findProduct(id); return p && inStock(p); });
+    if (!ids.length) return toast('Sepetiniz boş');
 
     const buyer = { name: $('buyerName').value.trim(), city: $('buyerCity').value.trim() };
     writeStore(BUYER_KEY, buyer);
@@ -696,11 +821,22 @@ function sendWhatsAppOrder() {
     if (buyer.name) message += `Firma / Ad: ${buyer.name}\n`;
     if (buyer.city) message += `Şehir: ${buyer.city}\n`;
     if (buyer.name || buyer.city) message += '\n';
-    lines.forEach((i, n) => {
-        const price = extractPrice(i.p.fiyat);
-        message += `${n + 1}. ${i.p.urun_adi} (${i.p.kategori})\n`;
-        message += `   ${i.quantity} adet x ${formatPrice(price)} = ${formatPrice(price * i.quantity)}\n\n`;
+
+    ids.forEach((id, n) => {
+        const p = findProduct(id);
+        const price = extractPrice(p.fiyat);
+        const lines = cart.filter(i => i.id === id);
+        const pieces = productPieces(id);
+        const s = saleOf(p);
+        message += `${n + 1}. ${p.urun_adi} (${p.kategori})\n`;
+        if (isSeri(p)) {
+            message += `   ${lines[0].quantity} seri (${s.bedenler.join('-')}, seri başı ${s.seriAdet} adet)\n`;
+        } else if (needsSize(p)) {
+            message += `   Bedenler: ${lines.map(i => `${i.size} → ${i.quantity} adet`).join(', ')}\n`;
+        }
+        message += `   ${pieces} adet x ${formatPrice(price)} = ${formatPrice(price * pieces)}\n\n`;
     });
+
     const { items, total } = cartTotals();
     message += `─────────────────────\n`;
     message += `Toplam: ${items} adet\n`;
@@ -709,7 +845,7 @@ function sendWhatsAppOrder() {
     // Bir dahaki ziyarette "Siparişi tekrarla" için sakla
     writeStore(LAST_ORDER_KEY, {
         date: new Date().toISOString(),
-        items: lines.map(i => ({ id: i.id, quantity: i.quantity }))
+        items: cart.filter(i => ids.includes(i.id)).map(i => ({ id: i.id, size: i.size, quantity: i.quantity }))
     });
 
     window.open(whatsappUrl(message), '_blank');
@@ -719,7 +855,13 @@ function sendWhatsAppOrder() {
 function reorderableItems() {
     const last = readStore(LAST_ORDER_KEY, null);
     if (!last || !Array.isArray(last.items)) return { last: null, items: [] };
-    const items = last.items.filter(i => { const p = findProduct(i.id); return p && inStock(p); });
+    const items = last.items.filter(i => {
+        const p = findProduct(i.id);
+        if (!p || !inStock(p) || !(i.quantity > 0)) return false;
+        const size = String(i.size || '');
+        // beden artık yoksa ya da satış şekli değiştiyse atla
+        return needsSize(p) ? saleOf(p).bedenler.includes(size) : size === '';
+    });
     return { last, items };
 }
 
@@ -732,20 +874,22 @@ function renderReorder() {
     if (!show) return;
 
     const date = new Date(last.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
-    const pieces = items.reduce((s, i) => s + i.quantity, 0);
-    const missing = last.items.length - items.length;
-    $('reorderInfo').textContent = `${date} tarihli siparişiniz: ${items.length} ürün, ${pieces} adet` +
-        (missing ? ` (${missing} ürün şu an stokta yok)` : '');
+    const products = new Set(items.map(i => i.id)).size;
+    const pieces = items.reduce((s, i) => s + piecesOf(i), 0);
+    const missing = new Set(last.items.map(i => i.id)).size - products;
+    $('reorderInfo').textContent = `${date} tarihli siparişiniz: ${products} ürün, ${pieces} adet` +
+        (missing > 0 ? ` (${missing} ürün şu an stokta yok)` : '');
 }
 
 function reorder() {
     const { items } = reorderableItems();
     items.forEach(i => {
-        const existing = cart.find(c => c.id === i.id);
+        const size = String(i.size || '');
+        const existing = cart.find(c => c.id === i.id && c.size === size);
         if (existing) existing.quantity = Math.max(existing.quantity, i.quantity);
-        else cart.push({ id: i.id, quantity: i.quantity });
-        refreshActions(i.id);
+        else cart.push({ id: i.id, size, quantity: i.quantity });
     });
+    new Set(items.map(i => i.id)).forEach(refreshActions);
     saveCart();
     updateCartUI();
     openCart();
@@ -779,14 +923,15 @@ function setupEvents() {
 
     // Kart, detay ve sepet içindeki tüm butonlar
     document.addEventListener('click', e => {
-        const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open],[data-similar],[data-share],[data-close],[data-goto],[data-fav]');
+        const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open],[data-open-id],[data-similar],[data-share],[data-close],[data-goto],[data-fav]');
         if (!t) return;
         const d = t.dataset;
         if (d.fav) toggleFav(Number(d.fav));
         else if (d.goto) selectCategory(d.goto);
         else if (d.add) addToCart(Number(d.add));
-        else if (d.inc) changeQuantity(Number(d.inc), 1);
-        else if (d.dec) changeQuantity(Number(d.dec), -1);
+        else if (d.inc) changeQuantity(Number(d.inc), d.size || '', 1);
+        else if (d.dec) changeQuantity(Number(d.dec), d.size || '', -1);
+        else if (d.openId) { $('cartModal').close(); openModal(Number(d.openId)); }
         else if (d.similar) openModal(Number(d.similar));
         else if (d.share) shareProduct(Number(d.share));
         else if ('open' in d) openModal(Number(t.closest('.card').dataset.id));
@@ -800,7 +945,7 @@ function setupEvents() {
 
     // Elle adet yazma
     document.addEventListener('change', e => {
-        if (e.target.dataset && e.target.dataset.qty) setQuantity(Number(e.target.dataset.qty), e.target.value);
+        if (e.target.dataset && e.target.dataset.qty) setQuantity(Number(e.target.dataset.qty), e.target.dataset.size || '', e.target.value);
     });
     document.addEventListener('keydown', e => {
         if (e.key === 'Enter' && e.target.dataset && e.target.dataset.qty) e.target.blur();

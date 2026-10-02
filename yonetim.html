@@ -286,6 +286,53 @@
             background: var(--text); color: #fff;
             display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;
         }
+        #campaignView .step:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+        /* Kime gönderilsin: kişi listesi */
+        .pick-bar { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+        .pick-bar button {
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: var(--card);
+            border: 1.5px solid var(--line);
+            color: var(--text);
+            font-size: 0.88rem;
+        }
+        .pick-bar button:hover { border-color: var(--text); }
+        .recip-list {
+            max-height: 340px;
+            overflow-y: auto;
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+        .recip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            margin: 0;
+            border-bottom: 1px solid var(--line);
+            font-weight: 400;
+            cursor: pointer;
+            background: var(--card);
+        }
+        .recip:last-child { border-bottom: none; }
+        .recip input { width: 22px; height: 22px; flex-shrink: 0; accent-color: var(--green); }
+        .recip .avatar { width: 36px; height: 36px; font-size: 0.85rem; }
+        .recip-text { display: flex; flex-direction: column; min-width: 0; }
+        .recip-text small { color: var(--muted); }
+        .recip:has(input:checked) { background: #effaf3; }
+        .recip.off { opacity: 0.5; cursor: not-allowed; }
+        .recip-count {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: var(--green-bg);
+            color: #166534;
+            font-size: 1rem;
+        }
+        .recip-count.none { background: #fff7ed; color: #9a3412; }
+
         .tpl-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 10px; }
         .tpl-row button {
             text-align: left;
@@ -440,6 +487,26 @@
         .bulk-preview .bp-row.dup { opacity: 0.5; text-decoration: line-through; }
 
         @media (hover: none), (pointer: coarse) { .desktop-only { display: none !important; } }
+
+        /* Satış şekli ve bedenler */
+        .sale-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .sale-choice button {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 12px;
+            text-align: left;
+            background: var(--card);
+            border: 2px solid var(--line);
+            color: var(--text);
+        }
+        .sale-choice button small { color: var(--muted); font-weight: 400; font-size: 0.8rem; }
+        .sale-choice button.active { border-color: var(--primary); background: #eff4ff; }
+        .seri-count { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .seri-count label { margin: 0; font-weight: 500; flex: 1; }
+        .seri-count input { width: 90px; text-align: center; }
+        .size-chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .size-chip { padding: 4px 10px; border-radius: 6px; background: var(--line); font-weight: 700; font-size: 0.85rem; }
 
         .variants { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .variant {
@@ -707,9 +774,14 @@
 
             <div class="step">
                 <div class="step-title"><span>1</span> Kime gönderilsin?</div>
-                <div class="seg-row" id="campSegs"></div>
-                <label class="check"><input type="checkbox" id="campSkipRecent" checked> Son 7 günde mesaj atılanları atla</label>
-                <p class="hint" id="campCount"></p>
+                <div class="pick-bar" id="campPick">
+                    <button type="button" data-pick="onerilen">⭐ Önerilenler</button>
+                    <button type="button" data-pick="hepsi">Herkes</button>
+                    <button type="button" data-pick="hic">Hiçbiri</button>
+                </div>
+                <p class="hint" style="margin:-2px 0 8px">⭐ Önerilen: 30 günden uzun süredir sipariş vermeyen ve son 7 günde mesaj atılmamış kişiler.</p>
+                <div class="recip-list" id="campList"></div>
+                <p class="recip-count" id="campCount"></p>
             </div>
 
             <div class="step">
@@ -777,6 +849,26 @@
                     <input type="text" inputmode="decimal" id="fPrice" placeholder="350">
                     <span>TL</span>
                 </div>
+                <p class="hint">Adet fiyatı.</p>
+            </div>
+
+            <div class="field">
+                <label>Satış şekli</label>
+                <div class="sale-choice" id="saleChoice">
+                    <button type="button" data-sale="seri"><b>Seri</b><small>Paket halinde satılır</small></button>
+                    <button type="button" data-sale="tekli"><b>Tekli</b><small>Müşteri beden ve adet seçer</small></button>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="fSizes">Bedenler</label>
+                <input type="text" id="fSizes" placeholder="Örn: S-M-L-XL-2XL veya 30-31-32-33-34">
+                <div class="chips-row" id="sizePresets"></div>
+                <div class="seri-count" id="seriCountWrap">
+                    <label for="fSeriAdet">Bir seride kaç adet var?</label>
+                    <input type="number" id="fSeriAdet" min="1" inputmode="numeric">
+                </div>
+                <p class="hint" id="sizeHint"></p>
             </div>
 
             <div class="field">
@@ -1301,7 +1393,96 @@
             renderCatSelect(p ? p.kategori : '');
             setStock(p ? (p.stok === 'Yok' ? 'Yok' : 'Var') : 'Var');
             setPhotoPreview(p ? imageSrc(p) : '');
+            fillSale(p ? saleOf(p) : { satis: 'seri', bedenler: [], seriAdet: 0 });
             show('formView');
+        }
+
+        // ---------- Satış şekli ve bedenler ----------
+        // Katalogla aynı okuyucu: kayıtlı alan yoksa açıklamadan bedenleri bulur
+        const SZ = '(?:\\d{2}|\\d?X{0,3}[SL]|M)';
+        const SIZE_RANGE_RE = new RegExp(`(?:^|[^\\w%])(${SZ}(?:\\s*-\\s*${SZ})+)(?![\\w%])`, 'i');
+        const SIZE_PAIR_RE = new RegExp(`(${SZ}-${SZ}(?:\\s*\\/\\s*${SZ}-${SZ})+)`, 'i');
+        const JEAN_SIZES = [28, 29, 30, 31, 32, 33, 34, 36, 38, 40, 42, 44, 46];
+
+        function parseSizes(text) {
+            const t = String(text || '');
+            const pair = t.match(SIZE_PAIR_RE);
+            if (pair) return pair[1].split('/').map(x => x.replace(/\s+/g, '').toUpperCase());
+            const m = t.match(SIZE_RANGE_RE);
+            if (!m) return [];
+            let parts = m[1].split('-').map(x => x.trim().toUpperCase());
+            if (parts.length === 2 && parts.every(x => /^\d{2}$/.test(x))) {
+                const [a, b] = parts.map(Number);
+                parts = JEAN_SIZES.filter(n => n >= a && n <= b).map(String);
+            }
+            return parts;
+        }
+
+        function saleOf(p) {
+            const bedenler = Array.isArray(p.bedenler) && p.bedenler.length ? p.bedenler.map(String) : parseSizes(p.aciklama);
+            const satis = p.satis === 'seri' || p.satis === 'tekli' ? p.satis
+                : (String(p.aciklama || '').toLocaleLowerCase('tr').includes('seri') ? 'seri' : 'tekli');
+            return { satis, bedenler, seriAdet: Number(p.seriAdet) || bedenler.length || 0 };
+        }
+
+        // Yazılan bedenleri ayır: "S-M-L" / "30, 31, 32" / "XS-S / M-L"
+        function sizesFromInput(v) {
+            v = String(v || '').trim();
+            if (!v) return [];
+            const parts = v.includes('/') ? v.split('/') : v.split(/[\s,;-]+/);
+            return [...new Set(parts.map(x => x.replace(/\s+/g, '').toUpperCase()).filter(Boolean))];
+        }
+
+        let formSale = 'seri';
+        let seriAdetTouched = false;
+
+        function setSale(v) {
+            formSale = v;
+            document.querySelectorAll('#saleChoice button').forEach(b => b.classList.toggle('active', b.dataset.sale === v));
+            renderSizeHint();
+        }
+
+        function fillSale(sale) {
+            $('fSizes').value = sale.bedenler.join('-');
+            seriAdetTouched = sale.seriAdet && sale.seriAdet !== sale.bedenler.length;
+            $('fSeriAdet').value = sale.seriAdet || '';
+            // En çok kullanılan beden dizileri hızlı seçim olarak
+            const counts = {};
+            products.forEach(x => { const k = saleOf(x).bedenler.join('-'); if (k) counts[k] = (counts[k] || 0) + 1; });
+            $('sizePresets').innerHTML = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5)
+                .map(([k]) => `<button type="button" data-sizes="${escapeHtml(k)}">${escapeHtml(k)}</button>`).join('');
+            setSale(sale.satis);
+        }
+
+        function renderSizeHint() {
+            const sizes = sizesFromInput($('fSizes').value);
+            if (!seriAdetTouched) $('fSeriAdet').value = sizes.length || '';
+            $('seriCountWrap').classList.toggle('hidden', formSale !== 'seri');
+            const n = Number($('fSeriAdet').value) || sizes.length;
+            const price = Number(String($('fPrice').value).replace(',', '.')) || 0;
+            $('sizeHint').innerHTML = !sizes.length
+                ? (formSale === 'tekli' ? 'Beden yazmazsanız müşteri sadece adet seçer.' : 'Bedenleri yazın veya yukarıdan seçin.')
+                : formSale === 'seri'
+                    ? `Müşteri <b>seri</b> ile sipariş verir: 1 seri = ${sizes.join(', ')} · <b>${n} adet</b>${price ? ` · ${(n * price).toLocaleString('tr-TR')} TL` : ''}`
+                    : `Müşteri şu bedenlerden adet seçer: <b>${sizes.join(', ')}</b>`;
+        }
+
+        document.querySelectorAll('#saleChoice button').forEach(b => b.onclick = () => setSale(b.dataset.sale));
+        $('fSizes').addEventListener('input', renderSizeHint);
+        $('fPrice').addEventListener('input', renderSizeHint);
+        $('fSeriAdet').addEventListener('input', () => { seriAdetTouched = true; renderSizeHint(); });
+        $('sizePresets').addEventListener('click', e => {
+            const b = e.target.closest('[data-sizes]');
+            if (!b) return;
+            $('fSizes').value = b.dataset.sizes;
+            renderSizeHint();
+        });
+
+        function saleFields() {
+            const bedenler = sizesFromInput($('fSizes').value);
+            const fields = { satis: formSale, bedenler };
+            if (formSale === 'seri') fields.seriAdet = Number($('fSeriAdet').value) || bedenler.length || 1;
+            return fields;
         }
 
         $('newBtn').onclick = () => openForm(null);
@@ -1319,6 +1500,10 @@
             if (editingId === null && !$('fDesc').value.trim() && !isNew) {
                 const last = [...products].reverse().find(p => p.kategori === $('fCat').value && p.aciklama);
                 if (last) $('fDesc').value = last.aciklama;
+            }
+            if (editingId === null && !isNew) {
+                const last = [...products].reverse().find(p => p.kategori === $('fCat').value);
+                if (last && !$('fSizes').value.trim()) fillSale(saleOf(last));
             }
         });
 
@@ -1421,7 +1606,7 @@
                 }
 
                 busy('Ürün kaydediliyor...');
-                const fields = { urun_adi: name, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock };
+                const fields = { urun_adi: name, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock, ...saleFields() };
 
                 if (existing) {
                     const oldImage = existing.gorsel;
@@ -1465,7 +1650,7 @@
                     busy(`Fotoğraflar yükleniyor (${i + 1}/${variants.length})...`);
                     await uploadImage(gorsel, v.base64);
                     localPreviews[gorsel] = v.dataUrl;
-                    items.push({ urun_adi, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock });
+                    items.push({ urun_adi, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock, ...saleFields() });
                 }
 
                 busy('Ürünler kaydediliyor...');
@@ -2019,7 +2204,7 @@
         $('bulkSave').onclick = () => addMany(parseBulk($('bulkText').value));
 
         // ---------- Geri kazanma sihirbazı ----------
-        let campSegs = new Set(['kayip', 'sessiz']);
+        let campSelected = new Set();          // mesaj atılacak müşteri id'leri
         let campTpl = 'ozledik';
         let queue = [], queueIndex = 0, sentCount = 0;
 
@@ -2049,9 +2234,43 @@
             ozel: { title: '✍️ Kendi mesajım', sub: 'Serbest yazın', text: () => 'Merhaba {ad}, ' }
         };
 
+        // Önerilen: sessiz/kayıp, mesaj istemiyor değil, son 7 günde mesaj atılmamış
+        const isRecommended = c => !c.ret && ['sessiz', 'kayip'].includes(segmentOf(c)) && !(c.sonMesaj && daysSince(c.sonMesaj) < 7);
+
         function campaignTargets() {
-            const skipRecent = $('campSkipRecent').checked;
-            return customers.filter(c => !c.ret && campSegs.has(segmentOf(c)) && !(skipRecent && c.sonMesaj && daysSince(c.sonMesaj) < 7));
+            return customers.filter(c => !c.ret && campSelected.has(c.id));
+        }
+
+        function recipientReason(c) {
+            if (c.ret) return 'mesaj istemiyor';
+            const parts = [c.sonSiparis ? `son sipariş ${agoText(c.sonSiparis)}` : 'sipariş bilgisi yok'];
+            if (c.sonMesaj) parts.push(`💬 mesaj ${agoText(c.sonMesaj)}`);
+            return parts.join(' · ');
+        }
+
+        function renderRecipients() {
+            const order = c => c.ret ? 2 : isRecommended(c) ? 0 : 1;
+            const list = [...customers].sort((a, b) => order(a) - order(b) || (daysSince(b.sonSiparis) ?? 9999) - (daysSince(a.sonSiparis) ?? 9999));
+            $('campList').innerHTML = list.map(c => `
+                <label class="recip ${c.ret ? 'off' : ''}">
+                    <input type="checkbox" data-rid="${c.id}" ${campSelected.has(c.id) ? 'checked' : ''} ${c.ret ? 'disabled' : ''}>
+                    <span class="avatar ${segmentOf(c)}">${escapeHtml(initials(c))}</span>
+                    <span class="recip-text">
+                        <b>${escapeHtml(displayName(c))}${isRecommended(c) ? ' ⭐' : ''}</b>
+                        <small>${escapeHtml(recipientReason(c))}</small>
+                    </span>
+                </label>`).join('');
+        }
+
+        function updateCampaignCount() {
+            const n = campaignTargets().length;
+            $('campCount').innerHTML = n ? `✓ <b>${n} kişi</b> seçili` : 'Kimse seçilmedi. Yukarıdan kişileri işaretleyin.';
+            $('campCount').classList.toggle('none', !n);
+            $('campStart').disabled = !n;
+            $('campStart').textContent = n ? `${n} kişiye gönderime başla →` : 'Gönderime başla →';
+            const first = campaignTargets()[0];
+            $('campPreviewTo').textContent = first ? `Önizleme: ${displayName(first)}` : 'Önizleme';
+            $('campPreview').textContent = personalize($('campText').value, first || { ad: 'Ahmet' });
         }
 
         function personalize(text, c) {
@@ -2062,20 +2281,18 @@
         }
 
         function renderCampaign() {
-            const counts = {};
-            customers.filter(c => !c.ret).forEach(c => { const s = segmentOf(c); counts[s] = (counts[s] || 0) + 1; });
-            $('campSegs').innerHTML = SEGMENTS.filter(s => s.key !== 'all').map(s => `
-                <button class="${campSegs.has(s.key) ? 'active' : ''}" data-cseg="${s.key}">${s.label}<small>${counts[s.key] || 0}</small></button>`).join('');
-            const targets = campaignTargets();
-            $('campCount').textContent = targets.length
-                ? `${targets.length} kişiye mesaj hazırlanacak.`
-                : 'Seçili grupta mesaj atılacak kimse yok.';
+            renderRecipients();
             $('campTpls').innerHTML = Object.entries(TEMPLATES).map(([k, t]) => `
                 <button class="${campTpl === k ? 'active' : ''}" data-tpl="${k}">${t.title}<small>${t.sub}</small></button>`).join('');
-            const sample = targets[0] || { ad: 'Ahmet' };
-            $('campPreviewTo').textContent = targets[0] ? `Önizleme: ${targets[0].ad || targets[0].firma}` : 'Önizleme';
-            $('campPreview').textContent = personalize($('campText').value, sample);
-            $('campStart').disabled = !targets.length;
+            updateCampaignCount();
+        }
+
+        function openCampaign(selectAll) {
+            if (!customers.length) return toast('Önce müşteri ekleyin.', true);
+            campSelected = new Set(customers.filter(c => !c.ret && (selectAll || isRecommended(c))).map(c => c.id));
+            $('campText').value = TEMPLATES[campTpl].text();
+            renderCampaign();
+            show('campaignView');
         }
 
         $('campApp').checked = useDesktopApp();
@@ -2083,23 +2300,22 @@
             try { localStorage.setItem(APP_KEY, $('campApp').checked ? '1' : '0'); } catch (e) {}
             if ($('campApp').checked) toast('Bilgisayarınızda WhatsApp masaüstü uygulaması kurulu olmalı.');
         });
-        $('campaignLink').onclick = e => {
-            e.preventDefault();
-            campSegs = new Set(['aktif', 'sessiz', 'kayip', 'yok']);
-            $('campaignBtn').onclick();
-        };
+        $('campaignLink').onclick = e => { e.preventDefault(); openCampaign(true); };
+        $('campaignBtn').onclick = () => openCampaign(false);
 
-        $('campaignBtn').onclick = () => {
-            if (!customers.length) return toast('Önce müşteri ekleyin.', true);
-            $('campText').value = TEMPLATES[campTpl].text();
-            renderCampaign();
-            show('campaignView');
-        };
-        $('campSegs').addEventListener('click', e => {
-            const b = e.target.closest('[data-cseg]');
+        $('campList').addEventListener('change', e => {
+            const id = e.target.dataset.rid;
+            if (!id) return;
+            e.target.checked ? campSelected.add(id) : campSelected.delete(id);
+            updateCampaignCount();
+        });
+        $('campPick').addEventListener('click', e => {
+            const b = e.target.closest('[data-pick]');
             if (!b) return;
-            campSegs.has(b.dataset.cseg) ? campSegs.delete(b.dataset.cseg) : campSegs.add(b.dataset.cseg);
-            renderCampaign();
+            const mode = b.dataset.pick;
+            campSelected = new Set(customers.filter(c => !c.ret && (mode === 'hepsi' || (mode === 'onerilen' && isRecommended(c)))).map(c => c.id));
+            renderRecipients();
+            updateCampaignCount();
         });
         $('campTpls').addEventListener('click', e => {
             const b = e.target.closest('[data-tpl]');
@@ -2109,7 +2325,7 @@
             renderCampaign();
             if (campTpl === 'ozel') $('campText').focus();
         });
-        ['campText', 'campSkipRecent', 'campOptOut'].forEach(id => $(id).addEventListener('input', renderCampaign));
+        ['campText', 'campOptOut'].forEach(id => $(id).addEventListener('input', updateCampaignCount));
 
         $('campStart').onclick = () => {
             queue = campaignTargets();

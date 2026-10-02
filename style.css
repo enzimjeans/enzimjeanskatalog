@@ -1799,6 +1799,159 @@ body::before {
     padding: 12px 18px;
 }
 
+/* ============================================
+   Beden / seri seçimi ve herkesin anlayacağı büyük düğmeler
+   ============================================ */
+
+/* Kartta satış şekli etiketi */
+.card-sub {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.sale-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--paper-2);
+    color: var(--ink-2);
+}
+
+.sale-tag.seri { background: #e6ecf6; color: var(--denim); }
+
+.card-sub .card-colors { margin-top: 0; }
+
+/* Kartta yazılı düğme */
+.card-body .card-action { margin-top: auto; padding-top: 10px; }   /* düğmeler hep kart altında hizalı */
+
+.card-btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1.5px solid var(--ink);
+    background: var(--card);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: background 0.15s, color 0.15s;
+}
+
+.card-btn:hover { background: var(--ink); color: var(--paper); }
+.card-btn:disabled { border-color: var(--line); color: var(--muted); background: transparent; cursor: not-allowed; }
+
+.card-btn.done {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+    font-size: 0.88rem;
+}
+
+.card-step {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--paper);
+    overflow: hidden;
+    animation: pop 0.2s ease;
+}
+
+.card-step button {
+    width: 46px;
+    height: 44px;
+    color: inherit;
+    font-size: 1.35rem;
+}
+
+.card-step button:hover { background: rgba(255, 255, 255, 0.12); }
+.card-step span { font-weight: 700; }
+
+/* Detayda: seri bilgisi */
+.seri-info {
+    background: #e6ecf6;
+    color: var(--denim);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    font-size: 0.92rem;
+    max-width: 360px;
+}
+
+.pick-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.pick-sum {
+    margin-top: 10px;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+}
+
+/* Detayda: beden ızgarası (her beden ayrı adet) */
+.size-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    max-width: 420px;
+}
+
+.size-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1.5px solid var(--line);
+    background: var(--card);
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.size-cell.on { border-color: var(--green); background: #effaf3; }
+
+.size-name {
+    font-weight: 800;
+    font-size: 1.05rem;
+    text-align: center;
+}
+
+.size-cell .stepper { border-width: 1px; }
+.size-cell .stepper button { width: 38px; height: 38px; font-size: 1.15rem; }
+.size-cell .qty { width: 3.4ch; }
+
+/* Sepet: ürün başına bir kart */
+.cart-item {
+    grid-template-columns: 64px 1fr;
+    align-items: start;
+}
+
+.cart-item-body { min-width: 0; }
+
+.cart-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.cart-size { font-size: 0.9rem; }
+.cart-line .stepper { flex: 0 0 auto; }
+
+.link-btn.small {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: var(--denim);
+}
+
 @media (prefers-reduced-motion: reduce) {
     *:not(.ticker-track), *::before, *::after {
         animation: none !important;
