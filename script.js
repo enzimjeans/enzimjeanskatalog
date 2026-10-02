@@ -435,7 +435,11 @@ function getVisibleProducts() {
     const q = trLower($('searchInput').value.trim());
     const sort = $('sortSelect').value;
 
+    // Telefonda "52 numara" denen ürün: sadece sayı yazılırsa önce o numaralı ürün gelir
+    const num = (q.match(/^(?:no\s*[.:]?\s*)?(\d+)$/) || [])[1];
+
     let list = allProducts.filter(p => {
+        if (num && String(p.id) === num) return true;
         if (activeCategory === 'new' && !newIds.has(p.id)) return false;
         if (activeCategory === 'fav' && !favs.has(p.id)) return false;
         if (activeCategory === 'featured' && !badgeOf(p)) return false;
@@ -456,7 +460,8 @@ function getVisibleProducts() {
     // Stokta olanlar önce; "Önerilen" sıralamada rozetli ürünler de öne çıkar
     const rank = p => badgeOf(p) ? Object.keys(BADGES).indexOf(p.rozet) : 99;   // çok satan > öne çıkan > fırsat
     const featuredFirst = sort === 'default' ? (a, b) => rank(a) - rank(b) : () => 0;
-    return list.sort((a, b) => (inStock(b) - inStock(a)) || featuredFirst(a, b) || sorter(a, b));
+    const exact = p => num && String(p.id) === num ? 0 : 1;
+    return list.sort((a, b) => exact(a) - exact(b) || (inStock(b) - inStock(a)) || featuredFirst(a, b) || sorter(a, b));
 }
 
 function renderProducts() {
@@ -520,7 +525,7 @@ function productCard(p, index) {
                 <h3 class="card-name" data-open>${escapeHtml(titleCase(p.urun_adi))}</h3>
                 <div class="card-sub">
                     <span class="sale-tag ${isSeri(p) ? 'seri' : ''}">${isSeri(p) ? `Seri · ${saleOf(p).seriAdet}'li` : 'Tekli'}</span>
-                    ${colorsOf(p).length > 1 ? `<span class="card-colors" data-open>${colorsOf(p).length} renk</span>` : ''}
+                    ${colorsOf(p).length > 1 ? `<span class="card-colors">${colorsOf(p).length} renk</span>` : ''}
                 </div>
                 <div class="card-meta">
                     <span class="card-price">${priceHtml(p)}</span>
@@ -574,7 +579,8 @@ function actionHtml(p, compact = false) {
             </div>
             <p class="pick-sum">${pieces
                 ? `Sepette <b>${pieces} adet</b> · ${formatPrice(pieces * price)}`
-                : 'Bedenin yanındaki <b>+</b> ile ekleyin'}</p>`;
+                : 'Bedenin altındaki <b>+</b> ile ekleyin'}</p>
+            ${pieces ? goCartHtml() : ''}`;
     }
 
     // Seri: seri sayısı
@@ -584,8 +590,11 @@ function actionHtml(p, compact = false) {
         : '';
     if (!q) return info + `<button class="add-btn" data-add="${p.id}">${isSeri(p) ? '1 seri sepete ekle' : 'Sepete ekle'}</button>`;
     return info + stepperHtml(p.id, '', q, unit) +
-        (isSeri(p) ? `<p class="pick-sum">${q} seri · <b>${q * s.seriAdet} adet</b> · ${formatPrice(q * s.seriAdet * price)}</p>` : '');
+        (isSeri(p) ? `<p class="pick-sum">${q} seri · <b>${q * s.seriAdet} adet</b> · ${formatPrice(q * s.seriAdet * price)}</p>` : '') +
+        goCartHtml();
 }
+
+const goCartHtml = () => '<button class="go-cart" data-go-cart>Sepete git ve siparişi gönder →</button>';
 
 // Toptan alımda adet elle yazılabilsin (50 kez + basmak yerine)
 function stepperHtml(id, size, quantity, unit = '') {
@@ -687,11 +696,11 @@ function openModal(id, { updateHash = true } = {}) {
     renderSimilar(p);
 
     const modal = $('productModal');
-    if (!modal.open) modal.showModal();
+    openDialog(modal);
     modal.scrollTop = 0;
     modal.querySelector('.detail-info').scrollTop = 0;
     document.body.classList.add('no-scroll');
-    if (updateHash) history.replaceState(null, '', `#urun-${p.id}`);
+    if (updateHash) history.replaceState(history.state, '', `#urun-${p.id}`);   // geri tuşu kaydı korunsun
 }
 
 // ---------- Ürün videosu ----------
@@ -938,8 +947,16 @@ function renderCart() {
 
 function openCart() {
     renderCart();
-    $('cartModal').showModal();
+    openDialog($('cartModal'));
     document.body.classList.add('no-scroll');
+}
+
+// Pencere açılınca tarayıcı geçmişine bir adım ekle: telefonun geri tuşu pencereyi kapatır
+let closingFromHistory = false, skipNextPop = false;
+function openDialog(d) {
+    if (d.open) return;
+    d.showModal();
+    history.pushState({ dlg: d.id }, '', location.href);
 }
 
 function clearCart() {
@@ -1065,10 +1082,11 @@ function setupEvents() {
 
     // Kart, detay ve sepet içindeki tüm butonlar
     document.addEventListener('click', e => {
-        const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open],[data-open-id],[data-similar],[data-share],[data-close],[data-goto],[data-fav]');
+        const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open],[data-open-id],[data-similar],[data-share],[data-close],[data-goto],[data-fav],[data-go-cart]');
         if (!t) return;
         const d = t.dataset;
-        if (d.fav) toggleFav(Number(d.fav));
+        if ('goCart' in d) { $('productModal').close(); setTimeout(openCart, 50); }
+        else if (d.fav) toggleFav(Number(d.fav));
         else if (d.goto) selectCategory(d.goto);
         else if (d.add) addToCart(Number(d.add));
         else if (d.inc) changeQuantity(Number(d.inc), d.size || '', 1);
@@ -1118,6 +1136,11 @@ function setupEvents() {
     document.querySelectorAll('dialog').forEach(dialog => {
         dialog.addEventListener('click', e => { if (e.target === dialog) closeDialog(dialog); });
         dialog.addEventListener('close', () => {
+            // ✕ veya Esc ile kapandıysa eklediğimiz geçmiş adımını geri al
+            if (!closingFromHistory && history.state && history.state.dlg === dialog.id) {
+                skipNextPop = true;
+                history.back();
+            }
             if (!document.querySelector('dialog[open]')) document.body.classList.remove('no-scroll');
             if (dialog.id === 'productModal') stopMedia();
             if (dialog.id === 'productModal' && location.hash.startsWith('#urun-')) {
@@ -1127,6 +1150,15 @@ function setupEvents() {
     });
 
     window.addEventListener('hashchange', openFromHash);
+    window.addEventListener('popstate', () => {
+        if (skipNextPop) { skipNextPop = false; return; }
+        const open = document.querySelector('dialog[open]');
+        if (open) {
+            closingFromHistory = true;
+            open.close();
+            closingFromHistory = false;
+        }
+    });
 
     // Vitrin okları
     document.querySelectorAll('[data-rail]').forEach(btn => btn.addEventListener('click', () => {

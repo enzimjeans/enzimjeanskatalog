@@ -17,7 +17,7 @@
             --line: #e2e8f0;
             --primary: #1d4ed8;
             --primary-dark: #1e3a8a;
-            --green: #16a34a;
+            --green: #15803d;
             --green-bg: #dcfce7;
             --red: #dc2626;
             --red-bg: #fee2e2;
@@ -153,8 +153,9 @@
         .photo-box img { max-width: 100%; max-height: 280px; border-radius: 8px; display: block; margin: 0 auto 10px; }
         .photo-box span { color: var(--primary); font-weight: 600; }
         /* Üstteki kısayol kutuları */
-        .hub { display: grid; gap: 10px; margin-bottom: 14px; }
-        @media (min-width: 640px) { .hub { grid-template-columns: repeat(2, 1fr); } }
+        .hub { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-bottom: 14px; }
+        .hub-tile { min-width: 0; width: 100%; }   /* uzun açıklama kutuyu ekrandan taşırmasın */
+        @media (min-width: 640px) { .hub { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         .hub-tile {
             display: flex;
             align-items: center;
@@ -579,6 +580,53 @@
             z-index: 50;
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast:has(.toast-undo) { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 12px; }
+        .toast-undo {
+            flex-shrink: 0;
+            padding: 8px 12px;
+            min-height: 40px;
+            border-radius: 8px;
+            background: #fbbf24;
+            color: #111;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        /* ---- Ölçüm sonrası: herkes için okunur ve dokunulur ---- */
+        /* Uzun formlarda Kaydet hep görünür (aşağı kaydırmaya gerek yok) */
+        #formView .form-actions,
+        #customerFormView .form-actions,
+        #announceView .form-actions {
+            position: sticky;
+            bottom: 0;
+            z-index: 6;
+            margin: 16px -20px -20px;
+            padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+            background: var(--card);
+            border-top: 1px solid var(--line);
+            border-radius: 0 0 14px 14px;
+            box-shadow: 0 -6px 16px rgba(15, 23, 42, 0.08);
+        }
+        header a { display: inline-flex; align-items: center; min-height: 44px; }
+        .item-actions button { min-height: 44px; }
+        .stock-btn.var { color: #166534; }
+        .stock-btn.yok { color: #991b1b; }
+        .order-btn { color: #166534; }
+        .msg-btn { min-width: 44px; }
+        .chips-row button, .pick-bar button, .seg-row button, .pick-row button { min-height: 44px; }
+        .seg-row button small, .chips-row button small { font-size: 0.85rem; }
+        .tpl-row button small { font-size: 0.85rem; }
+        .recip-text small { font-size: 0.875rem; }
+        .hub-text small { font-size: 0.875rem; }
+        .avatar.aktif { background: #15803d; }
+        .text-btn { min-height: 44px; }
+        #logoutBtn { display: inline-block; padding: 12px; }
+        .item.yok { opacity: 1; background: #f8fafc; }
+        .item.yok img { opacity: 0.5; filter: grayscale(1); }
+        .item.yok .item-name { text-decoration: line-through; color: #475569; }
+        .row-badge { font-size: 0.85rem; }
+        .count { color: #475569; }
+        .sale-choice button small, .winback-text small, label small, .hint { font-size: 0.9rem; }
         .toast.error { background: var(--red); }
 
         .overlay {
@@ -1180,12 +1228,19 @@
         }
 
         let toastTimer;
-        function toast(msg, isError) {
+        function toast(msg, isError, undo) {
             const t = $('toast');
             t.textContent = msg;
+            if (undo) {
+                const b = document.createElement('button');
+                b.className = 'toast-undo';
+                b.textContent = 'GERİ AL';
+                b.onclick = () => { t.className = 'toast'; undo(); };
+                t.appendChild(b);
+            }
             t.className = 'toast show' + (isError ? ' error' : '');
             clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => t.className = 'toast', isError ? 6000 : 3500);
+            toastTimer = setTimeout(() => t.className = 'toast', isError ? 6000 : undo ? 7000 : 3500);
         }
 
         function busy(text) {
@@ -1430,7 +1485,7 @@
                     </div>
                     <div class="item-actions">
                         <button class="stock-btn ${p.stok === 'Yok' ? 'yok' : 'var'}" data-action="stock">
-                            ${p.stok === 'Yok' ? 'Stok yok' : 'Stokta'}
+                            ${p.stok === 'Yok' ? '✗ Tükendi' : '✓ Stokta'}
                         </button>
                         <button class="btn-light edit-btn" data-action="edit">Düzenle</button>
                     </div>
@@ -1449,20 +1504,23 @@
 
             if (action === 'stock') {
                 const p = products.find(x => x.id === id);
-                const next = p.stok === 'Yok' ? 'Var' : 'Yok';
-                busy('Kaydediliyor...');
-                try {
-                    await updateProducts(
-                        list => list.map(x => x.id === id ? { ...x, stok: next } : x),
-                        `Stok: ${p.urun_adi} → ${next}`
-                    );
-                    renderList();
-                    toast(`${p.urun_adi}: ${next === 'Var' ? 'stokta' : 'stok dışı'} ✓`);
-                } catch (err) {
-                    toast(errorText(err), true);
-                } finally {
-                    busy();
-                }
+                const setStockTo = async (value, undoable) => {
+                    busy('Kaydediliyor...');
+                    try {
+                        await updateProducts(
+                            list => list.map(x => x.id === id ? { ...x, stok: value } : x),
+                            `Stok: ${p.urun_adi} → ${value}`
+                        );
+                        renderList();
+                        const msg = `${p.urun_adi}: ${value === 'Var' ? 'STOKTA' : 'TÜKENDİ'} olarak işaretlendi`;
+                        toast(msg, false, undoable ? () => setStockTo(value === 'Var' ? 'Yok' : 'Var', false) : null);
+                    } catch (err) {
+                        toast(errorText(err), true);
+                    } finally {
+                        busy();
+                    }
+                };
+                setStockTo(p.stok === 'Yok' ? 'Var' : 'Yok', true);
                 return;
             }
             openForm(id);

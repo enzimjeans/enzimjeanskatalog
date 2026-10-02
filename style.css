@@ -7,7 +7,7 @@
     --card: #fbf9f5;
     --ink: #14130f;
     --ink-2: #4a463e;
-    --muted: #857e72;
+    --muted: #6b6458;
     --line: #dcd5c8;
     --denim: #233a5e;
     --denim-2: #3a5a8c;
@@ -2134,6 +2134,97 @@ body::before {
 @media (min-width: 820px) {
     .detail-media video,
     .detail-media iframe { height: 100%; max-height: none; aspect-ratio: auto; }
+}
+
+/* ============================================
+   Herkes için okunur ve dokunulur (ölçüm sonrası)
+   En küçük yazı 14px, en küçük düğme 44px, kontrast en az 4,5:1
+   ============================================ */
+.brand-tag, .eyebrow, .hero-stats span, .section-head h2 small,
+.chip small, .card-cat, .detail-cat, .colors-label, .cart-item-meta,
+.cart-size, .result-count, .footer-text { font-size: 0.875rem; }
+
+.badge, .badge.hot, .badge.star, .badge.deal { font-size: 0.85rem; padding: 5px 11px 5px 16px; }
+.sale-tag, .card-no, .card-colors { font-size: 0.875rem; }
+.color-opt span { font-size: 0.875rem; }
+.video-chip { font-size: 0.875rem; }
+.card-name { font-size: 1rem; }
+
+.chip { min-height: 44px; padding: 9px 16px; font-size: 0.95rem; }
+.fav { width: 44px; height: 44px; }
+.section-link, .cart-btn, .footer-wa, .link-btn { min-height: 44px; display: inline-flex; align-items: center; }
+.size-cell .stepper button { width: 44px; height: 44px; }
+.cart-item .stepper button { width: 44px; height: 44px; }
+.sheet-close { width: 44px; height: 44px; }
+.reorder-close { width: 44px; height: 44px; }
+.card-btn.done { background: #1a7a43; border-color: #1a7a43; }
+.detail-stock.in { color: #1a7a43; }
+
+main .section-head h2 small, .spotlight .section-head h2 small { font-size: 0.875rem; }
+.similar-item span { font-size: 0.875rem; }
+.cat-tile-count { font-size: 0.875rem; letter-spacing: 0.04em; }
+.cart-count { font-size: 0.85rem; min-width: 24px; height: 24px; }
+.link-btn.small { font-size: 0.95rem; }
+.detail-stock { font-size: 0.95rem; }
+.badge { font-size: 0.875rem; }
+
+/* Nasıl sipariş verilir: 3 adım */
+.how {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 18px 0 0;
+}
+
+.how li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+    padding: 12px 6px;
+    border-radius: var(--radius);
+    background: var(--card);
+    border: 1.5px dashed var(--thread);
+}
+
+.how span {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--rust);
+    color: #fff;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.how b { font-size: 0.95rem; line-height: 1.2; }
+.how small { font-size: 0.875rem; color: var(--muted); line-height: 1.25; }
+
+/* Detayda sepete git */
+.go-cart {
+    width: 100%;
+    max-width: 420px;
+    margin-top: 12px;
+    padding: 15px;
+    border-radius: 12px;
+    background: var(--wa);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.go-cart:hover { background: var(--wa-dark); }
+
+.wa-hint {
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    margin-bottom: 10px;
+    text-align: left;
 }
 
 @media (prefers-reduced-motion: reduce) {
