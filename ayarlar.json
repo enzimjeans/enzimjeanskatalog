@@ -1,5 +1,16 @@
 {
   "duyuru": {
     "aktif": false
+  },
+  "firma": {
+    "kurulus": "2002",
+    "hakkinda": "",
+    "adres": "",
+    "saatler": "",
+    "kargo": "",
+    "odeme": "",
+    "degisim": "",
+    "telefon": "",
+    "instagram": ""
   }
 }
