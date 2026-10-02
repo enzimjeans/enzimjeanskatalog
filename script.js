@@ -94,10 +94,20 @@ function buildColorGroups() {
     });
     Object.entries(byOne).forEach(([k, list]) => { if (list.length > 1) colorGroups[k] = list; });
 
+    // "Kazak Koyu Mavi" + "Kazak Koyu Yeşil" grubu, "Kazak" grubu varsa ona katılır
+    Object.keys(colorGroups).forEach(k => {
+        const [cat, model] = k.split('|');
+        const parent = `${cat}|${model.split(' ').slice(0, -1).join(' ')}`;
+        if (parent !== k && colorGroups[parent]) {
+            colorGroups[parent].push(...colorGroups[k]);
+            delete colorGroups[k];
+        }
+    });
+
     // 2) iki kelimelik renkler ("Koyu Mavi") var olan bir gruba katılır
+    const grouped = new Set(Object.values(colorGroups).flat().map(p => p.id));
     allProducts.forEach(p => {
-        const k1 = keyFor(p, 1);
-        if (k1 && colorGroups[k1]) return;
+        if (grouped.has(p.id)) return;
         const k2 = keyFor(p, 2);
         if (k2 && colorGroups[k2]) colorGroups[k2].push(p);
     });
@@ -106,7 +116,7 @@ function buildColorGroups() {
     Object.entries(colorGroups).forEach(([k, list]) => {
         const modelLen = k.split('|')[1].split(' ').length;
         const labels = list.map(p => nameWords(p).slice(modelLen).join(' '));
-        const unique = new Set(labels).size === labels.length && labels.every(Boolean);
+        const unique = labels.every(Boolean) && new Set(labels).size > 1;
         list.forEach((p, i) => {
             groupOf[p.id] = k;
             colorLabel[p.id] = unique ? labels[i] : '';

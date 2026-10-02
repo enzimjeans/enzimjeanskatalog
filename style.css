@@ -694,20 +694,28 @@ body.has-cart-bar .footer { padding-bottom: 110px; }
         overflow: hidden;
     }
 
+    /* Pencere sabit yükseklikte: fotoğraf solda sabit durur, bilgiler sağda kendi içinde kayar */
     .product-detail {
         display: grid;
         grid-template-columns: 1.1fr 1fr;
-        max-height: 88vh;
+        height: 88vh;
     }
 
     .detail-media {
-        display: flex;
-        align-items: center;
+        height: 88vh;
+        min-height: 0;
+        overflow: hidden;
     }
 
-    .detail-media img { max-height: 88vh; }
+    .detail-media img {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        object-fit: contain;
+    }
 
     .detail-info {
+        min-height: 0;
         padding: 48px 36px;
         overflow-y: auto;
     }
