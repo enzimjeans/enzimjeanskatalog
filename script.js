@@ -1,510 +1,541 @@
-// Ürün verileri
-let allProducts = [];
-let filteredProducts = [];
+// ============================================
+// SİVAL Katalog
+// ============================================
 
-// Sayfa yüklendiğinde çalışacak
-document.addEventListener('DOMContentLoaded', function() {
+const NEW_COUNT = 12;          // en son eklenen kaç ürün "Yeni" rozeti alsın
+const SIMILAR_COUNT = 8;       // ürün detayında kaç benzer ürün gösterilsin
+
+let allProducts = [];
+let newIds = new Set();
+let activeCategory = 'all';
+let cart = [];                 // [{ id, quantity }]
+
+const $ = id => document.getElementById(id);
+
+// ---------- Yardımcılar ----------
+function escapeHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// "Pamuk.29-30" -> "Pamuk. 29-30" (Excel'den gelen boşluksuz cümleler)
+const tidyText = s => String(s || '').replace(/([^\d\s])\.(?=\S)/g, '$1. ').replace(/\s{2,}/g, ' ').trim();
+
+const trLower = s => String(s || '').toLocaleLowerCase('tr');
+
+// "350TL", "350 Tl", "1.250 TL", "1.250,50 TL" -> sayı
+function extractPrice(text) {
+    const m = String(text || '').match(/\d[\d.,]*/);
+    if (!m) return 0;
+    let n = m[0];
+    if (n.includes(',')) {
+        n = n.replace(/\./g, '').replace(',', '.');       // 1.250,50
+    } else if (/\.\d{3}$/.test(n)) {
+        n = n.replace(/\./g, '');                          // 1.250
+    }
+    return parseFloat(n) || 0;
+}
+
+function formatPrice(value) {
+    return value.toLocaleString('tr-TR', { maximumFractionDigits: 2 }) + ' TL';
+}
+
+function displayPrice(product) {
+    const n = extractPrice(product.fiyat);
+    return n ? formatPrice(n) : (product.fiyat || '');
+}
+
+function imagePath(product) {
+    const g = product.gorsel || '';
+    return g.startsWith('http') ? g : `gorseller/${encodeURIComponent(g)}`;
+}
+
+const inStock = p => p.stok !== 'Yok';
+const findProduct = id => allProducts.find(p => p.id === id);
+
+function whatsappUrl(message) {
+    const number = String(CONFIG.whatsappNumber).replace(/\D/g, '');
+    return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+}
+
+function productUrl(product) {
+    return `${location.origin}${location.pathname}#urun-${product.id}`;
+}
+
+let toastTimer;
+function toast(message) {
+    const t = $('toast');
+    t.textContent = message;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ---------- Yükleme ----------
+document.addEventListener('DOMContentLoaded', () => {
+    loadCart();
+    setupEvents();
     loadProducts();
-    setupEventListeners();
 });
 
-// Ürünleri yükle
 async function loadProducts() {
     try {
         const response = await fetch('urunler.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('Ürünler yüklenemedi');
+        allProducts = (await response.json()).filter(p => p && p.urun_adi);
 
-        if (!response.ok) {
-            throw new Error('Ürünler yüklenemedi');
-        }
+        const newest = [...allProducts].sort((a, b) => b.id - a.id).slice(0, NEW_COUNT);
+        newIds = new Set(newest.map(p => p.id));
 
-        allProducts = await response.json();
-        filteredProducts = [...allProducts];
-
-        populateCategories();
-        displayProducts(filteredProducts);
-        hideLoading();
-    } catch (error) {
-        console.error('Hata:', error);
-        showError('Ürünler yüklenirken bir hata oluştu.');
-        hideLoading();
-    }
-}
-
-// Kategorileri doldur
-function populateCategories() {
-    const categoryFilter = document.getElementById('categoryFilter');
-    const categories = [...new Set(allProducts.map(p => p.kategori))];
-
-    categories.forEach(category => {
-        const option = document.createElement('option');
-        option.value = category;
-        option.textContent = category;
-        categoryFilter.appendChild(option);
-    });
-}
-
-// Ürünleri göster
-function displayProducts(products) {
-    const grid = document.getElementById('productsGrid');
-    const noProducts = document.getElementById('noProducts');
-    const productCount = document.getElementById('productCount');
-
-    grid.innerHTML = '';
-
-    if (products.length === 0) {
-        noProducts.style.display = 'block';
-        productCount.textContent = '0 ürün';
-        return;
-    }
-
-    noProducts.style.display = 'none';
-
-    // Stok sayısını hesapla
-    const stokVar = products.filter(p => p.stok === 'Var').length;
-    const stokYok = products.filter(p => p.stok === 'Yok').length;
-    productCount.textContent = `${products.length} ürün (${stokVar} stokta, ${stokYok} stok dışı)`;
-
-    // Stoka göre sırala: Stokta olanlar üstte, olmayanlar altta
-    const sortedProducts = [...products].sort((a, b) => {
-        if (a.stok === 'Var' && b.stok === 'Yok') return -1;
-        if (a.stok === 'Yok' && b.stok === 'Var') return 1;
-        return 0;
-    });
-
-    sortedProducts.forEach(product => {
-        const card = createProductCard(product);
-        grid.appendChild(card);
-    });
-}
-
-// Ürün kartı oluştur
-function createProductCard(product) {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-
-    // Stokta yoksa özel class ekle
-    if (product.stok === 'Yok') {
-        card.classList.add('out-of-stock');
-    }
-
-    const imagePath = product.gorsel.startsWith('http')
-        ? product.gorsel
-        : `gorseller/${product.gorsel}`;
-
-    // Stok göstergesi
-    const stokBadge = product.stok === 'Yok'
-        ? '<span class="stock-badge out-of-stock-badge">Stokta Yok</span>'
-        : '<span class="stock-badge in-stock-badge">Stokta</span>';
-
-    card.innerHTML = `
-        <div class="product-image-container" onclick="openModal(${JSON.stringify(product).replace(/"/g, '&quot;')})">
-            <img src="${imagePath}" alt="${product.urun_adi}" class="product-image"
-                 onerror="this.src='https://via.placeholder.com/280x250?text=Görsel+Yok'">
-        </div>
-        <div class="product-info">
-            <div class="product-header">
-                <span class="product-category">${product.kategori}</span>
-                ${stokBadge}
-            </div>
-            <h3 class="product-name">${product.urun_adi}</h3>
-            ${product.aciklama ? `<p class="product-description">${product.aciklama}</p>` : ''}
-            <div class="product-footer">
-                <p class="product-price">${product.fiyat}</p>
-                <button class="add-to-cart-btn" onclick="addToCart(${product.id}); event.stopPropagation();">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="9" cy="21" r="1"></circle>
-                        <circle cx="20" cy="21" r="1"></circle>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
-                    Sepete Ekle
-                </button>
-            </div>
-        </div>
-    `;
-
-    return card;
-}
-
-// Modal aç
-function openModal(product) {
-    const modal = document.getElementById('productModal');
-    const imagePath = product.gorsel.startsWith('http')
-        ? product.gorsel
-        : `gorseller/${product.gorsel}`;
-
-    document.getElementById('modalImage').src = imagePath;
-    document.getElementById('modalTitle').textContent = product.urun_adi;
-    document.getElementById('modalCategory').textContent = product.kategori;
-    document.getElementById('modalPrice').textContent = product.fiyat;
-    document.getElementById('modalDescription').textContent = product.aciklama || 'Açıklama yok';
-
-    // Stok durumunu göster
-    const modalStock = document.getElementById('modalStock');
-    if (product.stok === 'Yok') {
-        modalStock.textContent = 'Stokta Yok';
-        modalStock.className = 'modal-stock out-of-stock';
-    } else {
-        modalStock.textContent = 'Stokta';
-        modalStock.className = 'modal-stock in-stock';
-    }
-
-    modal.style.display = 'block';
-}
-
-// Modal kapat
-function closeModal() {
-    document.getElementById('productModal').style.display = 'none';
-}
-
-// Event listener'ları ayarla
-function setupEventListeners() {
-    // Arama
-    document.getElementById('searchInput').addEventListener('input', filterProducts);
-
-    // Kategori filtresi
-    document.getElementById('categoryFilter').addEventListener('change', filterProducts);
-
-    // Sıralama
-    document.getElementById('sortSelect').addEventListener('change', sortProducts);
-
-    // Modal kapatma
-    document.querySelector('.close').addEventListener('click', closeModal);
-
-    window.addEventListener('click', function(event) {
-        const modal = document.getElementById('productModal');
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-}
-
-// Ürünleri filtrele
-function filterProducts() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const selectedCategory = document.getElementById('categoryFilter').value;
-
-    filteredProducts = allProducts.filter(product => {
-        const matchesSearch = product.urun_adi.toLowerCase().includes(searchTerm) ||
-                            (product.aciklama && product.aciklama.toLowerCase().includes(searchTerm));
-
-        const matchesCategory = selectedCategory === 'all' || product.kategori === selectedCategory;
-
-        return matchesSearch && matchesCategory;
-    });
-
-    sortProducts();
-}
-
-// Ürünleri sırala
-function sortProducts() {
-    const sortValue = document.getElementById('sortSelect').value;
-
-    switch(sortValue) {
-        case 'name-asc':
-            filteredProducts.sort((a, b) => a.urun_adi.localeCompare(b.urun_adi, 'tr'));
-            break;
-        case 'name-desc':
-            filteredProducts.sort((a, b) => b.urun_adi.localeCompare(a.urun_adi, 'tr'));
-            break;
-        case 'price-asc':
-            filteredProducts.sort((a, b) => extractPrice(a.fiyat) - extractPrice(b.fiyat));
-            break;
-        case 'price-desc':
-            filteredProducts.sort((a, b) => extractPrice(b.fiyat) - extractPrice(a.fiyat));
-            break;
-        default:
-            // Varsayılan sıralama (ID)
-            filteredProducts.sort((a, b) => a.id - b.id);
-    }
-
-    displayProducts(filteredProducts);
-}
-
-// Fiyatı çıkar (sayısal)
-function extractPrice(priceString) {
-    const match = priceString.match(/[\d,.]+/);
-    if (match) {
-        return parseFloat(match[0].replace(',', '.'));
-    }
-    return 0;
-}
-
-// Yüklemeyi gizle
-function hideLoading() {
-    document.getElementById('loading').style.display = 'none';
-}
-
-// Hata göster
-function showError(message) {
-    const grid = document.getElementById('productsGrid');
-    grid.innerHTML = `<div class="no-products"><p>${message}</p></div>`;
-}
-
-// ============================================
-// SEPET SİSTEMİ
-// ============================================
-
-let cart = [];
-
-// Sayfa yüklendiğinde sepeti yükle
-document.addEventListener('DOMContentLoaded', function() {
-    loadCart();
-});
-
-// LocalStorage'dan sepeti yükle
-function loadCart() {
-    const savedCart = localStorage.getItem(CONFIG.cart.storageKey);
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-        updateCartUI();
-    }
-}
-
-// LocalStorage'a sepeti kaydet
-function saveCart() {
-    localStorage.setItem(CONFIG.cart.storageKey, JSON.stringify(cart));
-}
-
-// Sepete ürün ekle
-function addToCart(productId) {
-    const product = allProducts.find(p => p.id === productId);
-
-    if (!product) {
-        alert('Ürün bulunamadı!');
-        return;
-    }
-
-    // Stokta yoksa ekleme
-    if (product.stok === 'Yok') {
-        alert('Bu ürün stokta yok!');
-        return;
-    }
-
-    // Zaten sepette mi?
-    const existingItem = cart.find(item => item.id === productId);
-
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push({
-            id: product.id,
-            urun_adi: product.urun_adi,
-            fiyat: product.fiyat,
-            kategori: product.kategori,
-            gorsel: product.gorsel,
-            quantity: 1
-        });
-    }
-
-    saveCart();
-    updateCartUI();
-
-    // Başarı bildirimi
-    showCartNotification(`${product.urun_adi} sepete eklendi!`);
-}
-
-// Sepetten ürün çıkar
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    saveCart();
-    updateCartUI();
-    renderCartItems();
-    updateCartSummary(); // Toplam tutarı güncelle
-}
-
-// Sepeti temizle
-function clearCart() {
-    if (cart.length === 0) return;
-
-    if (confirm('Sepeti tamamen temizlemek istediğinizden emin misiniz?')) {
-        cart = [];
+        // Silinmiş ürünleri sepetten çıkar
+        cart = cart.filter(item => findProduct(item.id));
         saveCart();
+
+        renderStats();
+        renderChips();
+        renderProducts();
         updateCartUI();
-        renderCartItems();
-        updateCartSummary(); // Toplam tutarı sıfırla
+        openFromHash();
+    } catch (error) {
+        console.error(error);
+        $('productsGrid').innerHTML = '';
+        $('productCount').textContent = 'Ürünler yüklenirken bir hata oluştu. Sayfayı yenileyin.';
+    } finally {
+        $('loading').hidden = true;
     }
 }
 
-// Sepet UI'ını güncelle
-function updateCartUI() {
-    const cartCount = document.getElementById('cartCount');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = totalItems;
+function renderStats() {
+    const catCount = new Set(allProducts.map(p => p.kategori)).size;
+    const stocked = allProducts.filter(inStock).length;
+    $('heroStats').innerHTML = `
+        <div><strong>${stocked}</strong><span>Stoktaki ürün</span></div>
+        <div><strong>${catCount}</strong><span>Kategori</span></div>
+        <div><strong>${newIds.size}</strong><span>Yeni ürün</span></div>
+    `;
+    const hello = whatsappUrl('Merhaba, toptan ürünleriniz hakkında bilgi almak istiyorum.');
+    $('footerWhatsApp').href = hello;
+    $('heroWhatsApp').href = hello;
 
-    // Sepet butonuna animasyon
-    if (totalItems > 0) {
-        cartCount.style.display = 'flex';
+    const fresh = newestInStock();
+
+    // Hero: en yeni 3 ürün askılı etiketlerle
+    $('heroFan').innerHTML = fresh.slice(0, 3).map((p, i) => `
+        <figure class="fan-card fan-${i}">
+            <img src="${imagePath(p)}" alt="" decoding="async">
+            <figcaption class="tag"><span>${escapeHtml(trLower(p.urun_adi))}</span><strong>${escapeHtml(displayPrice(p))}</strong></figcaption>
+        </figure>`).join('');
+
+    // Kayan kategori şeridi
+    const words = [...new Set(allProducts.map(p => p.kategori))];
+    const strip = words.map(w => `<span>${escapeHtml(w)}</span><i>✦</i>`).join('');
+    $('ticker').innerHTML = strip + strip + strip + strip;
+
+    // Yeni gelenler vitrini
+    $('newRail').innerHTML = fresh.map((p, i) => productCard(p, i)).join('');
+
+    // Kategori kutuları
+    const cats = {};
+    allProducts.forEach(p => {
+        const c = cats[p.kategori] || (cats[p.kategori] = { count: 0, cover: null });
+        c.count++;
+        if (!c.cover && inStock(p)) c.cover = p;
+    });
+    $('catTiles').innerHTML = Object.entries(cats).map(([name, c], i) => `
+        <button class="cat-tile" data-goto="${escapeHtml(name)}" style="--i:${i}">
+            ${c.cover ? `<img src="${imagePath(c.cover)}" alt="" loading="lazy" decoding="async">` : ''}
+            <span class="cat-tile-name">${escapeHtml(name)}</span>
+            <span class="cat-tile-count">${c.count} model</span>
+        </button>`).join('');
+}
+
+function newestInStock() {
+    return allProducts.filter(p => newIds.has(p.id) && inStock(p)).sort((a, b) => b.id - a.id);
+}
+
+function selectCategory(cat) {
+    activeCategory = cat;
+    renderChips();
+    renderProducts();
+    const active = document.querySelector('.chip.active');
+    if (active) active.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    const top = $('controls').offsetTop - document.querySelector('.topbar').offsetHeight;
+    if (window.scrollY > top || cat !== 'all') window.scrollTo({ top, behavior: 'smooth' });
+}
+
+// ---------- Kategoriler ----------
+function renderChips() {
+    const counts = {};
+    allProducts.forEach(p => { counts[p.kategori] = (counts[p.kategori] || 0) + 1; });
+    const chip = (value, label, count) => `
+        <button class="chip ${activeCategory === value ? 'active' : ''}" data-cat="${escapeHtml(value)}" role="tab"
+                aria-selected="${activeCategory === value}">${escapeHtml(label)}<small>${count}</small></button>`;
+
+    $('categoryChips').innerHTML =
+        chip('all', 'Tümü', allProducts.length) +
+        chip('new', '✦ Yeni gelenler', newIds.size) +
+        Object.keys(counts).map(c => chip(c, c, counts[c])).join('');
+}
+
+// ---------- Ürünler ----------
+function getVisibleProducts() {
+    const q = trLower($('searchInput').value.trim());
+    const sort = $('sortSelect').value;
+
+    let list = allProducts.filter(p => {
+        if (activeCategory === 'new' && !newIds.has(p.id)) return false;
+        if (activeCategory !== 'all' && activeCategory !== 'new' && p.kategori !== activeCategory) return false;
+        if (!q) return true;
+        return trLower(`${p.urun_adi} ${p.kategori} ${p.aciklama}`).includes(q);
+    });
+
+    const sorters = {
+        'price-asc': (a, b) => extractPrice(a.fiyat) - extractPrice(b.fiyat),
+        'price-desc': (a, b) => extractPrice(b.fiyat) - extractPrice(a.fiyat),
+        'name-asc': (a, b) => a.urun_adi.localeCompare(b.urun_adi, 'tr'),
+        'default': activeCategory === 'new' ? (a, b) => b.id - a.id : (a, b) => a.id - b.id
+    };
+    const sorter = sorters[sort] || sorters.default;
+
+    // Stokta olanlar her zaman önce
+    return list.sort((a, b) => (inStock(b) - inStock(a)) || sorter(a, b));
+}
+
+function renderProducts() {
+    const list = getVisibleProducts();
+    const grid = $('productsGrid');
+
+    $('noProducts').hidden = list.length > 0;
+    const out = list.filter(p => !inStock(p)).length;
+    $('productCount').textContent = list.length
+        ? `${list.length} ürün` + (out ? ` · ${out} tanesi şu an stokta yok` : '')
+        : '';
+
+    const browsing = activeCategory === 'all' && !$('searchInput').value.trim() && $('sortSelect').value === 'default';
+    $('spotlight').hidden = !browsing || newestInStock().length === 0;
+    $('catTilesWrap').hidden = !browsing;
+
+    if (browsing) {
+        // Kategorilere göre bölümler
+        const groups = {};
+        list.forEach(p => (groups[p.kategori] = groups[p.kategori] || []).push(p));
+        grid.innerHTML = Object.entries(groups).map(([cat, items]) => `
+            <section class="group">
+                <div class="section-head">
+                    <h2>${escapeHtml(cat)} <small>${items.length} model</small></h2>
+                    <button class="section-link" data-goto="${escapeHtml(cat)}">Sadece ${escapeHtml(cat)} →</button>
+                </div>
+                <div class="grid">${items.map((p, i) => productCard(p, i)).join('')}</div>
+            </section>`).join('');
     } else {
-        cartCount.style.display = 'none';
-    }
-
-    // Sepet modalı açıksa içeriği güncelle
-    const cartModal = document.getElementById('cartModal');
-    if (cartModal && cartModal.style.display === 'block') {
-        updateCartSummary();
+        grid.innerHTML = `<div class="grid">${list.map((p, i) => productCard(p, i)).join('')}</div>`;
     }
 }
 
-// Sepet özetini güncelle (toplam ürün ve tutar)
-function updateCartSummary() {
-    const cartTotalItems = document.getElementById('cartTotalItems');
-    const cartTotalPrice = document.getElementById('cartTotalPrice');
-    const cartFooter = document.getElementById('cartFooter');
+function productCard(p, index) {
+    const badge = !inStock(p)
+        ? '<span class="badge">Tükendi</span>'
+        : newIds.has(p.id) ? '<span class="badge">Yeni</span>' : '';
 
-    if (!cartTotalItems || !cartTotalPrice) return;
+    return `
+        <article class="card ${inStock(p) ? '' : 'soldout'}" data-id="${p.id}" style="--i:${index}">
+            <button class="card-media" data-open aria-label="${escapeHtml(p.urun_adi)} detayını aç">
+                <img src="${imagePath(p)}" alt="${escapeHtml(p.urun_adi)}" loading="lazy" decoding="async"
+                     onerror="this.parentNode.classList.add('noimg')">
+                ${badge}
+            </button>
+            <div class="card-body">
+                <span class="card-cat">${escapeHtml(p.kategori)}</span>
+                <h3 class="card-name" data-open>${escapeHtml(trLower(p.urun_adi))}</h3>
+                <p class="card-price">${escapeHtml(displayPrice(p))}</p>
+                <div class="card-action">${actionHtml(p)}</div>
+            </div>
+        </article>`;
+}
+
+// Sepette yoksa "Sepete ekle", varsa adet kontrolü
+function actionHtml(p) {
+    if (!inStock(p)) return '<button class="add-btn" disabled>Stokta yok</button>';
+    const item = cart.find(i => i.id === p.id);
+    if (!item) return `<button class="add-btn" data-add="${p.id}">Sepete ekle</button>`;
+    return `
+        <div class="stepper">
+            <button data-dec="${p.id}" aria-label="Azalt">−</button>
+            <span>${item.quantity} <small>adet</small></span>
+            <button data-inc="${p.id}" aria-label="Arttır">+</button>
+        </div>`;
+}
+
+// Sepet değişince sadece ilgili kartların butonlarını güncelle (resimler yeniden yüklenmesin)
+function refreshActions(id) {
+    const p = findProduct(id);
+    document.querySelectorAll(`[data-id="${id}"] .card-action, #modalActions[data-id="${id}"]`)
+        .forEach(el => { el.innerHTML = actionHtml(p); });
+}
+
+// ---------- Ürün detayı ----------
+function openModal(id, { updateHash = true } = {}) {
+    const p = findProduct(id);
+    if (!p) return;
+
+    $('modalImage').src = imagePath(p);
+    $('modalImage').alt = p.urun_adi;
+    $('modalTitle').textContent = trLower(p.urun_adi);
+    $('modalCategory').textContent = p.kategori + (newIds.has(p.id) ? ' · Yeni' : '');
+    $('modalPrice').textContent = displayPrice(p);
+    $('modalDescription').textContent = tidyText(p.aciklama);
+
+    const stock = $('modalStock');
+    stock.textContent = inStock(p) ? 'Stokta' : 'Şu an stokta yok';
+    stock.className = 'detail-stock ' + (inStock(p) ? 'in' : 'out');
+
+    const actions = $('modalActions');
+    actions.dataset.id = p.id;
+    actions.innerHTML = actionHtml(p);
+
+    const askText = `Merhaba, "${p.urun_adi}" (${displayPrice(p)}) hakkında bilgi almak istiyorum.\n${productUrl(p)}`;
+    $('modalExtras').innerHTML = `
+        <a class="ask-btn" href="${whatsappUrl(askText)}" target="_blank" rel="noopener">WhatsApp'tan sor</a>
+        <button class="ask-btn" data-share="${p.id}">Linki paylaş</button>`;
+
+    renderSimilar(p);
+
+    const modal = $('productModal');
+    if (!modal.open) modal.showModal();
+    modal.scrollTop = 0;
+    modal.querySelector('.detail-info').scrollTop = 0;
+    document.body.classList.add('no-scroll');
+    if (updateHash) history.replaceState(null, '', `#urun-${p.id}`);
+}
+
+function renderSimilar(p) {
+    const similar = allProducts
+        .filter(x => x.id !== p.id && x.kategori === p.kategori && inStock(x))
+        .sort((a, b) => Math.abs(extractPrice(a.fiyat) - extractPrice(p.fiyat)) - Math.abs(extractPrice(b.fiyat) - extractPrice(p.fiyat)))
+        .slice(0, SIMILAR_COUNT);
+
+    $('similarWrap').hidden = similar.length === 0;
+    $('similarList').innerHTML = similar.map(x => `
+        <button class="similar-item" data-similar="${x.id}">
+            <img src="${imagePath(x)}" alt="" loading="lazy" decoding="async">
+            <span>${escapeHtml(trLower(x.urun_adi))}</span>
+            <strong>${escapeHtml(displayPrice(x))}</strong>
+        </button>`).join('');
+}
+
+function openFromHash() {
+    const m = location.hash.match(/^#urun-(\d+)$/);
+    if (m && findProduct(Number(m[1]))) openModal(Number(m[1]), { updateHash: false });
+}
+
+async function shareProduct(id) {
+    const p = findProduct(id);
+    const url = productUrl(p);
+    if (navigator.share) {
+        try { await navigator.share({ title: p.urun_adi, text: `${p.urun_adi} - ${displayPrice(p)}`, url }); } catch (e) {}
+        return;
+    }
+    try {
+        await navigator.clipboard.writeText(url);
+        toast('Ürün linki kopyalandı');
+    } catch (e) {
+        prompt('Ürün linki:', url);
+    }
+}
+
+// ---------- Sepet ----------
+function loadCart() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(CONFIG.cart.storageKey) || '[]');
+        cart = Array.isArray(saved)
+            ? saved.filter(i => i && Number.isFinite(i.id) && i.quantity > 0).map(i => ({ id: i.id, quantity: i.quantity }))
+            : [];
+    } catch (e) {
+        cart = [];
+    }
+}
+
+function saveCart() {
+    try { localStorage.setItem(CONFIG.cart.storageKey, JSON.stringify(cart)); } catch (e) {}
+}
+
+function addToCart(id) {
+    const p = findProduct(id);
+    if (!p || !inStock(p)) return;
+    const item = cart.find(i => i.id === id);
+    if (item) {
+        item.quantity++;
+    } else {
+        if (cart.length >= CONFIG.cart.maxItems) return toast(`Sepete en fazla ${CONFIG.cart.maxItems} farklı ürün eklenebilir`);
+        cart.push({ id, quantity: 1 });
+    }
+    afterCartChange(id);
+    toast(`Sepete eklendi: ${trLower(p.urun_adi)}`);
+    const count = $('cartCount');
+    count.classList.remove('bump');
+    void count.offsetWidth;
+    count.classList.add('bump');
+}
+
+function changeQuantity(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    item.quantity += delta;
+    if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+    afterCartChange(id);
+}
+
+function afterCartChange(id) {
+    saveCart();
+    updateCartUI();
+    refreshActions(id);
+    if ($('cartModal').open) renderCart();
+}
+
+function cartTotals() {
+    let items = 0, total = 0;
+    cart.forEach(i => {
+        const p = findProduct(i.id);
+        if (!p || !inStock(p)) return;
+        items += i.quantity;
+        total += extractPrice(p.fiyat) * i.quantity;
+    });
+    return { items, total };
+}
+
+function updateCartUI() {
+    const { items, total } = cartTotals();
+    $('cartCount').textContent = items;
+    $('cartCount').hidden = items === 0;
+    $('cartBar').hidden = items === 0;
+    document.body.classList.toggle('has-cart-bar', items > 0);
+    $('cartBarCount').textContent = items;
+    $('cartBarTotal').textContent = formatPrice(total);
+}
+
+function renderCart() {
+    const body = $('cartBody');
+    const { items, total } = cartTotals();
 
     if (cart.length === 0) {
-        if (cartFooter) cartFooter.style.display = 'none';
+        body.innerHTML = '<p class="empty-cart">Sepetiniz boş.<br>Beğendiğiniz ürünleri ekleyin, siparişi WhatsApp\'tan iletin.</p>';
+        $('cartFooter').hidden = true;
         return;
     }
 
-    if (cartFooter) cartFooter.style.display = 'block';
-
-    // Toplam ürün sayısı
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartTotalItems.textContent = totalItems;
-
-    // Toplam tutar
-    const totalPrice = cart.reduce((sum, item) => {
-        const price = extractPrice(item.fiyat);
-        return sum + (price * item.quantity);
-    }, 0);
-    cartTotalPrice.textContent = totalPrice.toFixed(2) + ' TL';
-}
-
-// Sepeti aç
-function openCart() {
-    const modal = document.getElementById('cartModal');
-    modal.style.display = 'block';
-    renderCartItems();
-    updateCartSummary(); // Kesinlikle güncelle
-}
-
-// Sepeti kapat
-function closeCart() {
-    const modal = document.getElementById('cartModal');
-    modal.style.display = 'none';
-}
-
-// Sepet öğelerini render et
-function renderCartItems() {
-    const cartBody = document.getElementById('cartBody');
-
-    if (cart.length === 0) {
-        cartBody.innerHTML = '<p class="empty-cart">Sepetiniz boş</p>';
-        updateCartSummary();
-        return;
-    }
-
-    // Sepet özetini güncelle
-    updateCartSummary();
-
-    // Sepet öğelerini render et
-    cartBody.innerHTML = cart.map(item => {
-        const imagePath = item.gorsel.startsWith('http')
-            ? item.gorsel
-            : `gorseller/${item.gorsel}`;
-
+    body.innerHTML = cart.map(i => {
+        const p = findProduct(i.id);
+        if (!p) return '';
+        const price = extractPrice(p.fiyat);
         return `
             <div class="cart-item">
-                <img src="${imagePath}" alt="${item.urun_adi}" class="cart-item-image">
-                <div class="cart-item-info">
-                    <h4>${item.urun_adi}</h4>
-                    <p class="cart-item-category">${item.kategori}</p>
-                    <p class="cart-item-price">${item.fiyat}</p>
+                <img src="${imagePath(p)}" alt="">
+                <div>
+                    <h4>${escapeHtml(trLower(p.urun_adi))}</h4>
+                    <p class="cart-item-meta">${escapeHtml(p.kategori)} · ${escapeHtml(displayPrice(p))}</p>
+                    <p class="cart-item-total">${formatPrice(price * i.quantity)}</p>
                 </div>
-                <div class="cart-item-actions">
-                    <div class="quantity-controls">
-                        <button onclick="updateQuantity(${item.id}, -1)">-</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="updateQuantity(${item.id}, 1)">+</button>
-                    </div>
-                    <button class="remove-item-btn" onclick="removeFromCart(${item.id})">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        </svg>
-                    </button>
+                <div class="stepper">
+                    <button data-dec="${p.id}" aria-label="Azalt">−</button>
+                    <span>${i.quantity}</span>
+                    <button data-inc="${p.id}" aria-label="Arttır">+</button>
                 </div>
-            </div>
-        `;
+                ${inStock(p) ? '' : '<p class="cart-item-warning">Bu ürün stokta kalmadı, siparişe eklenmeyecek.</p>'}
+            </div>`;
     }).join('');
+
+    $('cartFooter').hidden = items === 0;
+    $('cartTotalItems').textContent = items;
+    $('cartTotalPrice').textContent = formatPrice(total);
 }
 
-// Miktar güncelle
-function updateQuantity(productId, change) {
-    const item = cart.find(i => i.id === productId);
-    if (!item) return;
-
-    item.quantity += change;
-
-    if (item.quantity <= 0) {
-        removeFromCart(productId);
-    } else {
-        saveCart();
-        updateCartUI();
-        renderCartItems();
-        updateCartSummary(); // Toplam tutarı güncelle
-    }
+function openCart() {
+    renderCart();
+    $('cartModal').showModal();
+    document.body.classList.add('no-scroll');
 }
 
-// WhatsApp siparişi gönder
+function clearCart() {
+    if (!cart.length || !confirm('Sepeti tamamen temizlemek istiyor musunuz?')) return;
+    const ids = cart.map(i => i.id);
+    cart = [];
+    saveCart();
+    updateCartUI();
+    ids.forEach(refreshActions);
+    renderCart();
+}
+
 function sendWhatsAppOrder() {
-    if (cart.length === 0) {
-        alert('Sepetiniz boş!');
-        return;
-    }
+    const lines = cart
+        .map(i => ({ ...i, p: findProduct(i.id) }))
+        .filter(i => i.p && inStock(i.p));
+    if (!lines.length) return toast('Sepetiniz boş');
 
-    // Mesaj formatı
     let message = `${CONFIG.welcomeMessage}\n\n`;
+    lines.forEach((i, n) => {
+        const price = extractPrice(i.p.fiyat);
+        message += `${n + 1}. ${i.p.urun_adi} (${i.p.kategori})\n`;
+        message += `   ${i.quantity} adet x ${formatPrice(price)} = ${formatPrice(price * i.quantity)}\n\n`;
+    });
+    const { items, total } = cartTotals();
+    message += `─────────────────────\n`;
+    message += `Toplam: ${items} adet\n`;
+    message += `Toplam tutar: ${formatPrice(total)}`;
 
-    let subtotal = 0;
-    cart.forEach((item, index) => {
-        const itemPrice = extractPrice(item.fiyat);
-        const itemTotal = itemPrice * item.quantity;
-        subtotal += itemTotal;
+    window.open(whatsappUrl(message), '_blank');
+}
 
-        message += `${index + 1}. ${item.urun_adi}\n`;
-        message += `   ${item.kategori} - ${item.fiyat}\n`;
-        message += `   Adet: ${item.quantity} x ${itemPrice.toFixed(2)} TL = ${itemTotal.toFixed(2)} TL\n\n`;
+// ---------- Olaylar ----------
+function closeDialog(dialog) {
+    dialog.close();
+}
+
+function setupEvents() {
+    $('searchInput').addEventListener('input', renderProducts);
+    $('sortSelect').addEventListener('change', renderProducts);
+
+    $('categoryChips').addEventListener('click', e => {
+        const chip = e.target.closest('.chip');
+        if (!chip) return;
+        selectCategory(chip.dataset.cat);
     });
 
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    message += `─────────────────────\n`;
-    message += `Toplam: ${totalItems} ürün\n`;
-    message += `Toplam Tutar: ${subtotal.toFixed(2)} TL`;
+    $('resetFilters').addEventListener('click', () => {
+        $('searchInput').value = '';
+        activeCategory = 'all';
+        renderChips();
+        renderProducts();
+    });
 
-    // WhatsApp URL
-    const whatsappURL = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+    // Kart, detay ve sepet içindeki tüm butonlar
+    document.addEventListener('click', e => {
+        const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open],[data-similar],[data-share],[data-close],[data-goto]');
+        if (!t) return;
+        const d = t.dataset;
+        if (d.goto) selectCategory(d.goto);
+        else if (d.add) addToCart(Number(d.add));
+        else if (d.inc) changeQuantity(Number(d.inc), 1);
+        else if (d.dec) changeQuantity(Number(d.dec), -1);
+        else if (d.similar) openModal(Number(d.similar));
+        else if (d.share) shareProduct(Number(d.share));
+        else if ('open' in d) openModal(Number(t.closest('.card').dataset.id));
+        else if ('close' in d) closeDialog(t.closest('dialog'));
+    });
 
-    // Yeni sekmede aç
-    window.open(whatsappURL, '_blank');
+    $('cartButton').addEventListener('click', openCart);
+    $('cartBar').addEventListener('click', openCart);
+    $('clearCart').addEventListener('click', clearCart);
+    $('whatsappOrder').addEventListener('click', sendWhatsAppOrder);
+
+    // Pencere dışına tıklayınca kapat; kapanınca kaydırmayı geri aç
+    document.querySelectorAll('dialog').forEach(dialog => {
+        dialog.addEventListener('click', e => { if (e.target === dialog) closeDialog(dialog); });
+        dialog.addEventListener('close', () => {
+            if (!document.querySelector('dialog[open]')) document.body.classList.remove('no-scroll');
+            if (dialog.id === 'productModal' && location.hash.startsWith('#urun-')) {
+                history.replaceState(null, '', location.pathname + location.search);
+            }
+        });
+    });
+
+    window.addEventListener('hashchange', openFromHash);
 }
-
-// Sepet bildirimi göster
-function showCartNotification(message) {
-    // Basit bir bildirim (isterseniz daha fancy yapabiliriz)
-    const notification = document.createElement('div');
-    notification.className = 'cart-notification';
-    notification.textContent = message;
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 10);
-
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 2000);
-}
-
-// Modal dışına tıklanınca kapat
-window.addEventListener('click', function(event) {
-    const cartModal = document.getElementById('cartModal');
-    if (event.target === cartModal) {
-        closeCart();
-    }
-});
