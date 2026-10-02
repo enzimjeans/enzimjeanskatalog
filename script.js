@@ -3,13 +3,26 @@
 // ============================================
 
 const NEW_COUNT = 12;          // en son eklenen kaç ürün "Yeni" rozeti alsın
-const SIMILAR_COUNT = 8;
-const GROUP_PREVIEW = 8;       // ana sayfada her kategoriden kaç ürün gösterilsin       // ürün detayında kaç benzer ürün gösterilsin
+const SIMILAR_COUNT = 8;       // ürün detayında kaç benzer ürün gösterilsin
+const GROUP_PREVIEW = 8;       // ana sayfada her kategoriden kaç ürün gösterilsin
+const FAV_KEY = 'sival_favs';
+const LAST_ORDER_KEY = 'sival_last_order';
+const BUYER_KEY = 'sival_buyer';
 
 let allProducts = [];
 let newIds = new Set();
 let activeCategory = 'all';
 let cart = [];                 // [{ id, quantity }]
+let favs = new Set();
+let colorGroups = {};          // model anahtarı -> aynı modelin renkleri
+
+// Tarayıcı hafızası (gizli sekmede hata verebilir)
+function readStore(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch (e) { return fallback; }
+}
+function writeStore(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+}
 
 const $ = id => document.getElementById(id);
 
@@ -57,6 +70,52 @@ function imagePath(product) {
 const inStock = p => p.stok !== 'Yok';
 const findProduct = id => allProducts.find(p => p.id === id);
 
+// Renk seçenekleri: aynı kategoride, adı sadece son kelime(ler)de ayrışan ürünler.
+// "Baggy Mavi", "Baggy Gri", "Baggy Kar Yıkama" -> model "Baggy"
+let groupOf = {};              // ürün id -> model anahtarı
+let colorLabel = {};           // ürün id -> "Mavi"
+
+const nameWords = p => titleCase(p.urun_adi).trim().split(/\s+/);
+
+function buildColorGroups() {
+    colorGroups = {};
+    groupOf = {};
+    colorLabel = {};
+    const keyFor = (p, drop) => {
+        const w = nameWords(p);
+        return w.length > drop ? `${p.kategori}|${w.slice(0, -drop).join(' ')}` : null;
+    };
+
+    // 1) son kelimesi farklı olanlar
+    const byOne = {};
+    allProducts.forEach(p => {
+        const k = keyFor(p, 1);
+        if (k) (byOne[k] = byOne[k] || []).push(p);
+    });
+    Object.entries(byOne).forEach(([k, list]) => { if (list.length > 1) colorGroups[k] = list; });
+
+    // 2) iki kelimelik renkler ("Koyu Mavi") var olan bir gruba katılır
+    allProducts.forEach(p => {
+        const k1 = keyFor(p, 1);
+        if (k1 && colorGroups[k1]) return;
+        const k2 = keyFor(p, 2);
+        if (k2 && colorGroups[k2]) colorGroups[k2].push(p);
+    });
+
+    // Etiket: model adından sonra kalan kelimeler; ayırt edici değilse etiket yok
+    Object.entries(colorGroups).forEach(([k, list]) => {
+        const modelLen = k.split('|')[1].split(' ').length;
+        const labels = list.map(p => nameWords(p).slice(modelLen).join(' '));
+        const unique = new Set(labels).size === labels.length && labels.every(Boolean);
+        list.forEach((p, i) => {
+            groupOf[p.id] = k;
+            colorLabel[p.id] = unique ? labels[i] : '';
+        });
+    });
+}
+
+const colorsOf = p => colorGroups[groupOf[p.id]] || [];
+
 function whatsappUrl(message) {
     const number = String(CONFIG.whatsappNumber).replace(/\D/g, '');
     return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
@@ -78,6 +137,10 @@ function toast(message) {
 // ---------- Yükleme ----------
 document.addEventListener('DOMContentLoaded', () => {
     loadCart();
+    favs = new Set(readStore(FAV_KEY, []));
+    const buyer = readStore(BUYER_KEY, {});
+    $('buyerName').value = buyer.name || '';
+    $('buyerCity').value = buyer.city || '';
     setupEvents();
     loadProducts();
 });
@@ -91,11 +154,15 @@ async function loadProducts() {
         const newest = [...allProducts].sort((a, b) => b.id - a.id).slice(0, NEW_COUNT);
         newIds = new Set(newest.map(p => p.id));
 
-        // Silinmiş ürünleri sepetten çıkar
+        // Silinmiş ürünleri sepetten ve favorilerden çıkar
         cart = cart.filter(item => findProduct(item.id));
         saveCart();
+        favs = new Set([...favs].filter(id => findProduct(id)));
+        writeStore(FAV_KEY, [...favs]);
+        buildColorGroups();
 
         renderStats();
+        renderReorder();
         renderChips();
         renderProducts();
         updateCartUI();
@@ -183,8 +250,10 @@ function renderChips() {
         <button class="chip ${activeCategory === value ? 'active' : ''}" data-cat="${escapeHtml(value)}" role="tab"
                 aria-selected="${activeCategory === value}">${escapeHtml(label)}<small>${count}</small></button>`;
 
+    if (activeCategory === 'fav' && favs.size === 0) activeCategory = 'all';
     $('categoryChips').innerHTML =
         chip('all', 'Tümü', allProducts.length) +
+        (favs.size ? chip('fav', '♥ Favorilerim', favs.size) : '') +
         chip('new', '✦ Yeni gelenler', newIds.size) +
         Object.keys(counts).map(c => chip(c, c, counts[c])).join('');
 }
@@ -196,7 +265,8 @@ function getVisibleProducts() {
 
     let list = allProducts.filter(p => {
         if (activeCategory === 'new' && !newIds.has(p.id)) return false;
-        if (activeCategory !== 'all' && activeCategory !== 'new' && p.kategori !== activeCategory) return false;
+        if (activeCategory === 'fav' && !favs.has(p.id)) return false;
+        if (!['all', 'new', 'fav'].includes(activeCategory) && p.kategori !== activeCategory) return false;
         if (!q) return true;
         return trLower(`${p.urun_adi} ${p.kategori} ${p.aciklama}`).includes(q);
     });
@@ -218,6 +288,10 @@ function renderProducts() {
     const grid = $('productsGrid');
 
     $('noProducts').hidden = list.length > 0;
+    const searched = $('searchInput').value.trim();
+    $('askMissing').href = whatsappUrl(searched
+        ? `Merhaba, katalogda "${searched}" bulamadım. Elinizde var mı?`
+        : 'Merhaba, katalogda aradığımı bulamadım, yardımcı olur musunuz?');
     const out = list.filter(p => !inStock(p)).length;
     $('productCount').textContent = list.length
         ? `${list.length} ürün` + (out ? ` · ${out} tanesi şu an stokta yok` : '')
@@ -260,10 +334,12 @@ function productCard(p, index) {
                          onerror="this.parentNode.classList.add('noimg')">
                 </button>
                 ${badge}
+                ${favButton(p)}
                 <div class="card-action quick" data-compact>${actionHtml(p, true)}</div>
             </div>
             <div class="card-body">
                 <h3 class="card-name" data-open>${escapeHtml(titleCase(p.urun_adi))}</h3>
+                ${colorsOf(p).length > 1 ? `<span class="card-colors" data-open>${colorsOf(p).length} renk seçeneği</span>` : ''}
                 <div class="card-meta">
                     <span class="card-price">${escapeHtml(displayPrice(p))}</span>
                     <span class="card-cat">${escapeHtml(p.kategori)}</span>
@@ -287,12 +363,48 @@ function actionHtml(p, compact = false) {
     }
     if (!inStock(p)) return '<button class="add-btn" disabled>Stokta yok</button>';
     if (!item) return `<button class="add-btn" data-add="${p.id}">Sepete ekle</button>`;
+    return stepperHtml(p.id, item.quantity, 'adet');
+}
+
+// Toptan alımda adet elle yazılabilsin (50 kez + basmak yerine)
+function stepperHtml(id, quantity, unit = '') {
     return `
         <div class="stepper">
-            <button data-dec="${p.id}" aria-label="Azalt">−</button>
-            <span>${item.quantity} <small>adet</small></span>
-            <button data-inc="${p.id}" aria-label="Arttır">+</button>
+            <button data-dec="${id}" aria-label="Azalt">−</button>
+            <label class="qty-wrap">
+                <input class="qty" type="number" inputmode="numeric" min="0" step="1" value="${quantity}"
+                       data-qty="${id}" aria-label="Adet">
+                ${unit ? `<small>${unit}</small>` : ''}
+            </label>
+            <button data-inc="${id}" aria-label="Arttır">+</button>
         </div>`;
+}
+
+function favButton(p) {
+    const on = favs.has(p.id);
+    return `
+        <button class="fav ${on ? 'on' : ''}" data-fav="${p.id}" aria-pressed="${on}" aria-label="Favorilere ekle">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.4C.9 8 3 4 6.9 4c2.2 0 3.7 1.2 5.1 3 1.4-1.8 2.9-3 5.1-3C21 4 23.1 8 21.6 11.6 19.5 16.4 12 21 12 21z"/></svg>
+        </button>`;
+}
+
+function toggleFav(id) {
+    const p = findProduct(id);
+    if (!p) return;
+    if (favs.has(id)) {
+        favs.delete(id);
+        toast('Favorilerden çıkarıldı');
+    } else {
+        favs.add(id);
+        toast('Favorilere eklendi ♥');
+    }
+    writeStore(FAV_KEY, [...favs]);
+    document.querySelectorAll(`[data-fav="${id}"]`).forEach(btn => {
+        btn.classList.toggle('on', favs.has(id));
+        btn.setAttribute('aria-pressed', favs.has(id));
+    });
+    renderChips();
+    if (activeCategory === 'fav' || favs.size === 0) renderProducts();
 }
 
 // Sepet değişince sadece ilgili kartların butonlarını güncelle (resimler yeniden yüklenmesin)
@@ -322,10 +434,21 @@ function openModal(id, { updateHash = true } = {}) {
     actions.dataset.id = p.id;
     actions.innerHTML = actionHtml(p);
 
+    // Aynı modelin diğer renkleri
+    const colors = colorsOf(p);
+    $('colorsWrap').hidden = colors.length < 2;
+    $('colorsList').innerHTML = colors.map(x => `
+        <button class="color-opt ${x.id === p.id ? 'current' : ''} ${inStock(x) ? '' : 'out'}" data-similar="${x.id}"
+                title="${escapeHtml(colorLabel[x.id] || titleCase(x.urun_adi))}">
+            <img src="${imagePath(x)}" alt="" loading="lazy" decoding="async">
+            ${colorLabel[x.id] ? `<span>${escapeHtml(colorLabel[x.id])}</span>` : ''}
+        </button>`).join('');
+
     const askText = `Merhaba, "${p.urun_adi}" (${displayPrice(p)}) hakkında bilgi almak istiyorum.\n${productUrl(p)}`;
     $('modalExtras').innerHTML = `
         <a class="ask-btn" href="${whatsappUrl(askText)}" target="_blank" rel="noopener">WhatsApp'tan sor</a>
-        <button class="ask-btn" data-share="${p.id}">Linki paylaş</button>`;
+        <button class="ask-btn" data-share="${p.id}">Linki paylaş</button>
+        ${favButton(p).replace('class="fav', 'class="fav fav-inline')}`;
 
     renderSimilar(p);
 
@@ -338,8 +461,9 @@ function openModal(id, { updateHash = true } = {}) {
 }
 
 function renderSimilar(p) {
+    const sameModel = new Set(colorsOf(p).map(x => x.id));
     const similar = allProducts
-        .filter(x => x.id !== p.id && x.kategori === p.kategori && inStock(x))
+        .filter(x => x.id !== p.id && !sameModel.has(x.id) && x.kategori === p.kategori && inStock(x))
         .sort((a, b) => Math.abs(extractPrice(a.fiyat) - extractPrice(p.fiyat)) - Math.abs(extractPrice(b.fiyat) - extractPrice(p.fiyat)))
         .slice(0, SIMILAR_COUNT);
 
@@ -409,8 +533,15 @@ function addToCart(id) {
 function changeQuantity(id, delta) {
     const item = cart.find(i => i.id === id);
     if (!item) return;
-    item.quantity += delta;
-    if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+    setQuantity(id, item.quantity + delta);
+}
+
+function setQuantity(id, quantity) {
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    quantity = Math.max(0, Math.min(9999, Math.floor(Number(quantity) || 0)));
+    if (quantity === 0) cart = cart.filter(i => i.id !== id);
+    else item.quantity = quantity;
     afterCartChange(id);
 }
 
@@ -464,16 +595,14 @@ function renderCart() {
                     <p class="cart-item-meta">${escapeHtml(p.kategori)} · ${escapeHtml(displayPrice(p))}</p>
                     <p class="cart-item-total">${formatPrice(price * i.quantity)}</p>
                 </div>
-                <div class="stepper">
-                    <button data-dec="${p.id}" aria-label="Azalt">−</button>
-                    <span>${i.quantity}</span>
-                    <button data-inc="${p.id}" aria-label="Arttır">+</button>
-                </div>
+                ${stepperHtml(p.id, i.quantity)}
                 ${inStock(p) ? '' : '<p class="cart-item-warning">Bu ürün stokta kalmadı, siparişe eklenmeyecek.</p>'}
             </div>`;
     }).join('');
 
-    $('cartFooter').hidden = items === 0;
+    // Sepetteki her şey stoktan düşse bile "Sepeti temizle" görünsün
+    $('cartFooter').hidden = false;
+    $('whatsappOrder').disabled = items === 0;
     $('cartTotalItems').textContent = items;
     $('cartTotalPrice').textContent = formatPrice(total);
 }
@@ -500,7 +629,13 @@ function sendWhatsAppOrder() {
         .filter(i => i.p && inStock(i.p));
     if (!lines.length) return toast('Sepetiniz boş');
 
+    const buyer = { name: $('buyerName').value.trim(), city: $('buyerCity').value.trim() };
+    writeStore(BUYER_KEY, buyer);
+
     let message = `${CONFIG.welcomeMessage}\n\n`;
+    if (buyer.name) message += `Firma / Ad: ${buyer.name}\n`;
+    if (buyer.city) message += `Şehir: ${buyer.city}\n`;
+    if (buyer.name || buyer.city) message += '\n';
     lines.forEach((i, n) => {
         const price = extractPrice(i.p.fiyat);
         message += `${n + 1}. ${i.p.urun_adi} (${i.p.kategori})\n`;
@@ -511,7 +646,49 @@ function sendWhatsAppOrder() {
     message += `Toplam: ${items} adet\n`;
     message += `Toplam tutar: ${formatPrice(total)}`;
 
+    // Bir dahaki ziyarette "Siparişi tekrarla" için sakla
+    writeStore(LAST_ORDER_KEY, {
+        date: new Date().toISOString(),
+        items: lines.map(i => ({ id: i.id, quantity: i.quantity }))
+    });
+
     window.open(whatsappUrl(message), '_blank');
+}
+
+// ---------- Siparişi tekrarla ----------
+function reorderableItems() {
+    const last = readStore(LAST_ORDER_KEY, null);
+    if (!last || !Array.isArray(last.items)) return { last: null, items: [] };
+    const items = last.items.filter(i => { const p = findProduct(i.id); return p && inStock(p); });
+    return { last, items };
+}
+
+function renderReorder() {
+    const { last, items } = reorderableItems();
+    let dismissed = false;
+    try { dismissed = sessionStorage.getItem('sival_reorder_closed') === '1'; } catch (e) {}
+    const show = !!last && items.length > 0 && !dismissed;
+    $('reorderBox').hidden = !show;
+    if (!show) return;
+
+    const date = new Date(last.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
+    const pieces = items.reduce((s, i) => s + i.quantity, 0);
+    const missing = last.items.length - items.length;
+    $('reorderInfo').textContent = `${date} tarihli siparişiniz: ${items.length} ürün, ${pieces} adet` +
+        (missing ? ` (${missing} ürün şu an stokta yok)` : '');
+}
+
+function reorder() {
+    const { items } = reorderableItems();
+    items.forEach(i => {
+        const existing = cart.find(c => c.id === i.id);
+        if (existing) existing.quantity = Math.max(existing.quantity, i.quantity);
+        else cart.push({ id: i.id, quantity: i.quantity });
+        refreshActions(i.id);
+    });
+    saveCart();
+    updateCartUI();
+    openCart();
 }
 
 // ---------- Olaylar ----------
@@ -520,7 +697,11 @@ function closeDialog(dialog) {
 }
 
 function setupEvents() {
-    $('searchInput').addEventListener('input', renderProducts);
+    let searchTimer;
+    $('searchInput').addEventListener('input', () => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(renderProducts, 180);
+    });
     $('sortSelect').addEventListener('change', renderProducts);
 
     $('categoryChips').addEventListener('click', e => {
@@ -538,10 +719,11 @@ function setupEvents() {
 
     // Kart, detay ve sepet içindeki tüm butonlar
     document.addEventListener('click', e => {
-        const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open],[data-similar],[data-share],[data-close],[data-goto]');
+        const t = e.target.closest('[data-add],[data-inc],[data-dec],[data-open],[data-similar],[data-share],[data-close],[data-goto],[data-fav]');
         if (!t) return;
         const d = t.dataset;
-        if (d.goto) selectCategory(d.goto);
+        if (d.fav) toggleFav(Number(d.fav));
+        else if (d.goto) selectCategory(d.goto);
         else if (d.add) addToCart(Number(d.add));
         else if (d.inc) changeQuantity(Number(d.inc), 1);
         else if (d.dec) changeQuantity(Number(d.dec), -1);
@@ -555,6 +737,24 @@ function setupEvents() {
     $('cartBar').addEventListener('click', openCart);
     $('clearCart').addEventListener('click', clearCart);
     $('whatsappOrder').addEventListener('click', sendWhatsAppOrder);
+
+    // Elle adet yazma
+    document.addEventListener('change', e => {
+        if (e.target.dataset && e.target.dataset.qty) setQuantity(Number(e.target.dataset.qty), e.target.value);
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && e.target.dataset && e.target.dataset.qty) e.target.blur();
+    });
+
+    // Firma / şehir bir kez yazılsın, hatırlansın
+    ['buyerName', 'buyerCity'].forEach(id => $(id).addEventListener('change', () =>
+        writeStore(BUYER_KEY, { name: $('buyerName').value.trim(), city: $('buyerCity').value.trim() })));
+
+    $('reorderBtn').addEventListener('click', reorder);
+    $('reorderClose').addEventListener('click', () => {
+        $('reorderBox').hidden = true;
+        try { sessionStorage.setItem('sival_reorder_closed', '1'); } catch (e) {}
+    });
 
     // Pencere dışına tıklayınca kapat; kapanınca kaydırmayı geri aç
     document.querySelectorAll('dialog').forEach(dialog => {

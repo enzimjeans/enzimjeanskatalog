@@ -385,10 +385,34 @@
         }
 
         async function uploadImage(fileName, base64) {
-            await gh(`gorseller/${encodeURIComponent(fileName)}`, {
-                method: 'PUT',
-                body: JSON.stringify({ message: `Görsel eklendi: ${fileName}`, branch: BRANCH, content: base64 })
-            });
+            // Aynı anda başka bir kayıt yapılırsa GitHub 409 verebilir; kısa bekleyip tekrar dene
+            for (let attempt = 0; ; attempt++) {
+                try {
+                    return await gh(`gorseller/${encodeURIComponent(fileName)}`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ message: `Görsel eklendi: ${fileName}`, branch: BRANCH, content: base64 })
+                    });
+                } catch (e) {
+                    if (e.status !== 409 || attempt >= 3) throw e;
+                    await new Promise(r => setTimeout(r, 800 * (attempt + 1)));
+                }
+            }
+        }
+
+        // Hiçbir ürün kullanmıyorsa eski görseli sil (site şişmesin). Hata olursa sessizce geç.
+        async function deleteImageIfUnused(fileName) {
+            if (!fileName || fileName.startsWith('http') || products.some(p => p.gorsel === fileName)) return;
+            try {
+                const path = `gorseller/${encodeURIComponent(fileName)}`;
+                const file = await gh(`${path}?ref=${BRANCH}`);
+                await gh(path, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: `Kullanılmayan görsel silindi: ${fileName}`, branch: BRANCH, sha: file.sha })
+                });
+            } catch (e) {
+                console.warn('Görsel silinemedi', fileName, e);
+            }
         }
 
         // ---------- Yardımcılar ----------
@@ -814,10 +838,12 @@
                 const fields = { urun_adi: name, fiyat: `${price} TL`, kategori: cat, gorsel, aciklama: desc, stok: formStock };
 
                 if (existing) {
+                    const oldImage = existing.gorsel;
                     await updateProducts(
                         list => list.map(x => x.id === editingId ? { ...x, ...fields } : x),
                         `Ürün güncellendi: ${name}`
                     );
+                    if (oldImage !== gorsel) deleteImageIfUnused(oldImage);
                 } else {
                     await updateProducts(list => {
                         const id = list.reduce((m, x) => Math.max(m, Number(x.id) || 0), 0) + 1;
@@ -879,6 +905,7 @@
             busy('Siliniyor...');
             try {
                 await updateProducts(list => list.filter(x => x.id !== p.id), `Ürün silindi: ${p.urun_adi}`);
+                deleteImageIfUnused(p.gorsel);
                 renderList();
                 show('listView');
                 toast('Ürün silindi ✓');

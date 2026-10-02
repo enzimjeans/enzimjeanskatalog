@@ -1480,6 +1480,221 @@ body::before {
 
 .more-btn:hover { background: rgba(201, 133, 58, 0.1); }
 
+/* ============================================
+   Satış araçları: favori, renkler, adet, tekrar sipariş
+   ============================================ */
+
+/* Favori kalbi */
+.fav {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(251, 249, 245, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(20, 19, 15, 0.15);
+    transition: transform 0.15s;
+}
+
+.fav svg { fill: none; stroke: var(--ink); stroke-width: 2; transition: fill 0.15s, stroke 0.15s; }
+.fav:hover { transform: scale(1.08); }
+.fav.on svg { fill: var(--rust); stroke: var(--rust); animation: pop 0.25s ease; }
+
+.fav.fav-inline {
+    position: static;
+    flex: 0 0 auto;
+    width: 44px;
+    height: auto;
+    border-radius: 10px;
+    border: 1.5px dashed var(--thread);
+    box-shadow: none;
+    background: transparent;
+}
+
+/* Kartta renk sayısı */
+.card-colors {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 3px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.card-colors::before {
+    /* üç küçük nokta: "birden fazla renk" */
+    content: '';
+    width: 20px;
+    height: 8px;
+    background:
+        radial-gradient(circle 3.5px at 4px 4px, var(--ink-2) 98%, transparent) ,
+        radial-gradient(circle 3.5px at 10px 4px, var(--muted) 98%, transparent),
+        radial-gradient(circle 3.5px at 16px 4px, var(--line) 98%, transparent);
+}
+
+/* Detayda renk seçenekleri */
+.colors { margin-top: 16px; }
+
+.colors-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+.colors-list {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 6px;
+    scrollbar-width: thin;
+}
+
+@media (min-width: 820px) {
+    .colors-list { flex-wrap: wrap; overflow: visible; }
+}
+
+.color-opt {
+    flex: 0 0 auto;
+    width: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.color-opt img {
+    width: 64px;
+    height: 76px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: var(--paper-2);
+    border: 2px solid transparent;
+    transition: border-color 0.15s;
+}
+
+.color-opt span {
+    font-size: 0.72rem;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--ink-2);
+}
+
+.color-opt:hover img { border-color: var(--line); }
+.color-opt.current img { border-color: var(--ink); }
+.color-opt.current span { font-weight: 700; color: var(--ink); }
+.color-opt.out img { filter: grayscale(1); opacity: 0.5; }
+
+/* Elle adet yazma */
+.qty-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+    flex: 1;
+    cursor: text;
+}
+
+.qty-wrap small { font-weight: 500; color: var(--muted); }
+
+.qty {
+    width: 4.2ch;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 4px 0;
+    border-radius: 6px;
+    -moz-appearance: textfield;
+}
+
+.qty::-webkit-outer-spin-button,
+.qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.qty:focus { outline: 2px solid var(--thread); background: var(--card); }
+
+.cart-item .qty { width: 3.6ch; font-size: 16px; }
+
+/* Sepette firma / şehir */
+.buyer {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.buyer input {
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    font-size: 16px;
+}
+
+.buyer input:focus { outline: 2px solid var(--thread); border-color: transparent; }
+
+.wa-btn:disabled { background: var(--paper-2); color: var(--muted); cursor: not-allowed; }
+
+/* Tekrar sipariş kutusu */
+.reorder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin: 24px 0 0;
+    padding: 16px 18px;
+    border-radius: var(--radius);
+    background: var(--card);
+    border: 1.5px dashed var(--thread);
+    animation: rise 0.4s ease both;
+}
+
+.reorder[hidden] { display: none; }
+
+.reorder-text { display: flex; flex-direction: column; gap: 2px; }
+.reorder-text strong { font-family: var(--display); font-weight: 500; font-size: 1.2rem; }
+.reorder-text span { font-size: 0.9rem; color: var(--ink-2); }
+
+.reorder-actions { display: flex; align-items: center; gap: 6px; }
+
+.reorder-btn {
+    padding: 11px 18px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+}
+
+.reorder-btn:hover { background: var(--denim); }
+
+.reorder-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    color: var(--muted);
+}
+
+/* Bulunamadı -> WhatsApp */
+.ask-inline {
+    display: inline-block;
+    flex: none;
+    margin-top: 14px;
+    padding: 12px 18px;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *:not(.ticker-track), *::before, *::after {
         animation: none !important;

@@ -49,6 +49,19 @@
         <div class="ticker-track" id="ticker"></div>
     </div>
 
+    <div class="wrap">
+        <div class="reorder" id="reorderBox" hidden>
+            <div class="reorder-text">
+                <strong>Tekrar hoş geldiniz!</strong>
+                <span id="reorderInfo"></span>
+            </div>
+            <div class="reorder-actions">
+                <button class="reorder-btn" id="reorderBtn">Siparişi tekrarla</button>
+                <button class="reorder-close" id="reorderClose" aria-label="Kapat">&times;</button>
+            </div>
+        </div>
+    </div>
+
     <section class="spotlight" id="spotlight" hidden>
         <div class="wrap">
             <div class="section-head">
@@ -97,6 +110,8 @@
         </div>
         <div class="state" id="noProducts" hidden>
             <p>Aramanıza uygun ürün bulunamadı.</p>
+            <a class="ask-btn ask-inline" id="askMissing" href="#" target="_blank" rel="noopener">Aradığınızı WhatsApp'tan sorun</a>
+            <br>
             <button class="link-btn" id="resetFilters">Filtreleri temizle</button>
         </div>
     </main>
@@ -113,7 +128,7 @@
 
     <!-- Sepet özeti (mobilde altta) -->
     <button class="cart-bar" id="cartBar" hidden>
-        <span><strong id="cartBarCount">0</strong> ürün · <span id="cartBarTotal">0 TL</span></span>
+        <span><strong id="cartBarCount">0</strong> adet · <span id="cartBarTotal">0 TL</span></span>
         <span class="cart-bar-cta">Sepeti gör →</span>
     </button>
 
@@ -129,6 +144,10 @@
                 <h2 id="modalTitle"></h2>
                 <p class="detail-price" id="modalPrice"></p>
                 <p class="detail-stock" id="modalStock"></p>
+                <div class="colors" id="colorsWrap" hidden>
+                    <p class="colors-label">Renk seçenekleri</p>
+                    <div class="colors-list" id="colorsList"></div>
+                </div>
                 <p class="detail-desc" id="modalDescription"></p>
                 <div class="detail-actions" id="modalActions"></div>
                 <div class="detail-extras" id="modalExtras"></div>
@@ -148,6 +167,10 @@
         </div>
         <div class="cart-body" id="cartBody"></div>
         <div class="cart-foot" id="cartFooter" hidden>
+            <div class="buyer">
+                <input type="text" id="buyerName" placeholder="Firma / Ad Soyad" autocomplete="organization">
+                <input type="text" id="buyerCity" placeholder="Şehir" autocomplete="address-level2">
+            </div>
             <div class="cart-sum">
                 <span>Toplam <strong id="cartTotalItems">0</strong> adet</span>
                 <strong class="cart-total" id="cartTotalPrice">0 TL</strong>
