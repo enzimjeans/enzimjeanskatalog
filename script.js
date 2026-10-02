@@ -192,7 +192,7 @@ function renderStats() {
 
     // Hero: en yeni 3 ürün askılı etiketlerle
     $('heroFan').innerHTML = fresh.slice(0, 3).map((p, i) => `
-        <figure class="fan-card fan-${i}">
+        <figure class="fan-card fan-${i}" data-similar="${p.id}">
             <img src="${imagePath(p)}" alt="" decoding="async">
             <figcaption class="tag"><span>${escapeHtml(titleCase(p.urun_adi))}</span><strong>${escapeHtml(displayPrice(p))}</strong></figcaption>
         </figure>`).join('');

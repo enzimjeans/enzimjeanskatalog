@@ -918,13 +918,24 @@ body.has-cart-bar .footer { padding-bottom: 110px; }
 .btn-paper:hover, .btn-ghost:hover { transform: translateY(-2px); }
 .btn-ghost:hover { background: rgba(201, 133, 58, 0.15); }
 
+/* En yeni 3 ürün: telefonda yazının üstünde, masaüstünde sağda */
 .hero-fan {
     position: relative;
-    display: none;
+    height: 280px;
+    order: -1;
+    margin: -8px 0 4px;
+}
+
+@media (max-width: 899px) {
+    .hero-fan .fan-card { width: min(40%, 180px); }
+    .hero-fan .fan-card img { border-width: 4px; }
+    .tag { right: -8px; bottom: 10px; padding: 6px 9px 6px 18px; }
+    .tag span { display: none; }
+    .tag strong { font-size: 0.92rem; }
 }
 
 @media (min-width: 900px) {
-    .hero-fan { display: block; height: 420px; }
+    .hero-fan { height: 420px; order: 0; margin: 0; }
 }
 
 .fan-card {
@@ -1359,7 +1370,7 @@ body::before {
 .hero-text { color: #d3dceb; }
 .hero-stats span { color: #a9b9d3; }
 
-.fan-card { box-shadow: 0 28px 60px rgba(5, 12, 28, 0.55); }
+.fan-card { box-shadow: 0 28px 60px rgba(5, 12, 28, 0.55); cursor: pointer; }
 
 /* Şerit: koyu zemin, bakır iplik */
 .ticker {
