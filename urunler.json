@@ -2105,5 +2105,105 @@
     "seriAdet": 5,
     "rozet": "one-cikan",
     "eskiFiyat": ""
+  },
+  {
+    "id": 146,
+    "urun_adi": "BY EFENDİ NUBUK GÖMLEK BEJ",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-nubuk-gomlek-bej-muuyhfmx0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 147,
+    "urun_adi": "BY EFENDİ NUBUK GÖMLEK GRİ",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-nubuk-gomlek-gri-muuyhfmx1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 148,
+    "urun_adi": "BY EFENDİ NUBUK GÖMLEK ACI KAHVE",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-nubuk-gomlek-aci-kahve-muuyhfmx2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 149,
+    "urun_adi": "BY EFENDİ NUBUK GÖMLEK MAVİ",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-nubuk-gomlek-mavi-muuyhfmx3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 150,
+    "urun_adi": "BY EFENDİ NUBUK GÖMLEK SİYAH",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-nubuk-gomlek-siyah-muuyhfmx4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
   }
 ]
