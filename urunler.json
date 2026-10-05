@@ -2519,5 +2519,85 @@
     "rozet": "",
     "eskiFiyat": "",
     "video": ""
+  },
+  {
+    "id": 166,
+    "urun_adi": "MODASON KISA PALTO LACİVERT",
+    "fiyat": "1750 TL",
+    "kategori": "Mont",
+    "gorsel": "modason-kisa-palto-lacivert-muuyvrhf0.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 167,
+    "urun_adi": "MODASON KISA PALTO BEJ",
+    "fiyat": "1750 TL",
+    "kategori": "Mont",
+    "gorsel": "modason-kisa-palto-bej-muuyvrhf1.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 168,
+    "urun_adi": "MODASON KISA PALTO SİYAH",
+    "fiyat": "1750 TL",
+    "kategori": "Mont",
+    "gorsel": "modason-kisa-palto-siyah-muuyvrhf2.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 169,
+    "urun_adi": "MODASON KISA PALTO GRİ",
+    "fiyat": "1750 TL",
+    "kategori": "Mont",
+    "gorsel": "modason-kisa-palto-gri-muuyvrhf3.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
