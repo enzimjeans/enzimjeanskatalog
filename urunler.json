@@ -556,11 +556,25 @@
   {
     "id": 46,
     "urun_adi": "Regular Fit Kot Pantolon Douglas",
-    "fiyat": "500TL",
+    "fiyat": "550 TL",
     "kategori": "Jeans",
     "gorsel": "DOUGLAS.png",
     "aciklama": "%98 pamuk ve %2 spandex. 30-31-32-33-34-36-38-40 Beden seçeneği mevcuttur.Belirtilen fiyatlar adet fiyatıdır.",
-    "stok": "Var"
+    "stok": "Var",
+    "video": "",
+    "satis": "tekli",
+    "bedenler": [
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "36",
+      "38",
+      "40"
+    ],
+    "rozet": "",
+    "eskiFiyat": ""
   },
   {
     "id": 47,
