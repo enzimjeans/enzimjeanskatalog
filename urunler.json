@@ -2599,5 +2599,65 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 170,
+    "urun_adi": "ZRA METAL DÜĞMELİ GÖMLEK BEJ",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "zra-metal-dugmeli-gomlek-bej-muuyzyaa0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 171,
+    "urun_adi": "ZRA METAL DÜĞMELİ GÖMLEK MAVİ",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "zra-metal-dugmeli-gomlek-mavi-muuyzyaa1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 172,
+    "urun_adi": "ZRA METAL DÜĞMELİ GÖMLEK SİYAH",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "zra-metal-dugmeli-gomlek-siyah-muuyzyaa2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
