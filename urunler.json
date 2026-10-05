@@ -1302,7 +1302,18 @@
     "kategori": "Kazak",
     "gorsel": "SELANİKKOYUMAVİ.jpg",
     "aciklama": "M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
-    "stok": "Var"
+    "stok": "Yok",
+    "video": "",
+    "satis": "seri",
+    "bedenler": [
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 4,
+    "rozet": "",
+    "eskiFiyat": ""
   },
   {
     "id": 118,
