@@ -2354,7 +2354,7 @@
     "id": 158,
     "urun_adi": "SOFTSHELL TAKTİK PANTOLON HAKİ",
     "fiyat": "800 TL",
-    "kategori": "PANTOLON",
+    "kategori": "Jeans",
     "gorsel": "softshell-taktik-pantolon-haki-muuynks34.jpg",
     "aciklama": "Rüzgâr ve hafif yağışlara karşı dayanıklı softshell kumaş\nÇok cepli taktik tasarım sayesinde pratik depolama alanı\nOutdoor, kamp, trekking, avcılık, güvenlik ve günlük kullanıma uygun",
     "stok": "Var",
@@ -2369,7 +2369,8 @@
     ],
     "seriAdet": 6,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 159,
