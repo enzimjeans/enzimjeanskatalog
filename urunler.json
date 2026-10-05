@@ -2391,5 +2391,125 @@
     "seriAdet": 6,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 160,
+    "urun_adi": "SÜET GÖMLEK BEJ",
+    "fiyat": "370 TL",
+    "kategori": "Gömlek",
+    "gorsel": "suet-gomlek-bej-muuypj8d0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 161,
+    "urun_adi": "SÜET GÖMLEK ACI KAHVE",
+    "fiyat": "370 TL",
+    "kategori": "Gömlek",
+    "gorsel": "suet-gomlek-aci-kahve-muuypj8d1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 162,
+    "urun_adi": "SÜET GÖMLEK YEŞİL",
+    "fiyat": "370 TL",
+    "kategori": "Gömlek",
+    "gorsel": "suet-gomlek-yesil-muuypj8d2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 163,
+    "urun_adi": "SÜET GÖMLEK BORDO",
+    "fiyat": "370 TL",
+    "kategori": "Gömlek",
+    "gorsel": "suet-gomlek-bordo-muuypj8d3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 164,
+    "urun_adi": "SÜET GÖMLEK SİYAH",
+    "fiyat": "370 TL",
+    "kategori": "Gömlek",
+    "gorsel": "suet-gomlek-siyah-muuypj8d4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 165,
+    "urun_adi": "SÜET GÖMLEK KREM",
+    "fiyat": "370 TL",
+    "kategori": "Gömlek",
+    "gorsel": "suet-gomlek-krem-muuypj8d5.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
