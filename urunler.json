@@ -1463,7 +1463,7 @@
     "kategori": "Tşört",
     "gorsel": "KAHVET.jpg",
     "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
-    "stok": "Var",
+    "stok": "Yok",
     "satis": "seri",
     "bedenler": [
       "S",
@@ -1474,7 +1474,8 @@
     ],
     "seriAdet": 5,
     "rozet": "cok-satan",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 133,
