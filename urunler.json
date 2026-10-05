@@ -2205,5 +2205,65 @@
     "seriAdet": 5,
     "rozet": "one-cikan",
     "eskiFiyat": ""
+  },
+  {
+    "id": 151,
+    "urun_adi": "MODASON UZUN PALTO GRİ",
+    "fiyat": "1750 TL",
+    "kategori": "Mont",
+    "gorsel": "modason-uzun-palto-gri-muuyjuyl0.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 152,
+    "urun_adi": "MODASON UZUN PALTO SİYAH",
+    "fiyat": "1750 TL",
+    "kategori": "Mont",
+    "gorsel": "modason-uzun-palto-siyah-muuyjuyl1.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 153,
+    "urun_adi": "MODASON UZUN PALTO FÜME",
+    "fiyat": "1750 TL",
+    "kategori": "Mont",
+    "gorsel": "modason-uzun-palto-fume-muuyjuyl2.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
