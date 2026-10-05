@@ -1082,11 +1082,23 @@
   {
     "id": 93,
     "urun_adi": "ERKEK NUBUK CEKET SİYAH",
-    "fiyat": "440 TL",
+    "fiyat": "540 TL",
     "kategori": "Ceket",
     "gorsel": "SİYAHNUBUK.jpg",
     "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Dilerseniz battal beden mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
-    "stok": "Var"
+    "stok": "Var",
+    "video": "",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   },
   {
     "id": 94,
