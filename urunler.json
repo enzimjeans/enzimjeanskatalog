@@ -713,11 +713,23 @@
   {
     "id": 56,
     "urun_adi": "Slim Fit kot Pantolon Dove",
-    "fiyat": "320 TL",
+    "fiyat": "350 TL",
     "kategori": "Jeans",
     "gorsel": "DOVE.jpg",
     "aciklama": "%98 pamuk ve %2 spandex.31-32-33-34-36-38 Beden seçeneği mevcuttur.Ürünümüz tekli olarak satın alınabilir.Belirtilen fiyatlar adet fiyatıdır.",
-    "stok": "Var"
+    "stok": "Var",
+    "video": "",
+    "satis": "tekli",
+    "bedenler": [
+      "31",
+      "32",
+      "33",
+      "34",
+      "36",
+      "38"
+    ],
+    "rozet": "",
+    "eskiFiyat": ""
   },
   {
     "id": 57,
