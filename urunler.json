@@ -664,7 +664,20 @@
     "kategori": "Mont",
     "gorsel": "SOFTHAKİ.jpg",
     "aciklama": "Su ve rüzgar geçirmez özelliği ile her türlü hava koşulunda konforlu bir kullanım sunar.Polar ve astar detayları ile ekstra sıcaklık ve konfor sağlar.S-M-L-XL-2XL-3XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
-    "stok": "Var"
+    "stok": "Yok",
+    "video": "",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL",
+      "3XL"
+    ],
+    "seriAdet": 6,
+    "rozet": "",
+    "eskiFiyat": ""
   },
   {
     "id": 54,
