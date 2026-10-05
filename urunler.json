@@ -1985,5 +1985,125 @@
     "gorsel": "SIFIRKOL.jpg",
     "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
     "stok": "Yok"
+  },
+  {
+    "id": 140,
+    "urun_adi": "BY EFENDİ KADİFE GÖMLEK AÇIK YEŞİL",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-kadife-gomlek-acik-yesil-muuyetff0.jpg",
+    "aciklama": "S-M-L-XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 141,
+    "urun_adi": "BY EFENDİ KADİFE GÖMLEK GRİ",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-kadife-gomlek-gri-muuyetff1.jpg",
+    "aciklama": "S-M-L-XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 142,
+    "urun_adi": "BY EFENDİ KADİFE GÖMLEK SİYAH",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-kadife-gomlek-siyah-muuyetff2.jpg",
+    "aciklama": "S-M-L-XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 143,
+    "urun_adi": "BY EFENDİ KADİFE GÖMLEK BEJ",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-kadife-gomlek-bej-muuyetff3.jpg",
+    "aciklama": "S-M-L-XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 144,
+    "urun_adi": "BY EFENDİ KADİFE GÖMLEK KAHVERENGİ",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-kadife-gomlek-kahverengi-muuyetff4.jpg",
+    "aciklama": "S-M-L-XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 145,
+    "urun_adi": "BY EFENDİ KADİFE GÖMLEK YEŞİL",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "by-efendi-kadife-gomlek-yesil-muuyetff5.jpg",
+    "aciklama": "S-M-L-XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "one-cikan",
+    "eskiFiyat": ""
   }
 ]
