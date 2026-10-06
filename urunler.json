@@ -3045,5 +3045,81 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 193,
+    "urun_adi": "POOL DEEP 3039 MONT SİYAH",
+    "fiyat": "1600 TL",
+    "kategori": "Mont",
+    "gorsel": "pool-deep-3039-mont-siyah-muwjwt7z0.jpg",
+    "aciklama": "Günlük kullanım için ideal, stil sahibi erkeklerin tercihi.\nŞıklık, sıcaklık ve rahatlık tek montta!",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "M",
+      "L",
+      "XL(2)",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 194,
+    "urun_adi": "POOL DEEP 3039 MONT ÇAĞLA YEŞİL",
+    "fiyat": "1600 TL",
+    "kategori": "Mont",
+    "gorsel": "pool-deep-3039-mont-cagla-yesil-muwjwt7z1.jpg",
+    "aciklama": "Günlük kullanım için ideal, stil sahibi erkeklerin tercihi.\nŞıklık, sıcaklık ve rahatlık tek montta!",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "M",
+      "L",
+      "XL(2)",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 195,
+    "urun_adi": "POOL DEEP 3039 MONT LACİVERT",
+    "fiyat": "1600 TL",
+    "kategori": "Mont",
+    "gorsel": "pool-deep-3039-mont-lacivert-muwjwt7z2.jpg",
+    "aciklama": "Günlük kullanım için ideal, stil sahibi erkeklerin tercihi.\nŞıklık, sıcaklık ve rahatlık tek montta!",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "M",
+      "L",
+      "XL(2)",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 196,
+    "urun_adi": "POOL DEEP 3039 MONT KAHVERENGİ",
+    "fiyat": "1600 TL",
+    "kategori": "Mont",
+    "gorsel": "pool-deep-3039-mont-kahverengi-muwjwt7z3.jpg",
+    "aciklama": "Günlük kullanım için ideal, stil sahibi erkeklerin tercihi.\nŞıklık, sıcaklık ve rahatlık tek montta!",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "M",
+      "L",
+      "XL(2)",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
