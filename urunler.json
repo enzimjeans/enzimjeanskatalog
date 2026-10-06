@@ -2925,5 +2925,125 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 187,
+    "urun_adi": "BOLD BROTHERS 6033 KAŞE GÖMLEK BEJ",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "bold-brothers-6033-kase-gomlek-bej-muwjiz6o0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Yok",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 188,
+    "urun_adi": "BOLD BROTHERS 6033 KAŞE GÖMLEK SİYAH",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "bold-brothers-6033-kase-gomlek-siyah-muwjiz6o1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Yok",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 189,
+    "urun_adi": "BOLD BROTHERS 6033 KAŞE GÖMLEK HAKİ",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "bold-brothers-6033-kase-gomlek-haki-muwjiz6o2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Yok",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 190,
+    "urun_adi": "BOLD BROTHERS 6033 KAŞE GÖMLEK FÜME",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "bold-brothers-6033-kase-gomlek-fume-muwjiz6o3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Yok",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 191,
+    "urun_adi": "BOLD BROTHERS 6033 KAŞE GÖMLEK LACİVERT",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "bold-brothers-6033-kase-gomlek-lacivert-muwjiz6o4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Yok",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 192,
+    "urun_adi": "BOLD BROTHERS 6033 KAŞE GÖMLEK ACI KAHVE",
+    "fiyat": "475 TL",
+    "kategori": "Gömlek",
+    "gorsel": "bold-brothers-6033-kase-gomlek-aci-kahve-muwjiz6o5.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Yok",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
