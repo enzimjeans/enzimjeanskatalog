@@ -3375,5 +3375,68 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 209,
+    "urun_adi": "SOFTSHELL POLAR CEKET FÜME",
+    "fiyat": "400 TL",
+    "kategori": "Ceket",
+    "gorsel": "softshell-polar-ceket-fume-muxu31a30.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL",
+      "3XL"
+    ],
+    "seriAdet": 6,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 210,
+    "urun_adi": "SOFTSHELL POLAR CEKET GRİ",
+    "fiyat": "400 TL",
+    "kategori": "Ceket",
+    "gorsel": "softshell-polar-ceket-gri-muxu31a31.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL",
+      "3XL"
+    ],
+    "seriAdet": 6,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 211,
+    "urun_adi": "SOFTSHELL POLAR CEKET SİYAH",
+    "fiyat": "400 TL",
+    "kategori": "Ceket",
+    "gorsel": "softshell-polar-ceket-siyah-muxu31a32.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL",
+      "3XL"
+    ],
+    "seriAdet": 6,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
