@@ -3438,5 +3438,110 @@
     "seriAdet": 6,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 212,
+    "urun_adi": "KADİFE PANTOLON LACİVERT",
+    "fiyat": "700 TL",
+    "kategori": "Jeans",
+    "gorsel": "kadife-pantolon-lacivert-muy3so4k0.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "44",
+      "46",
+      "48",
+      "50",
+      "52",
+      "54"
+    ],
+    "seriAdet": 10,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 213,
+    "urun_adi": "KADİFE PANTOLON HAKİ",
+    "fiyat": "700 TL",
+    "kategori": "Jeans",
+    "gorsel": "kadife-pantolon-haki-muy3so4k1.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "44",
+      "46",
+      "48",
+      "50",
+      "52",
+      "54"
+    ],
+    "seriAdet": 10,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 214,
+    "urun_adi": "KADİFE PANTOLON FÜME",
+    "fiyat": "700 TL",
+    "kategori": "Jeans",
+    "gorsel": "kadife-pantolon-fume-muy3so4k2.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "44",
+      "46",
+      "48",
+      "50",
+      "52",
+      "54"
+    ],
+    "seriAdet": 10,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 215,
+    "urun_adi": "KADİFE PANTOLON SİYAH",
+    "fiyat": "700 TL",
+    "kategori": "Jeans",
+    "gorsel": "kadife-pantolon-siyah-muy3so4k3.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "44",
+      "46",
+      "48",
+      "50",
+      "52",
+      "54"
+    ],
+    "seriAdet": 10,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 216,
+    "urun_adi": "KADİFE PANTOLON KAHVERENGİ",
+    "fiyat": "700 TL",
+    "kategori": "Jeans",
+    "gorsel": "kadife-pantolon-kahverengi-muy3so4k4.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "44",
+      "46",
+      "48",
+      "50",
+      "52",
+      "54"
+    ],
+    "seriAdet": 10,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
