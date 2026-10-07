@@ -3255,5 +3255,125 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 203,
+    "urun_adi": "VİOLE 3200 KAZAK GRİ",
+    "fiyat": "345 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3200-kazak-gri-muxt331n0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 204,
+    "urun_adi": "VİOLE 3200 KAZAK KAHVERENGİ",
+    "fiyat": "345 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3200-kazak-kahverengi-muxt331n1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 205,
+    "urun_adi": "VİOLE 3200 KAZAK BORDO",
+    "fiyat": "345 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3200-kazak-bordo-muxt331n2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 206,
+    "urun_adi": "VİOLE 3200 KAZAK HAKİ",
+    "fiyat": "345 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3200-kazak-haki-muxt331n3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 207,
+    "urun_adi": "VİOLE 3200 KAZAK BEYAZ",
+    "fiyat": "345 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3200-kazak-beyaz-muxt331n4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 208,
+    "urun_adi": "VİOLE 3200 KAZAK SİYAH",
+    "fiyat": "345 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3200-kazak-siyah-muxt331n5.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
