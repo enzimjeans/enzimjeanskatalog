@@ -3121,5 +3121,125 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 197,
+    "urun_adi": "VİOLE 3100 SELANİK KAZAK KAHVERENGİ",
+    "fiyat": "390 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3100-selanik-kazak-kahverengi-muxrxi5l0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 198,
+    "urun_adi": "VİOLE 3100 SELANİK KAZAK HAKİ",
+    "fiyat": "390 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3100-selanik-kazak-haki-muxrxi5l1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 199,
+    "urun_adi": "VİOLE 3100 SELANİK KAZAK BORDO",
+    "fiyat": "390 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3100-selanik-kazak-bordo-muxrxi5l2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 200,
+    "urun_adi": "VİOLE 3100 SELANİK KAZAK SİYAH",
+    "fiyat": "390 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3100-selanik-kazak-siyah-muxrxi5l3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 201,
+    "urun_adi": "VİOLE 3100 SELANİK KAZAK BEYAZ",
+    "fiyat": "390 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3100-selanik-kazak-beyaz-muxrxi5l4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 202,
+    "urun_adi": "VİOLE 3100 SELANİK KAZAK GRİ",
+    "fiyat": "390 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-3100-selanik-kazak-gri-muxrxi5l5.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
