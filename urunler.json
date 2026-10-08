@@ -3646,5 +3646,65 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 222,
+    "urun_adi": "ÖZ 3 İPLİK SWEAT BEYAZ",
+    "fiyat": "360 TL",
+    "kategori": "Sweat",
+    "gorsel": "oz-3-iplik-sweat-beyaz-muziowxu0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 223,
+    "urun_adi": "ÖZ 3 İPLİK SWEAT BEJ",
+    "fiyat": "360 TL",
+    "kategori": "Sweat",
+    "gorsel": "oz-3-iplik-sweat-bej-muziowxu1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 224,
+    "urun_adi": "ÖZ 3 İPLİK SWEAT FÜME",
+    "fiyat": "360 TL",
+    "kategori": "Sweat",
+    "gorsel": "oz-3-iplik-sweat-fume-muziowxu2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
