@@ -3544,5 +3544,26 @@
     "rozet": "",
     "eskiFiyat": "",
     "video": ""
+  },
+  {
+    "id": 217,
+    "urun_adi": "1489 JOGGER PANTOLON",
+    "fiyat": "350 TL",
+    "kategori": "Jeans",
+    "gorsel": "1489-jogger-pantolon-muzh6wxr.jpg",
+    "video": "",
+    "aciklama": "S-M-L-XL-2XL BEDEN ARALIĞI",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
