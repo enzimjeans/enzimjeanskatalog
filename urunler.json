@@ -4146,5 +4146,125 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 247,
+    "urun_adi": "DAĞLIOĞLU 226-266-220-277 KAZAK GRİ",
+    "fiyat": "255 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-226-266-220-277-kazak-gri-muzjxk5w0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 248,
+    "urun_adi": "DAĞLIOĞLU 226-266-220-277 KAZAK SİYAH",
+    "fiyat": "255 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-226-266-220-277-kazak-siyah-muzjxk5w1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 249,
+    "urun_adi": "DAĞLIOĞLU 226-266-220-277 KAZAK KIRMIZI",
+    "fiyat": "255 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-226-266-220-277-kazak-kirmizi-muzjxk5w2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 250,
+    "urun_adi": "DAĞLIOĞLU 226-266-220-277 KAZAK SÜRLÜ KAHVE",
+    "fiyat": "255 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-226-266-220-277-kazak-surlu-ka-muzjxk5w3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 251,
+    "urun_adi": "DAĞLIOĞLU 226-266-220-277 KAZAK MAVİ",
+    "fiyat": "255 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-226-266-220-277-kazak-mavi-muzjxk5w4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 252,
+    "urun_adi": "DAĞLIOĞLU 226-266-220-277 KAZAK HAKİ",
+    "fiyat": "255 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-226-266-220-277-kazak-haki-muzjxk5w5.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
