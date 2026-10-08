@@ -3746,5 +3746,105 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 227,
+    "urun_adi": "DAĞLIOĞLU YAKALI KAZAK 265 LACİVERT",
+    "fiyat": "310 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-yakali-kazak-265-lacivert-muzituxr0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 228,
+    "urun_adi": "DAĞLIOĞLU YAKALI KAZAK 265 BORDO",
+    "fiyat": "310 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-yakali-kazak-265-bordo-muzituxr1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 229,
+    "urun_adi": "DAĞLIOĞLU YAKALI KAZAK 265 BEJ",
+    "fiyat": "310 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-yakali-kazak-265-bej-muzituxr2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 230,
+    "urun_adi": "DAĞLIOĞLU YAKALI KAZAK 265 BEYAZ",
+    "fiyat": "310 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-yakali-kazak-265-beyaz-muzituxr3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 231,
+    "urun_adi": "DAĞLIOĞLU YAKALI KAZAK 265 SİYAH",
+    "fiyat": "310 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-yakali-kazak-265-siyah-muzituxr4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
