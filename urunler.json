@@ -3846,5 +3846,65 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 232,
+    "urun_adi": "DAĞLIOĞLU KAZAK 2530 KAHVERENGİ",
+    "fiyat": "300 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-kazak-2530-kahverengi-muzj0ibb0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 233,
+    "urun_adi": "DAĞLIOĞLU KAZAK 2530 GRİ",
+    "fiyat": "300 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-kazak-2530-gri-muzj0ibb1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 234,
+    "urun_adi": "DAĞLIOĞLU KAZAK 2530 SİYAH",
+    "fiyat": "300 TL",
+    "kategori": "Kazak",
+    "gorsel": "daglioglu-kazak-2530-siyah-muzj0ibb2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
