@@ -3966,5 +3966,125 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 238,
+    "urun_adi": "VİOLE 9250 HEMŞİRE YAKA TRİKO KAHVERENGİ",
+    "fiyat": "335 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9250-hemsire-yaka-triko-kahverengi-muzjbowo0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 239,
+    "urun_adi": "VİOLE 9250 HEMŞİRE YAKA TRİKO BEJ",
+    "fiyat": "335 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9250-hemsire-yaka-triko-bej-muzjbowo1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 240,
+    "urun_adi": "VİOLE 9250 HEMŞİRE YAKA TRİKO BEYAZ",
+    "fiyat": "335 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9250-hemsire-yaka-triko-beyaz-muzjbowo2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 241,
+    "urun_adi": "VİOLE 9250 HEMŞİRE YAKA TRİKO LACİVERT",
+    "fiyat": "335 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9250-hemsire-yaka-triko-lacivert-muzjbowo3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 242,
+    "urun_adi": "VİOLE 9250 HEMŞİRE YAKA TRİKO SİYAH",
+    "fiyat": "335 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9250-hemsire-yaka-triko-siyah-muzjbowo4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 243,
+    "urun_adi": "VİOLE 9250 HEMŞİRE YAKA TRİKO GRİ",
+    "fiyat": "335 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9250-hemsire-yaka-triko-gri-muzjbowo5.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
