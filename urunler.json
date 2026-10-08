@@ -3706,5 +3706,45 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 225,
+    "urun_adi": "SİMENTİ 0 YAKA SWEAT 2073 KAHVERENGİ",
+    "fiyat": "520 TL",
+    "kategori": "Sweat",
+    "gorsel": "simenti-0-yaka-sweat-2073-kahverengi-muziql9p0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 226,
+    "urun_adi": "SİMENTİ 0 YAKA SWEAT 2073 SİYAH",
+    "fiyat": "520 TL",
+    "kategori": "Sweat",
+    "gorsel": "simenti-0-yaka-sweat-2073-siyah-muziql9p1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
