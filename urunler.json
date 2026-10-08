@@ -4086,5 +4086,65 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 244,
+    "urun_adi": "POLO MİRAGE 5046/5048/5049 KAZAK BEYAZ",
+    "fiyat": "440 TL",
+    "kategori": "Kazak",
+    "gorsel": "polo-mirage-5046-5048-5049-kazak-beyaz-muzjek0s0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 245,
+    "urun_adi": "POLO MİRAGE 5046/5048/5049 KAZAK GRİ",
+    "fiyat": "440 TL",
+    "kategori": "Kazak",
+    "gorsel": "polo-mirage-5046-5048-5049-kazak-gri-muzjek0s1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 246,
+    "urun_adi": "POLO MİRAGE 5046/5048/5049 KAZAK KAHVERENGİ",
+    "fiyat": "440 TL",
+    "kategori": "Kazak",
+    "gorsel": "polo-mirage-5046-5048-5049-kazak-kahvere-muzjek0s2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
