@@ -3906,5 +3906,65 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 235,
+    "urun_adi": "VİOLE 1120 FERMUARLI KAZAK BEJ",
+    "fiyat": "345 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-1120-fermuarli-kazak-bej-muzj988q0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 236,
+    "urun_adi": "VİOLE 1120 FERMUARLI KAZAK BEYAZ",
+    "fiyat": "345 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-1120-fermuarli-kazak-beyaz-muzj988q1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 237,
+    "urun_adi": "VİOLE 1120 FERMUARLI KAZAK SİYAH",
+    "fiyat": "345 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-1120-fermuarli-kazak-siyah-muzj988q2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
