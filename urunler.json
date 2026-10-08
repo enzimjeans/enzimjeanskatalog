@@ -3565,5 +3565,26 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 218,
+    "urun_adi": "1489 BATTAL  JOGGER PANTOLON",
+    "fiyat": "380 TL",
+    "kategori": "Jeans",
+    "gorsel": "1489-battal-jogger-pantolon-muzi6df4.jpg",
+    "video": "",
+    "aciklama": "2XL-3XL-4XL-5XL-6XL BEDEN ARALIĞI",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "2X",
+      "3X",
+      "4X",
+      "5X",
+      "6X"
+    ],
+    "seriAdet": 8,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
