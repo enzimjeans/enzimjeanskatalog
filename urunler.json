@@ -3586,5 +3586,65 @@
     "seriAdet": 8,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 219,
+    "urun_adi": "MASTİF 6041 3İP SWEAT LACİVERT",
+    "fiyat": "450 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6041-3ip-sweat-lacivert-muzimoy20.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 220,
+    "urun_adi": "MASTİF 6041 3İP SWEAT SİYAH",
+    "fiyat": "450 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6041-3ip-sweat-siyah-muzimoy21.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 221,
+    "urun_adi": "MASTİF 6041 3İP SWEAT GRİ",
+    "fiyat": "450 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6041-3ip-sweat-gri-muzimoy22.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
