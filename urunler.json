@@ -1849,7 +1849,20 @@
     "kategori": "Jeans",
     "gorsel": "243-4.jpg",
     "aciklama": "32-33-34-36-38-40 Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
-    "stok": "Var"
+    "stok": "Yok",
+    "video": "",
+    "satis": "seri",
+    "bedenler": [
+      "32",
+      "33",
+      "34",
+      "36",
+      "38",
+      "40"
+    ],
+    "seriAdet": 6,
+    "rozet": "",
+    "eskiFiyat": ""
   },
   {
     "id": 130,
