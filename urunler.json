@@ -4825,5 +4825,85 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 277,
+    "urun_adi": "MASTİF 6050 3İPLİK CEKET MAVİ",
+    "fiyat": "485 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6050-3iplik-ceket-mavi-mv0v7av20.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 278,
+    "urun_adi": "MASTİF 6050 3İPLİK CEKET SİYAH",
+    "fiyat": "485 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6050-3iplik-ceket-siyah-mv0v7av21.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 279,
+    "urun_adi": "MASTİF 6050 3İPLİK CEKET GRİ",
+    "fiyat": "485 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6050-3iplik-ceket-gri-mv0v7av22.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 280,
+    "urun_adi": "MASTİF 6050 3İPLİK CEKET LACİVERT",
+    "fiyat": "485 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6050-3iplik-ceket-lacivert-mv0v7av23.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
