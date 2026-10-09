@@ -4506,5 +4506,65 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 265,
+    "urun_adi": "MASTİF 6043-6030-3015 SWEAT GRİ",
+    "fiyat": "440 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6043-6030-3015-sweat-gri-mv0mlp9m0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 266,
+    "urun_adi": "MASTİF 6043-6030-3015 SWEAT SİYAH",
+    "fiyat": "440 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6043-6030-3015-sweat-siyah-mv0mlp9m1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 267,
+    "urun_adi": "MASTİF 6043-6030-3015 SWEAT YEŞİL",
+    "fiyat": "440 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6043-6030-3015-sweat-yesil-mv0mlp9m2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
