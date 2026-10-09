@@ -4386,5 +4386,125 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 259,
+    "urun_adi": "VİOLE 9150 0 YAKA KAZAK BEYAZ",
+    "fiyat": "325 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9150-0-yaka-kazak-beyaz-mv0mjzd30.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 260,
+    "urun_adi": "VİOLE 9150 0 YAKA KAZAK LACİVERT",
+    "fiyat": "325 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9150-0-yaka-kazak-lacivert-mv0mjzd31.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 261,
+    "urun_adi": "VİOLE 9150 0 YAKA KAZAK GRİ",
+    "fiyat": "325 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9150-0-yaka-kazak-gri-mv0mjzd32.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 262,
+    "urun_adi": "VİOLE 9150 0 YAKA KAZAK BEJ",
+    "fiyat": "325 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9150-0-yaka-kazak-bej-mv0mjzd33.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 263,
+    "urun_adi": "VİOLE 9150 0 YAKA KAZAK SİYAH",
+    "fiyat": "325 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9150-0-yaka-kazak-siyah-mv0mjzd34.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 264,
+    "urun_adi": "VİOLE 9150 0 YAKA KAZAK BORDO",
+    "fiyat": "325 TL",
+    "kategori": "Kazak",
+    "gorsel": "viole-9150-0-yaka-kazak-bordo-mv0mjzd35.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
