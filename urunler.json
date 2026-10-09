@@ -4566,5 +4566,26 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 268,
+    "urun_adi": "MASTİF 6043-6030-3015 SWEAT",
+    "fiyat": "440 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-6043-6030-3015-sweat-mv0mm8fv.jpg",
+    "video": "",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
