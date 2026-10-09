@@ -4266,5 +4266,125 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 253,
+    "urun_adi": "MASTİF 3036 OYSHO SWEAT ZÜMRÜT YEŞİL",
+    "fiyat": "350 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3036-oysho-sweat-zumrut-yesil-mv0l22nl0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 254,
+    "urun_adi": "MASTİF 3036 OYSHO SWEAT LACİVERT",
+    "fiyat": "350 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3036-oysho-sweat-lacivert-mv0l22nl1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 255,
+    "urun_adi": "MASTİF 3036 OYSHO SWEAT BEYAZ",
+    "fiyat": "350 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3036-oysho-sweat-beyaz-mv0l22nl2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 256,
+    "urun_adi": "MASTİF 3036 OYSHO SWEAT SİYAH",
+    "fiyat": "350 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3036-oysho-sweat-siyah-mv0l22nl3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 257,
+    "urun_adi": "MASTİF 3036 OYSHO SWEAT GRİ",
+    "fiyat": "350 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3036-oysho-sweat-gri-mv0l22nl4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 258,
+    "urun_adi": "MASTİF 3036 OYSHO SWEAT YEŞİL",
+    "fiyat": "350 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3036-oysho-sweat-yesil-mv0l22nl5.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
