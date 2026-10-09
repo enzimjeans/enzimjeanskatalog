@@ -4587,5 +4587,45 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 269,
+    "urun_adi": "3026 MASTİF ERKEK SWEAT GRİ",
+    "fiyat": "300 TL",
+    "kategori": "Sweat",
+    "gorsel": "3026-mastif-erkek-sweat-gri-mv0mq7oj0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 270,
+    "urun_adi": "3026 MASTİF ERKEK SWEAT SİYAH",
+    "fiyat": "300 TL",
+    "kategori": "Sweat",
+    "gorsel": "3026-mastif-erkek-sweat-siyah-mv0mq7oj1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
