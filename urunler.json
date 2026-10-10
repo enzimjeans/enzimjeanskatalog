@@ -5229,7 +5229,7 @@
   },
   {
     "id": 297,
-    "urun_adi": "KADİFE GÖMLEK ZRA yeşil",
+    "urun_adi": "KDF GÖMLEK ZRA YEŞİL",
     "fiyat": "325 TL",
     "kategori": "Gömlek",
     "gorsel": "kadife-gomlek-zra-yesil-mv23ttap7.jpg",
@@ -5245,7 +5245,8 @@
     ],
     "seriAdet": 5,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 298,
