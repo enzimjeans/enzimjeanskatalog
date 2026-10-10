@@ -5169,7 +5169,7 @@
   },
   {
     "id": 294,
-    "urun_adi": "KADİFE GÖMLEK ZRA bej",
+    "urun_adi": "KDF GÖMLEK ZRA BEJ",
     "fiyat": "325 TL",
     "kategori": "Gömlek",
     "gorsel": "kadife-gomlek-zra-bej-mv23ttap4.jpg",
@@ -5185,7 +5185,8 @@
     ],
     "seriAdet": 5,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 295,
