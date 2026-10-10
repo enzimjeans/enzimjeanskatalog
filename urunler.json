@@ -4945,5 +4945,26 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 283,
+    "urun_adi": "BOLD BROTHERS 6072-6085 OYSHO SWEAT",
+    "fiyat": "350 TL",
+    "kategori": "Sweat",
+    "gorsel": "bold-brothers-6072-6085-oysho-sweat-mv221s7v.jpg",
+    "video": "",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
