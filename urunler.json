@@ -3546,7 +3546,7 @@
     "kategori": "Jeans",
     "gorsel": "kadife-pantolon-haki-muy3so4k1.jpg",
     "aciklama": "",
-    "stok": "Var",
+    "stok": "Yok",
     "satis": "seri",
     "bedenler": [
       "44",
@@ -3558,7 +3558,8 @@
     ],
     "seriAdet": 10,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 214,
