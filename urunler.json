@@ -4905,5 +4905,45 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 281,
+    "urun_adi": "MASTİFF 3000 UZUN KOL PENYE SİYAH",
+    "fiyat": "230 TL",
+    "kategori": "Kazak",
+    "gorsel": "mastiff-3000-uzun-kol-penye-siyah-mv21yqvz0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 282,
+    "urun_adi": "MASTİFF 3000 UZUN KOL PENYE BEYAZ",
+    "fiyat": "230 TL",
+    "kategori": "Kazak",
+    "gorsel": "mastiff-3000-uzun-kol-penye-beyaz-mv21yqvz1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
