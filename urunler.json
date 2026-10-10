@@ -3567,7 +3567,7 @@
     "kategori": "Jeans",
     "gorsel": "kadife-pantolon-fume-muy3so4k2.jpg",
     "aciklama": "",
-    "stok": "Var",
+    "stok": "Yok",
     "satis": "seri",
     "bedenler": [
       "44",
@@ -3579,7 +3579,8 @@
     ],
     "seriAdet": 10,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 215,
