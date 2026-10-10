@@ -5109,7 +5109,7 @@
   },
   {
     "id": 291,
-    "urun_adi": "KADİFE GÖMLEK ZRA mavi",
+    "urun_adi": "KDF GÖMLEK ZRA MAVİ",
     "fiyat": "325 TL",
     "kategori": "Gömlek",
     "gorsel": "kadife-gomlek-zra-mavi-mv23ttap1.jpg",
@@ -5125,7 +5125,8 @@
     ],
     "seriAdet": 5,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 292,
