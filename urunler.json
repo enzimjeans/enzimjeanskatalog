@@ -5318,5 +5318,45 @@
     "rozet": "",
     "eskiFiyat": "",
     "video": ""
+  },
+  {
+    "id": 301,
+    "urun_adi": "MASTİF 6032 POLAR CEKET GRİ",
+    "fiyat": "380 TL",
+    "kategori": "Ceket",
+    "gorsel": "mastif-6032-polar-ceket-gri-mv24kwu70.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 302,
+    "urun_adi": "MASTİF 6032 POLAR CEKET SİYAH",
+    "fiyat": "380 TL",
+    "kategori": "Ceket",
+    "gorsel": "mastif-6032-polar-ceket-siyah-mv24kwu71.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
