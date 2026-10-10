@@ -5189,7 +5189,7 @@
   },
   {
     "id": 295,
-    "urun_adi": "KADİFE GÖMLEK ZRA taba",
+    "urun_adi": "KDF GÖMLEK ZRA TABA",
     "fiyat": "325 TL",
     "kategori": "Gömlek",
     "gorsel": "kadife-gomlek-zra-taba-mv23ttap5.jpg",
@@ -5205,7 +5205,8 @@
     ],
     "seriAdet": 5,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 296,
