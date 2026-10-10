@@ -3461,7 +3461,7 @@
     "kategori": "Ceket",
     "gorsel": "softshell-polar-ceket-fume-muxu31a30.jpg",
     "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
-    "stok": "Var",
+    "stok": "Yok",
     "satis": "seri",
     "bedenler": [
       "S",
@@ -3473,7 +3473,8 @@
     ],
     "seriAdet": 6,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 210,
