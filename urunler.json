@@ -5129,7 +5129,7 @@
   },
   {
     "id": 292,
-    "urun_adi": "KADİFE GÖMLEK ZRA füme",
+    "urun_adi": "KDF GÖMLEK ZRA FÜME",
     "fiyat": "325 TL",
     "kategori": "Gömlek",
     "gorsel": "kadife-gomlek-zra-fume-mv23ttap2.jpg",
@@ -5145,7 +5145,8 @@
     ],
     "seriAdet": 5,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 293,
