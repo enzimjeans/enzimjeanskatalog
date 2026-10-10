@@ -5249,7 +5249,7 @@
   },
   {
     "id": 298,
-    "urun_adi": "KADİFE GÖMLEK ZRA kahverengi",
+    "urun_adi": "KDF GÖMLEK ZRA KAHVERENGİ",
     "fiyat": "325 TL",
     "kategori": "Gömlek",
     "gorsel": "kadife-gomlek-zra-kahverengi-mv23ttap8.jpg",
@@ -5265,7 +5265,8 @@
     ],
     "seriAdet": 5,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 299,
