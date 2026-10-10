@@ -4966,5 +4966,125 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 284,
+    "urun_adi": "MASTİF 3035 3İPLİK SWEAT BEYAZ",
+    "fiyat": "325 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3035-3iplik-sweat-beyaz-mv22ds7l0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 285,
+    "urun_adi": "MASTİF 3035 3İPLİK SWEAT TURKUAZ",
+    "fiyat": "325 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3035-3iplik-sweat-turkuaz-mv22ds7l1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 286,
+    "urun_adi": "MASTİF 3035 3İPLİK SWEAT GRİ",
+    "fiyat": "325 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3035-3iplik-sweat-gri-mv22ds7l2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 287,
+    "urun_adi": "MASTİF 3035 3İPLİK SWEAT LACİVERT",
+    "fiyat": "325 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3035-3iplik-sweat-lacivert-mv22ds7l3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 288,
+    "urun_adi": "MASTİF 3035 3İPLİK SWEAT SİYAH",
+    "fiyat": "325 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3035-3iplik-sweat-siyah-mv22ds7l4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 289,
+    "urun_adi": "MASTİF 3035 3İPLİK SWEAT KAHVERENGİ",
+    "fiyat": "325 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3035-3iplik-sweat-kahverengi-mv22ds7l5.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
