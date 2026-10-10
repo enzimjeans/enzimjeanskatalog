@@ -5362,5 +5362,85 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 303,
+    "urun_adi": "BOLD BRO 8025 CEKET BEYAZ",
+    "fiyat": "635 TL",
+    "kategori": "Ceket",
+    "gorsel": "bold-bro-8025-ceket-beyaz-mv25u1ry0.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 304,
+    "urun_adi": "BOLD BRO 8025 CEKET SİYAH",
+    "fiyat": "635 TL",
+    "kategori": "Ceket",
+    "gorsel": "bold-bro-8025-ceket-siyah-mv25u1ry1.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 305,
+    "urun_adi": "BOLD BRO 8025 CEKET LACİVERT",
+    "fiyat": "635 TL",
+    "kategori": "Ceket",
+    "gorsel": "bold-bro-8025-ceket-lacivert-mv25u1ry2.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 306,
+    "urun_adi": "BOLD BRO 8025 CEKET YEŞİL",
+    "fiyat": "635 TL",
+    "kategori": "Ceket",
+    "gorsel": "bold-bro-8025-ceket-yesil-mv25u1ry3.jpg",
+    "aciklama": "S-M-L-XL-2XL Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
