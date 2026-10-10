@@ -5289,7 +5289,7 @@
   },
   {
     "id": 300,
-    "urun_adi": "KADİFE GÖMLEK ZRA taş",
+    "urun_adi": "KDF GÖMLEK ZRA TAŞ",
     "fiyat": "325 TL",
     "kategori": "Gömlek",
     "gorsel": "kadife-gomlek-zra-tas-mv23ttap10.jpg",
@@ -5305,6 +5305,7 @@
     ],
     "seriAdet": 5,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   }
 ]
