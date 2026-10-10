@@ -3588,7 +3588,7 @@
     "kategori": "Jeans",
     "gorsel": "kadife-pantolon-siyah-muy3so4k3.jpg",
     "aciklama": "",
-    "stok": "Var",
+    "stok": "Yok",
     "satis": "seri",
     "bedenler": [
       "44",
@@ -3600,7 +3600,8 @@
     ],
     "seriAdet": 10,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 216,
