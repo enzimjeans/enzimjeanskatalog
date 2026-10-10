@@ -5086,5 +5086,225 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 290,
+    "urun_adi": "KADİFE GÖMLEK ZRA yeşil",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-yesil-mv23ttap0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 291,
+    "urun_adi": "KADİFE GÖMLEK ZRA mavi",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-mavi-mv23ttap1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 292,
+    "urun_adi": "KADİFE GÖMLEK ZRA füme",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-fume-mv23ttap2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 293,
+    "urun_adi": "KADİFE GÖMLEK ZRA beyaz",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-beyaz-mv23ttap3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 294,
+    "urun_adi": "KADİFE GÖMLEK ZRA bej",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-bej-mv23ttap4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 295,
+    "urun_adi": "KADİFE GÖMLEK ZRA taba",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-taba-mv23ttap5.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 296,
+    "urun_adi": "KADİFE GÖMLEK ZRA siyah",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-siyah-mv23ttap6.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 297,
+    "urun_adi": "KADİFE GÖMLEK ZRA yeşil",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-yesil-mv23ttap7.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 298,
+    "urun_adi": "KADİFE GÖMLEK ZRA kahverengi",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-kahverengi-mv23ttap8.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 299,
+    "urun_adi": "KADİFE GÖMLEK ZRA füme",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-fume-mv23ttap9.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 300,
+    "urun_adi": "KADİFE GÖMLEK ZRA taş",
+    "fiyat": "325 TL",
+    "kategori": "Gömlek",
+    "gorsel": "kadife-gomlek-zra-tas-mv23ttap10.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur. Ürünümüz serili olarak satılmaktadır. Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
