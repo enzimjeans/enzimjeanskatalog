@@ -3525,7 +3525,7 @@
     "kategori": "Jeans",
     "gorsel": "kadife-pantolon-lacivert-muy3so4k0.jpg",
     "aciklama": "",
-    "stok": "Var",
+    "stok": "Yok",
     "satis": "seri",
     "bedenler": [
       "44",
@@ -3537,7 +3537,8 @@
     ],
     "seriAdet": 10,
     "rozet": "",
-    "eskiFiyat": ""
+    "eskiFiyat": "",
+    "video": ""
   },
   {
     "id": 213,
