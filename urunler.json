@@ -5442,5 +5442,105 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 307,
+    "urun_adi": "BOLD BRO 8002 KAŞE CEKET KREM",
+    "fiyat": "925 TL",
+    "kategori": "Mont",
+    "gorsel": "bold-bro-8002-kase-ceket-krem-mv4zme6f0.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 308,
+    "urun_adi": "BOLD BRO 8002 KAŞE CEKET KAHVERENGİ",
+    "fiyat": "925 TL",
+    "kategori": "Mont",
+    "gorsel": "bold-bro-8002-kase-ceket-kahverengi-mv4zme6f1.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 309,
+    "urun_adi": "BOLD BRO 8002 KAŞE CEKET GRİ",
+    "fiyat": "925 TL",
+    "kategori": "Mont",
+    "gorsel": "bold-bro-8002-kase-ceket-gri-mv4zme6f2.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 310,
+    "urun_adi": "BOLD BRO 8002 KAŞE CEKET SİYAH",
+    "fiyat": "925 TL",
+    "kategori": "Mont",
+    "gorsel": "bold-bro-8002-kase-ceket-siyah-mv4zme6f3.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 311,
+    "urun_adi": "BOLD BRO 8002 KAŞE CEKET LACİVERT",
+    "fiyat": "925 TL",
+    "kategori": "Mont",
+    "gorsel": "bold-bro-8002-kase-ceket-lacivert-mv4zme6f4.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
