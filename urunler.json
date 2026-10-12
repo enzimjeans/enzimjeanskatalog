@@ -5742,5 +5742,105 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 322,
+    "urun_adi": "POOL DEEP 3033 MONT YEŞİL",
+    "fiyat": "1400 TL",
+    "kategori": "Mont",
+    "gorsel": "pool-deep-3033-mont-yesil-mv5dh5gh0.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 323,
+    "urun_adi": "POOL DEEP 3033 MONT KAHVERENGİ",
+    "fiyat": "1400 TL",
+    "kategori": "Mont",
+    "gorsel": "pool-deep-3033-mont-kahverengi-mv5dh5gh1.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 324,
+    "urun_adi": "POOL DEEP 3033 MONT LACİVERT",
+    "fiyat": "1400 TL",
+    "kategori": "Mont",
+    "gorsel": "pool-deep-3033-mont-lacivert-mv5dh5gh2.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 325,
+    "urun_adi": "POOL DEEP 3033 MONT SİYAH",
+    "fiyat": "1400 TL",
+    "kategori": "Mont",
+    "gorsel": "pool-deep-3033-mont-siyah-mv5dh5gh3.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 326,
+    "urun_adi": "POOL DEEP 3033 MONT GRİ",
+    "fiyat": "1400 TL",
+    "kategori": "Mont",
+    "gorsel": "pool-deep-3033-mont-gri-mv5dh5gh4.jpg",
+    "aciklama": "",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
