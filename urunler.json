@@ -5542,5 +5542,105 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 312,
+    "urun_adi": "MUSİC 0 YAKA 3İP SWEAT LACİVERT",
+    "fiyat": "290 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-3ip-sweat-lacivert-mv57p9ae0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 313,
+    "urun_adi": "MUSİC 0 YAKA 3İP SWEAT GRİ",
+    "fiyat": "290 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-3ip-sweat-gri-mv57p9ae1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 314,
+    "urun_adi": "MUSİC 0 YAKA 3İP SWEAT SİYAH",
+    "fiyat": "290 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-3ip-sweat-siyah-mv57p9ae2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 315,
+    "urun_adi": "MUSİC 0 YAKA 3İP SWEAT HAKİ YEŞİL",
+    "fiyat": "290 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-3ip-sweat-haki-yesil-mv57p9ae3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 316,
+    "urun_adi": "MUSİC 0 YAKA 3İP SWEAT MAVİ",
+    "fiyat": "290 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-3ip-sweat-mavi-mv57p9ae4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
