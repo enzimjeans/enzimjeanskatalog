@@ -5642,5 +5642,105 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 317,
+    "urun_adi": "MUSİC 0 YAKA OYSHO SWEAT GRİ",
+    "fiyat": "265 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-oysho-sweat-gri-mv583hlf0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 318,
+    "urun_adi": "MUSİC 0 YAKA OYSHO SWEAT İNDİGO MAVİ",
+    "fiyat": "265 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-oysho-sweat-indigo-mavi-mv583hlf1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 319,
+    "urun_adi": "MUSİC 0 YAKA OYSHO SWEAT SİYAH",
+    "fiyat": "265 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-oysho-sweat-siyah-mv583hlf2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 320,
+    "urun_adi": "MUSİC 0 YAKA OYSHO SWEAT LACİVERT",
+    "fiyat": "265 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-oysho-sweat-lacivert-mv583hlf3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 321,
+    "urun_adi": "MUSİC 0 YAKA OYSHO SWEAT BEJ",
+    "fiyat": "265 TL",
+    "kategori": "Sweat",
+    "gorsel": "music-0-yaka-oysho-sweat-bej-mv583hlf4.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
