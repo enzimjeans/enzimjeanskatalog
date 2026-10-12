@@ -5823,25 +5823,5 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
-  },
-  {
-    "id": 326,
-    "urun_adi": "POOL DEEP 3033 MONT GRİ",
-    "fiyat": "1400 TL",
-    "kategori": "Mont",
-    "gorsel": "pool-deep-3033-mont-gri-mv5dh5gh4.jpg",
-    "aciklama": "",
-    "stok": "Var",
-    "satis": "seri",
-    "bedenler": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "2XL"
-    ],
-    "seriAdet": 5,
-    "rozet": "",
-    "eskiFiyat": ""
   }
 ]
