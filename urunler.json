@@ -5903,5 +5903,85 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 330,
+    "urun_adi": "BERŞA 3 İPLİK SWEAT LACİVERT",
+    "fiyat": "310 TL",
+    "kategori": "Sweat",
+    "gorsel": "bersa-3-iplik-sweat-lacivert-mv7t0jbz0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 331,
+    "urun_adi": "BERŞA 3 İPLİK SWEAT HAKİ",
+    "fiyat": "310 TL",
+    "kategori": "Sweat",
+    "gorsel": "bersa-3-iplik-sweat-haki-mv7t0jbz1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 332,
+    "urun_adi": "BERŞA 3 İPLİK SWEAT BORDO",
+    "fiyat": "310 TL",
+    "kategori": "Sweat",
+    "gorsel": "bersa-3-iplik-sweat-bordo-mv7t0jbz2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 333,
+    "urun_adi": "BERŞA 3 İPLİK SWEAT SİYAH",
+    "fiyat": "310 TL",
+    "kategori": "Sweat",
+    "gorsel": "bersa-3-iplik-sweat-siyah-mv7t0jbz3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
