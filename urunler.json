@@ -5823,5 +5823,85 @@
     "seriAdet": 5,
     "rozet": "",
     "eskiFiyat": ""
+  },
+  {
+    "id": 326,
+    "urun_adi": "MASTİF 3049 OYSHO SWEAT HAKİ",
+    "fiyat": "370 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3049-oysho-sweat-haki-mv7sqyws0.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 327,
+    "urun_adi": "MASTİF 3049 OYSHO SWEAT SİYAH",
+    "fiyat": "370 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3049-oysho-sweat-siyah-mv7sqyws1.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 328,
+    "urun_adi": "MASTİF 3049 OYSHO SWEAT LACİVERT",
+    "fiyat": "370 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3049-oysho-sweat-lacivert-mv7sqyws2.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
+  },
+  {
+    "id": 329,
+    "urun_adi": "MASTİF 3049 OYSHO SWEAT KREM",
+    "fiyat": "370 TL",
+    "kategori": "Sweat",
+    "gorsel": "mastif-3049-oysho-sweat-krem-mv7sqyws3.jpg",
+    "aciklama": "S-M-L-XL-2XL  Beden seçeneği mevcuttur.Ürünümüz serili olarak satılmaktadır.Belirtilen fiyatlar adet fiyatıdır.",
+    "stok": "Var",
+    "satis": "seri",
+    "bedenler": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "seriAdet": 5,
+    "rozet": "",
+    "eskiFiyat": ""
   }
 ]
