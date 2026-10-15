@@ -1,6 +1,6 @@
 // SİVAL: internet koparsa en son görülen katalog açılsın.
 // Her zaman önce internetten alınır (fiyat/stok hep güncel); sadece bağlantı yoksa kayıtlı kopya kullanılır.
-const CACHE = 'sival-v1';
+const CACHE = 'sival-v2';
 
 // İlk açılışta temel dosyaları sakla: bir sonraki açılış internetsiz de olur
 const SHELL = ['./', 'index.html', 'style.css', 'ikonlar.css', 'script.js', 'config.js', 'urunler.json', 'ayarlar.json', 'manifest.webmanifest', 'ikonlar/ikon-192.png'];
@@ -9,7 +9,12 @@ self.addEventListener('install', e => {
     self.skipWaiting();
     e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => c.add(new Request(u, { cache: 'reload' })).catch(() => {})))));
 });
-self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+// Yeni sürümde eski kayıtlı kopyayı sil (internetsizken eski tasarım açılmasın)
+self.addEventListener('activate', e => e.waitUntil(
+    caches.keys()
+        .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+        .then(() => self.clients.claim())
+));
 
 self.addEventListener('fetch', e => {
     const req = e.request;

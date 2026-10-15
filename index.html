@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SİVAL - Toptan Satış Kataloğu</title>
     <meta name="description" content="SİVAL toptan giyim kataloğu: jean, gömlek, mont, yelek ve daha fazlası. Sepetinizi oluşturun, WhatsApp'tan sipariş verin.">
-    <meta name="theme-color" content="#14130f">
+    <meta name="theme-color" content="#1c2f4f">
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="ikonlar/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,7 +19,7 @@
     <!-- Ziyaret istatistikleri (Umami: çerezsiz, kişisel veri yok). Sadece yayındaki sitede sayar. -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="91cefaf2-0706-425c-ad1e-56dba596ced0" data-domains="enzimjeans.github.io"></script>
 </head>
-<body>
+<body data-view="home">
     <!-- Duyuru bandı (yönetim sayfasından düzenlenir) -->
     <div class="promo" id="promo" hidden>
         <button class="promo-main" id="promoMain">
@@ -84,12 +84,6 @@
             <li><span>2</span><b>Sepete ekleyin</b><small>Seri veya beden seçin</small></li>
             <li><span>3</span><b>WhatsApp'tan gönderin</b><small>Mesaj hazır gelir</small></li>
         </ol>
-        <div class="trust-strip" id="trustStrip" hidden></div>
-        <button class="size-cta" id="sizeCta" hidden>
-            <i class="ic duo ic-tape" aria-hidden="true"></i>
-            <span><b>Rafınızda eksik beden mi kaldı?</b><small>Bedeni seçin, tekli alınabilen ürünleri gösterelim</small></span>
-            <em>Eksik bedeni tamamla →</em>
-        </button>
         <div class="reorder" id="reorderBox" hidden>
             <div class="reorder-text">
                 <strong>Tekrar hoş geldiniz!</strong>
@@ -101,6 +95,48 @@
             </div>
         </div>
     </div>
+
+    <div class="controls" id="controls">
+        <div class="wrap">
+            <div class="cat-head" id="catHead">
+                <button class="cat-back" id="catBack"><span aria-hidden="true">←</span> Tüm kategoriler</button>
+                <div class="cat-title">
+                    <h2 id="catTitle"></h2>
+                    <span id="catMeta"></span>
+                </div>
+            </div>
+            <div class="controls-row">
+                <label class="search">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                    <input type="search" id="searchInput" placeholder="Ürün ara: ad veya No" aria-label="Ürün ara">
+                </label>
+                <select id="sortSelect" aria-label="Sıralama">
+                    <option value="default">Sırala</option>
+                    <option value="price-asc">Ucuzdan pahalıya</option>
+                    <option value="price-desc">Pahalıdan ucuza</option>
+                    <option value="name-asc">Ada göre A-Z</option>
+                </select>
+            </div>
+            <div class="chips" id="categoryChips" role="tablist" aria-label="Kategoriler"></div>
+            <div class="sale-filters" id="saleFilters" role="group" aria-label="Süzgeçler">
+                <button class="filt on" data-filter="stock" aria-pressed="true">Stokta olanlar</button>
+                <button class="filt" data-filter="seri" aria-pressed="false">Seri</button>
+                <button class="filt" data-filter="tekli" aria-pressed="false">Tekli</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="wrap gates-wrap" id="gatesWrap" hidden>
+        <button class="new-strip" id="newStrip" data-goto="new" hidden>
+            <span class="new-thumbs" id="newThumbs" aria-hidden="true"></span>
+            <span class="new-text"><b id="newStripText"></b><small>Son eklenen ürünler</small></span>
+            <span class="new-go" aria-hidden="true">→</span>
+        </button>
+        <div class="section-head">
+            <h2>Kategoriler</h2>
+        </div>
+        <div class="gates" id="catTiles"></div>
+    </section>
 
     <section class="spotlight featured" id="featured" hidden>
         <div class="wrap">
@@ -116,6 +152,15 @@
         </div>
     </section>
 
+    <div class="wrap size-cta-wrap">
+        <div class="trust-strip" id="trustStrip" hidden></div>
+        <button class="size-cta" id="sizeCta" hidden>
+            <i class="ic duo ic-tape" aria-hidden="true"></i>
+            <span><b>Rafınızda eksik beden mi kaldı?</b><small>Bedeni seçin, tekli alınabilen ürünleri gösterelim</small></span>
+            <em>Eksik bedeni tamamla →</em>
+        </button>
+    </div>
+
     <section class="spotlight" id="spotlight" hidden>
         <div class="wrap">
             <div class="section-head">
@@ -129,31 +174,6 @@
             <button class="rail-arrow next" data-rail="1" aria-label="Sonraki ürünler">›</button>
         </div>
     </section>
-
-    <section class="wrap cat-tiles-wrap" id="catTilesWrap" hidden>
-        <div class="section-head">
-            <h2>Kategoriler</h2>
-        </div>
-        <div class="cat-tiles" id="catTiles"></div>
-    </section>
-
-    <div class="controls" id="controls">
-        <div class="wrap">
-            <div class="controls-row">
-                <label class="search">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-                    <input type="search" id="searchInput" placeholder="Ürün adı veya numarası..." aria-label="Ürün ara">
-                </label>
-                <select id="sortSelect" aria-label="Sıralama">
-                    <option value="default">Önerilen</option>
-                    <option value="price-asc">Fiyat: Düşükten yükseğe</option>
-                    <option value="price-desc">Fiyat: Yüksekten düşüğe</option>
-                    <option value="name-asc">İsim: A-Z</option>
-                </select>
-            </div>
-            <div class="chips" id="categoryChips" role="tablist" aria-label="Kategoriler"></div>
-        </div>
-    </div>
 
     <main class="wrap">
         <div class="size-banner" id="sizeBanner" hidden>
@@ -206,6 +226,21 @@
         </span>
         <span class="cart-bar-goal" id="cartBarGoal" hidden></span>
     </button>
+
+    <!-- Telefonda açılışta sepet hedefi: "X TL daha → kargo bedava" (dokununca sepet) -->
+    <button class="dock-goal" id="dockGoal" hidden></button>
+
+    <!-- Telefonda alt menü -->
+    <nav class="dock" id="dock" aria-label="Alt menü">
+        <button class="dock-btn on" data-dock="home"><i class="ic ic-grid" aria-hidden="true"></i><span>Katalog</span></button>
+        <button class="dock-btn" data-dock="search"><i class="ic ic-search" aria-hidden="true"></i><span>Ara</span></button>
+        <button class="dock-btn dock-cart" data-dock="cart" aria-label="Sepet">
+            <span class="dock-cart-ring"><i class="ic ic-bag" aria-hidden="true"></i><b id="dockCount" hidden>0</b></span>
+            <span>Sepet</span>
+        </button>
+        <button class="dock-btn" data-dock="reorder"><i class="ic ic-repeat" aria-hidden="true"></i><span>Tekrarla</span></button>
+        <a class="dock-btn" data-dock="wa" id="dockWa" href="#" target="_blank" rel="noopener" data-umami-event="whatsapp-yaz"><i class="ic ic-chat" aria-hidden="true"></i><span>Yaz</span></a>
+    </nav>
 
     <!-- Ürün detayı -->
     <dialog class="sheet product-sheet" id="productModal" aria-labelledby="modalTitle">

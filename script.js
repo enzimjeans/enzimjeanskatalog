@@ -4,8 +4,10 @@
 
 const NEW_COUNT = 12;          // en son eklenen kaç ürün "Yeni" rozeti alsın
 const SIMILAR_COUNT = 8;       // ürün detayında kaç benzer ürün gösterilsin
-const GROUP_PREVIEW = 8;       // ana sayfada her kategoriden kaç ürün gösterilsin
+const GROUP_PREVIEW = 8;       // bilgisayar açılışında her kategoriden kaç ürün gösterilsin
+const WIDE = matchMedia('(min-width: 800px)');   // bilgisayar: alt menü yok, açılışta ürünler de var
 const FAV_KEY = 'sival_favs';
+const HOW_KEY = 'sival_how_seen';   // "3 adımda sipariş" kutusu sadece ilk ziyarette
 const LAST_ORDER_KEY = 'sival_last_order_v2';
 const BUYER_KEY = 'sival_buyer';
 
@@ -15,6 +17,12 @@ let activeCategory = 'all';
 let cart = [];                 // [{ id, size, quantity }]
 let favs = new Set();
 let colorGroups = {};          // model anahtarı -> aynı modelin renkleri
+
+// Görünüm: 'home' = kategori kapıları, 'cat' = bir kategorinin ürünleri (#k-jeans)
+let view = 'home';
+let homeScroll = 0;            // açılışa dönünce kaldığı yere kaydır
+let catPushed = false;         // kategoriye açılıştan girdiysek geri tuşu açılışa döner
+const filters = { stock: true, sale: '' };   // sale: '' | 'seri' | 'tekli'
 
 // Tarayıcı hafızası (gizli sekmede hata verebilir)
 function readStore(key, fallback) {
@@ -196,13 +204,45 @@ function productUrl(product) {
 }
 
 let toastTimer;
-function toast(message) {
+function toast(message, ms = 1800) {
     const t = $('toast');
     t.textContent = message;
     t.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+    toastTimer = setTimeout(() => t.classList.remove('show'), ms);
 }
+
+// ---------- Kategori adresleri: #k-jeans, #k-esofman-alti ----------
+// Kategoriler yönetimden serbest adla eklenebilir; adres her ad için ayrı ve sabit olsun.
+const SPECIAL = { all: 'tumu', new: 'yeni', fav: 'favoriler', featured: 'one-cikanlar', beden: 'eksik-beden' };
+const SPECIAL_TITLE = { all: 'Tüm ürünler', new: 'Yeni gelenler', fav: 'Favorilerim', featured: 'Öne çıkanlar', beden: 'Eksik beden' };
+const TR_ASCII = { ç: 'c', ğ: 'g', ı: 'i', ö: 'o', ş: 's', ü: 'u', â: 'a', î: 'i', û: 'u' };
+let catSlugs = {};             // kategori adı -> adres parçası
+
+const categoryNames = () => [...new Set(allProducts.map(p => p.kategori).filter(Boolean))];
+
+function slugify(s) {
+    return trLower(s).replace(/[çğıöşüâîû]/g, c => TR_ASCII[c])
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'kategori';
+}
+
+function buildCatSlugs() {
+    catSlugs = {};
+    const used = new Set(Object.values(SPECIAL));
+    categoryNames().forEach(c => {
+        const base = slugify(c);
+        let s = base, i = 2;
+        while (used.has(s)) s = `${base}-${i++}`;      // aynı adrese düşen iki kategori
+        used.add(s);
+        catSlugs[c] = s;
+    });
+}
+
+const slugOf = cat => SPECIAL[cat] || catSlugs[cat];
+const isKnownCat = cat => cat in SPECIAL || cat in catSlugs;
+const catFromSlug = slug => Object.keys(SPECIAL).find(k => SPECIAL[k] === slug)
+    || Object.keys(catSlugs).find(c => catSlugs[c] === slug) || null;
 
 // ---------- Yükleme ----------
 document.addEventListener('DOMContentLoaded', () => {
@@ -231,11 +271,14 @@ async function loadProducts() {
         favs = new Set([...favs].filter(id => findProduct(id)));
         writeStore(FAV_KEY, [...favs]);
         buildColorGroups();
+        buildCatSlugs();
 
         renderStats();
         renderReorder();
         $('sizeCta').hidden = sizeOptions().length === 0;
         renderBackIn();
+        renderHow();
+        initView();
         renderChips();
         renderProducts();
         updateCartUI();
@@ -244,6 +287,8 @@ async function loadProducts() {
         console.error(error);
         $('productsGrid').innerHTML = '';
         $('productCount').textContent = 'Ürünler yüklenirken bir hata oluştu. Sayfayı yenileyin.';
+        $('gatesWrap').hidden = false;
+        $('catTiles').innerHTML = '<p class="gate-error">Ürünler yüklenirken bir hata oluştu. Sayfayı yenileyin.</p>';
     } finally {
         $('loading').hidden = true;
     }
@@ -433,7 +478,7 @@ function renderStats() {
     const strip = words.map(w => `<span>${escapeHtml(w)}</span><i class="tick-sep"></i>`).join('');
     $('ticker').innerHTML = strip + strip + strip + strip;
 
-    // Yeni gelenler vitrini
+    // Yeni gelenler vitrini (açılışta artık şerit var; bölüm gizli ama içerik hazır)
     $('newRail').innerHTML = fresh.map((p, i) => productCard(p, i)).join('');
     // Öne çıkanlar: çok satan, öne çıkan, fırsat sırasıyla
     const order = Object.keys(BADGES);
@@ -442,19 +487,53 @@ function renderStats() {
         .map((p, i) => productCard(p, i)).join('');
     requestAnimationFrame(updateRailArrows);
 
-    // Kategori kutuları
+    renderGates();
+}
+
+// ---------- Kategori kapıları (açılış) ----------
+// Her şey urunler.json'dan hesaplanır: yönetimden eklenen kategori kendiliğinden kapı olur.
+function renderGates() {
     const cats = {};
     allProducts.forEach(p => {
-        const c = cats[p.kategori] || (cats[p.kategori] = { count: 0, cover: null });
+        if (!p.kategori) return;
+        const c = cats[p.kategori] || (cats[p.kategori] = { count: 0, stocked: 0, fresh: 0, cover: null, any: null });
         c.count++;
-        if (!c.cover && inStock(p)) c.cover = p;
+        if (!c.any || p.id > c.any.id) c.any = p;
+        if (inStock(p)) {
+            c.stocked++;
+            if (!c.cover || p.id > c.cover.id) c.cover = p;     // stoktaki en yeni ürün
+            if (newIds.has(p.id)) c.fresh++;
+        }
     });
-    $('catTiles').innerHTML = Object.entries(cats).map(([name, c], i) => `
-        <button class="cat-tile" data-goto="${escapeHtml(name)}" style="--i:${i}">
-            ${c.cover ? `<img src="${imagePath(c.cover)}" alt="" loading="lazy" decoding="async">` : ''}
-            <span class="cat-tile-name">${escapeHtml(name)}</span>
-            <span class="cat-tile-count">${c.count} model</span>
-        </button>`).join('');
+    // Çok modelli kategori önde; tamamen tükenenler en sonda
+    const list = Object.entries(cats).sort(([, a], [, b]) => (!a.stocked) - (!b.stocked) || b.count - a.count);
+    $('catTiles').innerHTML = list.map(([name, c], i) => {
+        const out = !c.stocked;
+        const cover = c.cover || c.any;
+        const label = `${name}, ${c.count} model` + (out ? ', şu an tükendi' : c.fresh ? `, ${c.fresh} yeni` : '');
+        return `
+        <button class="gate ${out ? 'out' : ''}" data-goto="${escapeHtml(name)}" aria-label="${escapeHtml(label)}" style="--i:${i}">
+            <span class="gate-img">
+                ${cover ? `<img src="${imagePath(cover)}" alt="" loading="${i < 4 ? 'eager' : 'lazy'}" decoding="async" onerror="this.remove()">` : ''}
+                ${!out && c.fresh ? `<b class="gate-new">${c.fresh} yeni</b>` : ''}
+            </span>
+            <span class="gate-lab"><strong>${escapeHtml(name)}</strong><small>${out ? 'Tükendi' : `${c.count} model`}</small></span>
+        </button>`;
+    }).join('');
+    $('gatesWrap').hidden = list.length === 0;
+
+    const fresh = newestInStock();
+    $('newStrip').hidden = fresh.length === 0;
+    $('newStripText').textContent = `${fresh.length} yeni ürün geldi`;
+    $('newThumbs').innerHTML = fresh.slice(0, 3).map(p => `<img src="${imagePath(p)}" alt="" decoding="async">`).join('');
+}
+
+// "3 adımda sipariş" kutusu: ilk ziyarette göster, sonra yer kaplamasın
+function renderHow() {
+    const how = document.querySelector('.how');
+    if (!how) return;
+    how.hidden = !!readStore(HOW_KEY, false);
+    writeStore(HOW_KEY, true);
 }
 
 // ---------- Hero vitrini ----------
@@ -501,14 +580,87 @@ function newestInStock() {
     return allProducts.filter(p => newIds.has(p.id) && inStock(p)).sort((a, b) => b.id - a.id);
 }
 
-function selectCategory(cat) {
+// ---------- Görünüm: açılış (kapılar) <-> kategori ----------
+let pendingHistory = null;     // pencere kapanırken geri adımı bitince yapılacak geçmiş kaydı
+
+function setView(v) {
+    view = v;
+    document.body.dataset.view = v;
+    updateDock();
+}
+
+// Kategoriye gir. Bilinmeyen kategori (ör. yönetimde silinmiş duyuru hedefi) -> hiçbir şey yapma.
+function selectCategory(cat, { fromHistory = false } = {}) {
+    if (!isKnownCat(cat)) return false;
+    const entering = view !== 'cat';
+    if (entering) homeScroll = window.scrollY;
     activeCategory = cat;
+    setView('cat');
+    if (!fromHistory) {
+        const url = `#k-${slugOf(cat)}`;
+        const write = () => {
+            if (entering) { history.pushState({ view: 'cat' }, '', url); catPushed = true; }
+            else history.replaceState({ view: 'cat' }, '', url);
+        };
+        // Pencere yeni kapandıysa geçmişte bir adım geri gidiliyor; o bitmeden yazarsak kayıt karışır
+        if (skipNextPop) pendingHistory = write; else write();
+    }
     renderChips();
     renderProducts();
+    window.scrollTo({ top: 0, behavior: 'instant' });     // görünüm değişti: kayarak değil, hemen
     const active = document.querySelector('.chip.active');
-    if (active) active.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-    const top = $('controls').offsetTop - document.querySelector('.topbar').offsetHeight;
-    if (window.scrollY > top || cat !== 'all') window.scrollTo({ top, behavior: 'smooth' });
+    if (active) active.scrollIntoView({ inline: 'center', block: 'nearest' });
+    return true;
+}
+
+// Açılışa dön: kategoriye açılıştan girdiysek geri adımı kullan (telefonun geri tuşuyla aynı)
+function goHome() {
+    if (view !== 'cat') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (catPushed && history.state && history.state.view === 'cat') { history.back(); return; }
+    showHome();
+    history.replaceState(null, '', location.pathname + location.search);
+}
+
+function showHome() {
+    catPushed = false;
+    activeCategory = 'all';
+    $('searchInput').value = '';
+    setView('home');
+    renderChips();
+    renderProducts();
+    window.scrollTo({ top: homeScroll, behavior: 'instant' });
+}
+
+// Adres çubuğuna göre görünüm (ilk açılış ve geri/ileri tuşları)
+function catFromHash() {
+    const m = location.hash.match(/^#k-([a-z0-9-]+)$/);
+    const cat = m && catFromSlug(m[1]);
+    return cat === 'beden' && !wantedSizes.size ? null : cat;
+}
+
+function initView() {
+    const cat = catFromHash();
+    if (cat) {
+        activeCategory = cat;
+        setView('cat');
+        history.replaceState({ view: 'cat' }, '', location.href);
+        catPushed = false;
+    } else {
+        setView('home');
+        if (location.hash.startsWith('#k-')) history.replaceState(null, '', location.pathname + location.search);
+    }
+}
+
+function syncViewFromLocation() {
+    const cat = catFromHash();
+    if (cat) {
+        if (view !== 'cat' || activeCategory !== cat) {
+            selectCategory(cat, { fromHistory: true });
+            catPushed = false;
+        }
+    } else if (view === 'cat' && !location.hash.startsWith('#urun-')) {
+        showHome();
+    }
 }
 
 // ---------- Kategoriler ----------
@@ -581,43 +733,81 @@ function trackNotFound(count) {
 function renderProducts() {
     if (activeCategory === 'beden' && !wantedSizes.size) activeCategory = 'all';
     renderSizeBanner();
-    const list = getVisibleProducts();
+    $('featured').hidden = !allProducts.some(isFeatured);
+    $('spotlight').hidden = true;          // yeni gelenler açılıştaki şeritten açılıyor
+    updateDock();
     const grid = $('productsGrid');
 
-    $('noProducts').hidden = list.length > 0;
-    trackNotFound(list.length);
+    // Açılış: telefonda sadece kapılar; bilgisayarda kapıların altında kategori kategori ürünler
+    if (view !== 'cat') {
+        $('noProducts').hidden = true;
+        $('productCount').textContent = '';
+        grid.innerHTML = WIDE.matches ? groupedHtml() : '';
+        return;
+    }
+
     const searched = $('searchInput').value.trim();
+    const num = (trLower(searched).match(/^(?:no\s*[.:]?\s*)?(\d+)$/) || [])[1];
+    const found = getVisibleProducts();
+
+    $('catTitle').textContent = searched ? 'Arama sonuçları' : (SPECIAL_TITLE[activeCategory] || activeCategory);
+    $('catMeta').textContent = found.length ? `${found.length} model · ${found.filter(inStock).length} stokta` : '';
+
+    // Seri / Tekli süzgeci sadece rafta ikisi de varsa
+    const kinds = new Set(found.map(p => saleOf(p).satis));
+    if (kinds.size < 2) filters.sale = '';
+    document.querySelectorAll('#saleFilters [data-filter]').forEach(b => {
+        const k = b.dataset.filter;
+        const on = k === 'stock' ? filters.stock : filters.sale === k;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', on);
+        if (k !== 'stock') b.hidden = kinds.size < 2;
+    });
+
+    let list = filters.sale ? found.filter(p => saleOf(p).satis === filters.sale) : found;
+    const out = list.filter(p => !inStock(p)).length;
+    let count = list.length
+        ? `${list.length} ürün` + (out ? ` · ${out} tanesi şu an stokta yok` : '')
+        : '';
+    if (filters.stock && out) {
+        const keep = list.filter(p => inStock(p) || (num && String(p.id) === num));
+        if (keep.length) {
+            count = `${keep.length} ürün · <button class="link-btn" data-filter="stock">${list.length - keep.length} tükeneni de göster</button>`;
+            list = keep;
+        } else {
+            count = 'Bu raftaki ürünlerin hepsi şu an tükendi. "Gelince haber ver" deyin, stoğa girince size yazalım.';
+        }
+    }
+    $('productCount').innerHTML = count;
+
+    $('noProducts').hidden = list.length > 0;
+    trackNotFound(found.length);
     $('askMissing').href = whatsappUrl(searched
         ? `Merhaba, katalogda "${searched}" bulamadım. Elinizde var mı?`
         : 'Merhaba, katalogda aradığımı bulamadım, yardımcı olur musunuz?');
-    const out = list.filter(p => !inStock(p)).length;
-    $('productCount').textContent = list.length
-        ? `${list.length} ürün` + (out ? ` · ${out} tanesi şu an stokta yok` : '')
-        : '';
 
-    const browsing = activeCategory === 'all' && !$('searchInput').value.trim() && $('sortSelect').value === 'default';
-    $('spotlight').hidden = !browsing || newestInStock().length === 0;
-    $('featured').hidden = !browsing || !allProducts.some(isFeatured);
-    $('catTilesWrap').hidden = !browsing;
+    grid.innerHTML = `<div class="grid">${list.map((p, i) => productCard(p, i)).join('')}</div>`;
+}
 
-    if (browsing) {
-        // Kategorilere göre bölümler
-        const groups = {};
-        list.forEach(p => (groups[p.kategori] = groups[p.kategori] || []).push(p));
-        grid.innerHTML = Object.entries(groups).map(([cat, items]) => `
+// Bilgisayar açılışı: her kategoriden stoktaki ilk 8 ürün, "tümünü gör" kategori görünümünü açar
+function groupedHtml() {
+    const groups = {};
+    getVisibleProducts().forEach(p => (groups[p.kategori] = groups[p.kategori] || []).push(p));
+    return Object.entries(groups).map(([cat, items]) => {
+        const shown = items.filter(inStock).slice(0, GROUP_PREVIEW);
+        if (!shown.length) return '';
+        return `
             <section class="group">
                 <div class="section-head">
                     <h2>${escapeHtml(cat)} <small>${items.length} model</small></h2>
                     <button class="section-link" data-goto="${escapeHtml(cat)}">Sadece ${escapeHtml(cat)} →</button>
                 </div>
-                <div class="grid">${items.slice(0, GROUP_PREVIEW).map((p, i) => productCard(p, i)).join('')}</div>
-                ${items.length > GROUP_PREVIEW
+                <div class="grid">${shown.map((p, i) => productCard(p, i)).join('')}</div>
+                ${items.length > shown.length
                     ? `<button class="more-btn" data-goto="${escapeHtml(cat)}">${items.length} modelin tümünü gör →</button>`
                     : ''}
-            </section>`).join('');
-    } else {
-        grid.innerHTML = `<div class="grid">${list.map((p, i) => productCard(p, i)).join('')}</div>`;
-    }
+            </section>`;
+    }).join('');
 }
 
 function productCard(p, index) {
@@ -795,6 +985,8 @@ function openModal(id, { updateHash = true } = {}) {
     const actions = $('modalActions');
     actions.dataset.id = p.id;
     actions.innerHTML = actionHtml(p);
+    // Seri / tek ürünlerde "Sepete ekle" telefonda pencerenin altına yapışık (beden tablosu çok yer kaplar, o hariç)
+    actions.classList.toggle('stick', inStock(p) && !needsSize(p));
 
     // Aynı modelin diğer renkleri
     const colors = colorsOf(p);
@@ -1056,6 +1248,8 @@ function updateCartUI() {
     const { items, total } = cartTotals();
     $('cartCount').textContent = items;
     $('cartCount').hidden = items === 0;
+    $('dockCount').textContent = items;
+    $('dockCount').hidden = items === 0;
     $('cartBar').hidden = items === 0;
     document.body.classList.toggle('has-cart-bar', items > 0);
     $('cartBarCount').textContent = items;
@@ -1066,6 +1260,10 @@ function updateCartUI() {
         : '✓ Tüm hedeflere ulaştınız';
     $('cartBarGoal').textContent = goalText;
     $('cartBarGoal').hidden = !goalText;
+    // Telefonda açılışta sepet çubuğu yok; hedef yazısı alt menünün üstünde görünsün
+    $('dockGoal').textContent = goalText;
+    $('dockGoal').hidden = !goalText;
+    document.body.classList.toggle('has-dock-goal', !!goalText);
 }
 
 // Sepette ürün başına tek kart; tekli üründe bedenler alt alta
@@ -1342,6 +1540,26 @@ function reorder() {
     openCart();
 }
 
+// ---------- Alt menü (telefon) ----------
+function updateDock() {
+    const searching = view === 'cat' && $('searchInput').value.trim();
+    document.querySelectorAll('.dock-btn').forEach(b =>
+        b.classList.toggle('on', b.dataset.dock === (searching ? 'search' : 'home')));
+}
+
+function dockAction(action) {
+    if (action === 'home') goHome();
+    else if (action === 'search') {
+        const input = $('searchInput');
+        input.focus();
+        input.select();
+    } else if (action === 'cart') openCart();
+    else if (action === 'reorder') {
+        if (reorderableItems().items.length) reorder();
+        else toast('Henüz siparişiniz yok. WhatsApp\'tan sipariş gönderince buradan tek dokunuşla tekrarlarsınız.', 4000);
+    }
+}
+
 // ---------- Olaylar ----------
 function closeDialog(dialog) {
     dialog.close();
@@ -1351,9 +1569,34 @@ function setupEvents() {
     let searchTimer;
     $('searchInput').addEventListener('input', () => {
         clearTimeout(searchTimer);
-        searchTimer = setTimeout(renderProducts, 180);
+        searchTimer = setTimeout(() => {
+            // Açılışta aranınca tüm ürünlerde arama sonuçlarına geç
+            if (view !== 'cat' && $('searchInput').value.trim()) selectCategory('all');
+            else renderProducts();
+        }, 180);
     });
     $('sortSelect').addEventListener('change', renderProducts);
+
+    // Süzgeçler: Stokta olanlar / Seri / Tekli ("tükeneni de göster" bağlantısı da aynı)
+    document.addEventListener('click', e => {
+        const f = e.target.closest('[data-filter]');
+        if (!f) return;
+        const k = f.dataset.filter;
+        if (k === 'stock') filters.stock = !filters.stock;
+        else filters.sale = filters.sale === k ? '' : k;
+        renderProducts();
+    });
+
+    $('catBack').addEventListener('click', goHome);
+    $('dockGoal').addEventListener('click', openCart);
+    // Pencere telefon <-> bilgisayar genişliği arasında değişirse açılışı yeniden çiz
+    WIDE.addEventListener('change', () => { if (view === 'home' && allProducts.length) renderProducts(); });
+    document.querySelector('.brand').addEventListener('click', e => { e.preventDefault(); goHome(); });
+    $('dock').addEventListener('click', e => {
+        const b = e.target.closest('[data-dock]');
+        if (b && b.dataset.dock !== 'wa') dockAction(b.dataset.dock);
+    });
+    $('dockWa').href = whatsappUrl('Merhaba, katalog hakkında bilgi almak istiyorum.');
 
     $('categoryChips').addEventListener('click', e => {
         const chip = e.target.closest('.chip');
@@ -1364,9 +1607,8 @@ function setupEvents() {
 
     $('resetFilters').addEventListener('click', () => {
         $('searchInput').value = '';
-        activeCategory = 'all';
-        renderChips();
-        renderProducts();
+        filters.sale = '';
+        selectCategory('all');
     });
 
     // Kart, detay ve sepet içindeki tüm butonlar
@@ -1461,13 +1703,19 @@ function setupEvents() {
 
     window.addEventListener('hashchange', openFromHash);
     window.addEventListener('popstate', () => {
-        if (skipNextPop) { skipNextPop = false; return; }
+        if (skipNextPop) {
+            skipNextPop = false;
+            if (pendingHistory) { const w = pendingHistory; pendingHistory = null; w(); }
+            return;
+        }
         const open = document.querySelector('dialog[open]');
         if (open) {
             closingFromHistory = true;
             open.close();
             closingFromHistory = false;
+            return;
         }
+        syncViewFromLocation();      // kategori <-> açılış
     });
 
     // Vitrin okları
