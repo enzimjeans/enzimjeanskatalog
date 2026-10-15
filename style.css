@@ -2696,6 +2696,11 @@ body[data-view="home"] .controls {
     .hero-fan { height: 340px; }
 }
 
+/* Bilgisayarda fareyle yana kaydırılamıyor: kategori çipleri alt satıra geçsin, hepsi görünsün */
+@media (min-width: 800px) {
+    .chips { flex-wrap: wrap; overflow-x: visible; }
+}
+
 /* Alt menü: sadece telefonda */
 .dock, .dock-goal { display: none; }
 
@@ -2707,9 +2712,9 @@ body[data-view="home"] .controls {
         bottom: 0;
         z-index: 26;
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         align-items: end;
-        padding: 4px 4px calc(6px + env(safe-area-inset-bottom));
+        padding: 4px 2px calc(6px + env(safe-area-inset-bottom));
         background: var(--card);
         border-top: 1px solid var(--line);
         box-shadow: 0 -8px 22px -14px rgba(20, 19, 15, 0.35);
@@ -2846,6 +2851,15 @@ body[data-view="home"] .controls {
         box-shadow: 0 -10px 20px -14px rgba(20, 19, 15, 0.4);
     }
     .detail-actions.stick .seri-info { margin-bottom: 8px; }
+}
+
+/* Çok dar telefonlar (320 px): menü ve 3 adım yazıları taşmasın */
+@media (max-width: 359px) {
+    .how { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .how li { flex-direction: column; gap: 4px; }
+    .how li b { text-align: center; overflow-wrap: anywhere; }
+    .dock-btn { letter-spacing: -0.02em; }
+    .dock-btn span { max-width: 100%; overflow: hidden; text-overflow: clip; }
 }
 
 @media (prefers-reduced-motion: reduce) {
